@@ -1,0 +1,148 @@
+<body>
+    <section id="container">
+      <!-- **********************************************************************************************************************************************************
+          TOP BAR CONTENT & NOTIFICATIONS
+          *********************************************************************************************************************************************************** -->
+      <!--header start-->
+      <header class="header black-bg">
+        <div class="sidebar-toggle-box">
+          <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+        </div>
+        <!--logo start-->
+        <a href="index.html" class="logo text-decoration-none"><b>KOLIMA <span>Transfert</span></b></a>
+        <!--logo end-->
+        <div class="nav notify-row" id="top_menu">
+          <!--  notification start -->
+          <ul class="nav top-menu">
+            <!-- settings start -->
+            <li class="dropdown">
+              <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
+                <i class="fa fa-tasks"></i>
+                <span class="badge bg-theme">4</span>
+                </a>
+             
+            </li>
+            <!-- settings end -->
+            <!-- inbox dropdown start-->
+            <li id="header_inbox_bar" class="dropdown">
+              <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
+                <i class="fa fa-envelope-o"></i>
+                <span class="badge bg-theme">5</span>
+                </a>
+             
+            </li>
+            <!-- inbox dropdown end -->
+            <!-- notification dropdown start-->
+            <li id="header_notification_bar" class="dropdown">
+              <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
+                <i class="fa fa-bell-o"></i>
+                <span class="badge bg-warning">7</span>
+                </a>
+            </li>
+            <!-- notification dropdown end -->
+          </ul>
+          <!--  notification end -->
+        </div>
+        <div class="top-menu">
+          <ul class="nav pull-right top-menu">
+            <li><a class="logout" href="login.html">Deconnecter </a></li>
+          </ul>
+        </div>
+      </header>
+      <!--header end-->
+      <!-- **********************************************************************************************************************************************************
+          MAIN SIDEBAR MENU
+          *********************************************************************************************************************************************************** -->
+      <!--sidebar start-->
+      <aside>
+        <div id="sidebar" class="nav-collapse ">
+          <!-- sidebar menu start-->
+          <ul class="sidebar-menu" id="nav-accordion">
+            <p class="centered"><a href="profile.html"><img src="/assets/semantic/img/user.png" class="img-circle" width="80"></a></p>
+            <h5 class="centered">
+              <% if(typeof nom !== "undefined"){ %>
+                <%= nom %>
+                
+          <% } %>
+              </h5>
+            <li class="mt">
+              <a class="active" href="/Acceuil">
+                <i class="fa fa-dashboard"></i>
+                <span>Tableau de bord</span>
+                </a>
+            </li>
+            <li class="sub-menu">
+              <a href="javascript:;">
+                <i  class="fa fa-building-o "></i>
+                <span>Agence</span>
+                </a>
+              <ul class="sub">
+                <li><a href="/Superadmin/AjoutAgence">Ajout Agence</a></li>
+                <li><a href="/Superadmin/ListeAgence">Liste des Agences</a></li>
+              </ul>
+            </li>
+            <li class="mt-1">
+              <a href="/Superadmin/LesTransactionTouts">
+                
+                <i  class="fa fa-refresh "></i>
+                <span>Toute les Transactions</span>
+                </a>
+            
+            </li>
+            <li class="mt-1">
+              <a href="/Superadmin/ToutTransactionvalider">
+                <i  class="fa fa-check-square "></i>
+                <span>Transaction validée</span>
+                </a>
+            
+            </li>
+            <li class="sub-menu">
+              <a href="javascript:;">
+                <i  class="fa fa-building-o "></i>
+                <span>Compensation</span>
+                </a>
+              <ul class="sub">
+                <li><a href="/Superadmin/Compensation">D'une Agence</a></li>
+                <li><a href="/Superadmin/HistoriqueCompensation">Historique des compensations</a></li>
+              </ul>
+            </li>
+            <li class="sub-menu">
+              <a href="javascript:;">
+                <i class="fa fa-briefcase"></i>
+                <span>Configuration </span>
+                </a>
+              <ul class="sub"> 
+                <li><a href="/Superadmin/Lesmonaies">La monnaie</a></li>
+              
+                <li><a href="/Superadmin/Configurationtaux">Taux d'échanges </a></li>
+                <li><a href="/Superadmin/Lesfrais"> Liste des frais d'envoie</a></li>
+                <li><a href="/Superadmin/Gainfrais">Gain des frais d'envoie </a></li>
+                <li><a href="/Superadmin/Lestauxfraisechange">Les Taux Frais d'echange </a></li>
+             
+              </ul>
+            </li>
+            <li class="sub-menu">
+              <a href="javascript:;">
+                <i class="fa fa-briefcase"></i>
+                <span>Finances</span>
+                </a>
+              <ul class="sub"> 
+                <li><a href="/Superadmin/Lestypescomptes">Les Types de Comptes</a></li>
+              
+                <li><a href="/Superadmin/Lescomptefinances">Les Comptes  </a></li>
+                <li><a href="/Superadmin/SaissieComptables">Saissie des Operations Comptables</a></li>
+                
+                <li><a href="/Superadmin/ModifieEcriture">Modifier une Ecriture</a></li>
+                <li><a href="/Superadmin/Lesetatsfinancier">Edition des Rapports Financiers</a></li>
+                <li><a href="/Superadmin/BrouillardeCompte">Edition Du Brouillard de Compte </a></li>
+                <li><a href="/Superadmin/Bilan">Bilan </a></li>
+                <li> <a href="/Superadmin/CompteResultats"> Compte de Resultats </a> </li>
+                <li><a href="/Superadmin/BalanceaDate">Balance A Date</a></li>
+                <li><a href="/Superadmin/BalancePeriodique">Balance Périodique</a></li>
+                
+              </ul>
+            </li>
+          </ul>
+          <!-- sidebar menu end-->
+        </div>
+      </aside>

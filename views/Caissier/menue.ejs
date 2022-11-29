@@ -1,0 +1,90 @@
+<title>Caissiers  || Kolima Transfert</title>
+<body>
+    <section id="container">
+      <!-- **********************************************************************************************************************************************************
+          TOP BAR CONTENT & NOTIFICATIONS
+          *********************************************************************************************************************************************************** -->
+      <!--header start-->
+      <header class="header black-bg">
+        <div class="sidebar-toggle-box">
+          <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+        </div>
+        <!--logo start-->
+        <a href="/Caissier/Acceuil" class="logo text-decoration-none"><b>KOLIMA <span>Transfert</span></b></a>
+        <!--logo end-->
+        <div class="nav notify-row" id="top_menu">
+          <!--  notification start -->
+          <ul class="nav top-menu">
+            <!-- settings start -->
+           
+            <!-- notification dropdown end -->
+          </ul>
+          <!--  notification end -->
+        </div>
+        <div class="top-menu">
+          
+          <button data-bs-toggle="modal" data-bs-target="#deconnecter" class="btn btn-danger nav pull-right top-menu mt-2">Déconnection</button>
+        </div>
+      </header>
+      <!--header end-->
+      <!-- **********************************************************************************************************************************************************
+          MAIN SIDEBAR MENU
+          *********************************************************************************************************************************************************** -->
+      <!--sidebar start-->
+      <aside>
+        <div id="sidebar" class="nav-collapse ">
+          <!-- sidebar menu start-->
+          <ul class="sidebar-menu" id="nav-accordion">
+            <p class="centered"><a href="profile.html"><img src="/assets/semantic/img/user.png" class="img-circle" width="80"></a></p>
+            <h5 class="centered">
+              <% if(typeof nom !== "undefined"){ %>
+                <%= nom %>
+                
+          <% } %>
+              </h5>
+            <li class="mt">
+              <a class="active" href="/Caissier/Acceuil">
+                <i class="fa fa-dashboard"></i>
+                <span>Tableau de bord</span>
+                </a>
+            </li>
+            <li class="sub-menu">
+              <a href="javascript:;">
+                <i  class="fa fa-dollar "></i>
+                <span>Argent</span>
+                </a>
+              <ul class="sub">
+                <li><a href="/Caissier/EnvoieArgent">Envoie d'Argent</a></li>
+                <li><a href="/Caissier/Retraitargent">Retrait d'Argent</a></li>
+              </ul>
+            </li>
+            <li class="mt">
+              <a  href="/Caissier/Transactionjournalier">
+                <i class="fa fa-dashboard"></i>
+                <span>Transactions Validées Journalièrements</span>
+                </a>
+            </li>
+          </ul>
+          <!-- sidebar menu end-->
+        </div>
+      </aside>
+      
+                                                                       <!--Boite  suppression-->
+                                                                       <div class="modal fade" id="deconnecter" tabindex="-1" role="dialog" aria-labelledby="defaultModal" aria-hidden="true">
+                                                                        <div class="modal-dialog" role="document">
+                                                                            <div class="modal-content">
+                                                                              <div class="modal-header bg-danger">
+                                                                                <h5 class="modal-title " id="exampleModalLabel">Attention, Déconnection !</h5>
+                                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                              </div>
+                                                                                <div class="modal-body text-dark">
+                                                                                    Voulez-vous vous déconnectez ? 
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">Non</button>
+                                                                                    <a href="/Caissier/Deconnecter"><button type="button" data-bs-toggle="modal" data-bs-target="#regroupementambassade" id="oui"  class="btn btn-danger">Oui</button></a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--Boite suppression fin--> 

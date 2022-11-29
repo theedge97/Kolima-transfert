@@ -1,0 +1,559 @@
+<!-- debut de head-->
+<%- include('head'); -%>
+
+
+<title>Agency || Kolima  Transfert</title>
+<link href="/assets/semantic/lib/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+ 
+
+  <!-- fin de head-->
+  <style>
+    #blockmodifier
+    {
+      display: none;
+    }
+  </style>
+ 
+</head>
+<script src="/assets/semantic/lib/jquery.validate.js"></script>
+<script src="/assets/semantic/lib/moment.min.js"></script>
+
+<script src="/assets/semantic/lib/html2pdf.bundle.min.js"></script>
+<script src="/assets/semantic/js/jquery.formatCurrency.js" ></script>
+<script src="/assets/semantic/js/easy-number-separator.js"></script>
+
+
+<!-- debut  de menue-->
+<%- include('menueEn'); -%>
+    <!--fin de menue end-->
+    <!-- **********************************************************************************************************************************************************
+        MAIN CONTENT
+        *********************************************************************************************************************************************************** -->
+    <!-- debut du body-->
+    <section id="main-content">
+      <section class="wrapper">
+      
+        <div class="row mt-5">
+         
+            <div class="col-lg-12  ">
+             
+              <div class="row account-contant">
+                            
+                <div class="col-12">
+                    <div class="card card-statistics">
+                        <div class="card-body p-0">
+                            <div class="row no-gutters">
+                                
+                                <div class="col-xl-12 col-md-12 col-12">
+                                    <div class="page-account-form">
+                                        <div class="form-titel border-bottom p-3">
+                                            <h5 class="mb-0  textcoleur py-2">Report of deposit and retreat transactions between two dates   </h5>
+                                        
+                                            <!--Fin Boite Modale-->
+                                          </div>
+                                        <div class="p-4">
+                                            <form  id="rectifie" method="post" action="/Agence/RechercheToutTransacEntreDeuxDates">
+                                                <div class="row ">
+                                                    
+                                                    <div class="form-group col-md-4 col-md-offset-2">
+                                                      <label for="datedebut" class="control-label ">Start Date   :</label>
+                                                      <input type="date" class="form-control" name="datedebut" id="datedebut" placeholder="  ">
+                                                    </div>
+                                                    <div class="form-group col-md-4 col-md-offset-2">
+                                                        <label for="datefin" class="control-label ">End Date  :</label>
+                                                        <input type="date" class="form-control" name="datefin" id="datefin" placeholder="  ">
+                                                      </div>
+                                               
+                                    
+                                                  
+                                                  
+                                                 
+                                                    
+                                                </div><hr>
+                                                <div class="form-group">
+                                                  <div class="col-lg-offset-2 col-lg-9">
+                                                    <button id="enregistrer" class="btn btn-primary" type="submit">Search</button>
+
+                                                  
+                                                  </div>
+                                                </div>
+                                            </form>
+                                           
+
+                                                
+                                     
+                                        </div>
+                                        <hr>
+                                        <div class="p-4" >
+                                                
+                                     
+        <div class="row mt">
+            <div class="col-md-12 ">
+                <div class="">
+                  <h4><i class="fa fa-angle-right"></i><font _mstmutation="1">List of all transaction reports made between  <span id="debut"></span> et <span id="fin"></span>  </font> </h4>
+                  <hr>
+       
+                  <div id="deuxdaterapport" class="table-responsive m-t-40" style="clear: both;">
+                  <table  id="dataTable "  class="table tablet table-striped table-advance table-hover table-striped table-bordered dataTable">
+                    
+                    
+                    <thead>
+                      <tr>
+                        <th> N °</th>
+                        <th> Sender Name  </th> 
+                        <th>Sender Contact </th>
+                        <th> Receiving Country  </th>
+                        <th> Receiver Name   </th>
+                        <th> Receiver Contact</th>
+                        <th> Card Number </th>
+                        <th>Type of  Transaction </th>
+                        <th> Deposit Amount</th>
+                        <th>Shipping </th>
+                        <th>Deposit Fee </th>
+                        <th>Date of Send </th>
+                        <th>Retreat Amount</th>
+                        <th>Retreat Fee</th>
+                        <th>Date of Retreat </th>
+
+                       
+                      </tr>
+                    </thead>
+                    <tbody>
+                          
+                           
+                        
+ 
+     
+                    </tbody>
+                  </table>
+                  </div>
+                </div>
+                <!-- /content-panel -->
+              </div>
+              
+
+              <div class="col-lg-12">
+                <button id="rapportimprimert" class="btn btn-primary">Imprimer </button>
+                                               
+              </div>
+            <!-- /col-lg-12 -->
+          </div>
+        <!-- /row -->
+
+
+                        
+        <div class="row  mt-4 bg-theme">
+          <div class="col-md-12 ">
+
+              <div class="table-responsive m-t-40" style="clear: both;">
+                  <table  id="dataTable "  class="table tablet table-striped table-advance table-hover table-striped table-bordered dataTable">
+                    
+                    
+                    <thead>
+                      <tr>
+                        <th> Total Amount of deposit</th>
+                        <th> Total  Deposit Fees</th> 
+                        <th>Total Amount of Retreat</th>
+                        <th>Total Retreat Fees</th>
+                      
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                          <td id="totalmontantdepot"></td>
+                          
+                          <td id="totalcomidepot"></td>
+                          
+                          <td id="totalmontantretrait"></td>
+                          
+                          <td id="totalcomretrait"></td>
+                      </tr>
+                      </tbody>
+                      </table>
+              </div>
+
+          </div>
+      </div>
+        <!--Fin-->
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      <!--Fin de notification d'erreur-->
+     
+            </div>
+            <!-- /col-lg-12 -->
+          </div>
+          
+          <!-- Button trigger modal -->
+
+        <!-- /row -->
+      </section>
+    </section>
+    <!--main content end-->
+    
+  </section>
+  <!-- js placed at the end of the document so the pages load faster -->
+  
+  <script>
+   
+
+     
+     
+    document.querySelector("#rapportimprimert").addEventListener("click", ()=>{
+       var td = document.getElementsByTagName('td');
+       var th = document.getElementsByTagName('th');
+       $("td").css({ 
+                         
+        padding: 0
+                        });
+                        $("th").css({ 
+                          
+                          padding: 0
+                                          });
+                
+
+        const invoice = this.document.getElementById("deuxdaterapport");
+        var opt = {
+margin:       0.1,
+filename:     'rapportdeuxdate.pdf',
+image:        { type: 'jpeg', quality: 1 },
+html2canvas:  { scale: 1.5 },
+jsPDF:        { unit: 'in', format: 'a4', orientation: 'landscape' },
+
+pagebreak: {mode: 'avoid-all', before:'#pageX'}
+};
+        html2pdf().from(invoice).set(opt).save();
+        
+        
+        setTimeout(function () {
+            $("td").css({ 
+                         
+                padding: '15px'
+                                         });
+                                         $("th").css({ 
+                                           
+                                          
+                padding: '15px'
+                                                           });
+                              
+                           }, 3000);
+                           
+    })
+
+
+
+    
+
+
+</script>
+<script>
+  easyNumberSeparator({
+    selector: '.number-separator',
+    separator: ' ',
+    resultInput: '#montant',
+  })
+  //
+  
+</script>
+<script src="/assets/semantic/lib/datatables/jquery.dataTables.min.js"></script>
+<script src="/assets/semantic/lib/datatables/dataTables.bootstrap4.min.js"></script>
+<script src="/assets/semantic/lib/datatables/datatables-demo.js"></script>
+
+
+  <script src="/assets/semantic/lib/bootstrap/js/bootstrap.min.js"></script>
+ 
+
+  <script>
+ 
+    var nomimprimer = "";
+    var idtransaction = "";
+      
+        $().ready(function() {
+          // validate the comment form when it is submitted
+          jQuery.validator.addMethod("phoneGuinee", function (phone_number, element) {
+            phone_number = phone_number.replace(/\s+/g, "");
+            return this.optional(element) || phone_number.length >= 9 && phone_number.match(/^6[1,2,5,6]{1}[0-9]{7}$/);
+        }, "Veuillez Entrez le bon format de Numero");
+          // validate signup form on keyup and submit
+          $("#rectifie").validate({
+            rules: {
+              datefin: {
+                required: true,
+              } ,
+              datedebut: {
+                required: true,
+              } ,
+             
+            },
+            messages: {
+              datefin: {
+                required: "Veuillez entrez le code .",
+              },
+              datedebut: {
+                required: "Veuillez entrez le code .",
+              }
+            },
+            submitHandler: function(form){
+         
+         $.ajax({
+             url: form.action,
+             type: form.method,
+             data: $(form).serialize(),
+             success: function(response) {
+             
+    
+                  if (response.codeerreurs) { 
+                    
+        $("#codeerreurs").css({ 
+                          display: 'block'
+                        });
+                        setTimeout(function () {
+        $("#codeerreurs").css({ 
+          display: 'none'
+        });
+        }, 3000)
+                        
+                    }
+                      
+                    if (response.transactdatedeux) { 
+                     var table = response.transactdatedeux;
+                     
+  
+
+                        var tableau = document.querySelector(".tablet");                    
+                    for (var i = 0; i < table.length; i++) {
+                        var element = table[i];
+ 
+        
+  var datevalidation =  element.Datevalidation;
+  var dv =  moment(datevalidation).format('DD/MM/YYYY ');
+  
+ var dva =  moment(datevalidation).fromNow();
+  
+    var ligne = tableau.insertRow(-1);//on a ajouté une ligne
+  var colonne0 = ligne.insertCell(0);//on ajoute la seconde cellule
+  colonne0.innerHTML += i+1;
+  var colonne1 = ligne.insertCell(1);//on ajoute la seconde cellule
+  colonne1.innerHTML += element.Nomexpediteur;
+
+  var colonne2 = ligne.insertCell(2);//on ajoute la seconde cellule
+  //convertir
+  
+  colonne2.innerHTML += element.Contactexpediteur;
+
+  var colonne3 = ligne.insertCell(3);//on ajoute la seconde cellule
+  //Convertir 
+
+ colonne3.innerHTML += element.Contactexpediteur;
+
+ var colonne4 = ligne.insertCell(4);//on ajoute la seconde cellule
+  //Convertir 
+  
+ colonne4.innerHTML += element.Nomreceveur;
+
+ 
+ var colonne5 = ligne.insertCell(5);//on ajoute la seconde cellule
+  //Convertir 
+  
+ colonne5.innerHTML += element.Contactreceveur;
+
+ 
+ var colonne6 = ligne.insertCell(6);//on ajoute la seconde cellule
+  //Convertir 
+  
+ colonne6.innerHTML += element.Numerocarte;
+ var colonne7 = ligne.insertCell(7);//on ajoute la seconde cellule
+  //Convertir 
+  
+  
+ if (element.idagenceretrait == response.agenceid ) {
+  colonne7.innerHTML += ' <span class="text-warning">Retreat </span>';
+  
+     }else{
+      colonne7.innerHTML += '<span class="text-success">Deposit  </span>';
+   
+     }
+   
+
+ var colonne8 = ligne.insertCell(8);//on ajoute la seconde cellule
+  //Convertir 
+  
+  var Sommeenvoie = new Intl.NumberFormat('gn-GN').format(element.Sommeenvoie);
+ 
+ 
+  if (element.idagenceretrait == response.agenceid  ) {
+    
+    colonne8.innerHTML += ' <span class="text-warning">Nil </span>';
+   
+     }if (element.idagenceretrait != response.agenceid ){
+      colonne8.innerHTML += Sommeenvoie;
+     }
+
+ 
+ var colonne9 = ligne.insertCell(9);//on ajoute la seconde cellule
+  //Convertir 
+  var Frais = new Intl.NumberFormat('gn-GN').format(element.Frais);
+ 
+  
+ 
+ if (element.idagenceretrait == response.agenceid  ) {
+    
+  colonne9.innerHTML += ' <span class="text-warning">Nil </span>';
+   
+     }if (element.idagenceretrait != response.agenceid ){
+      colonne9.innerHTML += Frais;
+     }
+
+ 
+ var colonne10 = ligne.insertCell(10);//on ajoute la seconde cellule
+  //Convertir 
+  var Fraisdepot = new Intl.NumberFormat('gn-GN').format(element.Fraisdepot);
+ 
+  
+  
+  if (element.idagenceretrait == response.agenceid  ) {
+    colonne10.innerHTML += ' <span class="text-warning">Nil </span>';
+   
+     }if (element.idagenceretrait != response.agenceid ){
+   
+   
+      colonne10.innerHTML += Fraisdepot;
+    
+     }
+ 
+ var colonne11 = ligne.insertCell(11);//on ajoute la seconde cellule
+  //Convertir 
+ 
+
+  var dtr = element.Datetransaction
+  var datenvoie =  moment(dtr).format('DD/MM/YYYY ');
+  colonne11.innerHTML += datenvoie;
+
+  var colonne12 = ligne.insertCell(12);
+  
+  var montantdevise = new Intl.NumberFormat('gn-GN').format(element.montantdevise);
+ 
+  
+  if (element.idagenceretrait == response.agenceid  ) {
+    
+    colonne12.innerHTML += montantdevise;
+     }if (element.idagenceretrait != response.agenceid ){
+   
+      colonne12.innerHTML += ' <span class="text-warning">Nil </span>';
+   
+   
+     }
+     
+     var colonne13 = ligne.insertCell(13);
+     var Fraisretrait = new Intl.NumberFormat('gn-GN').format(element.Fraisretrait);
+  
+     if (element.idagenceretrait == response.agenceid  ) {
+    
+      colonne13.innerHTML += Fraisretrait;
+      }if (element.idagenceretrait != response.agenceid ){
+      
+        colonne13.innerHTML += ' <span class="text-warning">Nil </span>';
+   
+     }
+
+     var colonne14 = ligne.insertCell(14);
+     
+  var dt = element.Datevalidation
+  var dateretrait =  moment(dt).format('DD/MM/YYYY ');
+     colonne14.innerHTML += dateretrait;
+     
+     
+ 
+                    }
+                    
+                    var totalcomidepot = document.getElementById("totalcomidepot");
+                    var comidepot = response.deuxdatetoutcommissiondedepot;
+                    var comitoutdepot= new Intl.NumberFormat('gn-GN').format(comidepot.tout);
+  
+                    totalcomidepot.innerHTML +=   comitoutdepot;
+                    var montagencesdepot = response.deuxdatelessommesdepotagence;
+                    var montantdepot = new Intl.NumberFormat('gn-GN').format(montagencesdepot.toutdepot);
+  
+                    var totalmontantdepot = document.getElementById("totalmontantdepot");
+                    totalmontantdepot.innerHTML += montantdepot;
+                    
+                    
+                    
+                    var totalmontantretrait = document.getElementById("totalmontantretrait");
+                    var mt = response.deuxdateslessommesretraitagence;
+                    var montantretaits = new Intl.NumberFormat('gn-GN').format(mt.toutretrait);
+                    totalmontantretrait.innerHTML += montantretaits;
+                    //commissiondeuxdateretrait
+                    //totalcomretrait
+                    var totalcomretrait = document.getElementById("totalcomretrait");
+                    var vb = response.commissiondeuxdateretrait;
+                    var comi = new Intl.NumberFormat('gn-GN').format(vb.toutcommssion);
+                    totalcomretrait.innerHTML += comi;
+
+                  
+
+                  
+                    var debut = document.getElementById("debut");
+                    var fin = document.getElementById("fin");
+              
+  var d =  moment(response.debut).format('DD/MM/YYYY');
+  
+  var f =  moment(response.fin).format('DD/MM/YYYY');
+                    debut.innerHTML += d
+                    fin.innerHTML += f
+                   
+                  }
+    
+    
+                 
+                 
+                            }            
+               });       
+         }
+         
+          });
+      
+      
+          //code to hide topic selection, disable for demo
+          var newsletter = $("#newsletter");
+          // newsletter topics are optional, hide at first
+          var inital = newsletter.is(":checked");
+          var topics = $("#newsletter_topics")[inital ? "removeClass" : "addClass"]("gray");
+          var topicInputs = topics.find("input").attr("disabled", !inital);
+          // show when newsletter is checked
+          newsletter.click(function() {
+            topics[this.checked ? "removeClass" : "addClass"]("gray");
+            topicInputs.attr("disabled", !this.checked);
+          });
+        });
+        
+    
+    
+         
+        </script>
+           
+
+  <script class="include" type="text/javascript" src="/assets/semantic/lib/jquery.dcjqaccordion.2.7.js"></script>
+  <script src="/assets/semantic/lib/jquery.scrollTo.min.js"></script>
+  <script src="/assets/semantic/lib/jquery.nicescroll.js" type="text/javascript"></script>
+  <script src="/assets/semantic/lib/jquery.sparkline.js"></script>
+  <!--common script for all pages-->
+  <script src="/assets/semantic/lib/common-scripts.js"></script>
+  <script type="text/javascript" src="/assets/semantic/lib/gritter/js/jquery.gritter.js"></script>
+  <script type="text/javascript" src="/assets/semantic/lib/gritter-conf.js"></script>
+  <!--script for this page-->
+  
+  
+  
+</body>
+
+</html>

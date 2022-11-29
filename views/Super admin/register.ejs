@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="Dashboard">
+  <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+  <title>Kolima Transfert</title>
+
+  <!-- Favicons -->
+  <link href="/assets/semantic/img/favicon.png" rel="icon">
+  <link href="/assets/semantic/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Bootstrap core CSS -->
+  <link href="/assets/semantic/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!--external css-->
+  <link href="/assets/semantic/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
+  <!-- Custom styles for this template -->
+  <link href="/assets/semantic/css/style.css" rel="stylesheet">
+  <link href="/assets/semantic/css/style-responsive.css" rel="stylesheet">
+  
+  <!-- =======================================================
+    Template Name: Dashio
+    Template URL: https://templatemag.com/dashio-bootstrap-admin-template/
+    Author: TemplateMag.com
+    License: https://templatemag.com/license/
+  ======================================================= -->
+  <style>
+    #notifi{
+text-align: left;
+font-size: 17px;
+margin-top: 5px;
+z-index: 100;
+padding: 5px;
+border-radius: 5px;
+color: #ffffff;
+background-color: #ffca18;
+border-color: #ffca18;
+position: absolute; 
+top: 10%;
+display: none;
+    }
+    #erreur
+    {
+text-align: left;
+font-size: 17px;
+margin-top: 5px;
+z-index: 100;
+padding: 5px;
+border-radius: 5px;
+color: #ffffff;
+background-color: #f30808;
+border-color:  #f30808;
+position: absolute; 
+top: 10%;
+display: block;
+    }
+    .error
+        {
+            color: red;
+        }
+</style>
+</head>
+
+<body>
+  <!-- **********************************************************************************************************************************************************
+      MAIN CONTENT
+      *********************************************************************************************************************************************************** -->
+  <div id="login-page">
+    <div class="container">
+      <div class="row">
+        
+        <% if(typeof codeerreur !== "undefined"){ %>
+          <div id="notifi" class="col-lg-offset-3   col-md-offset-4 col-sm-11 col-xs-12 col-md-6 col-lg-4 ">
+            <h2><%= codeerreur %></h2>
+          </div>
+          
+          <% } %>
+          <% if(typeof erreur !== "undefined"){ %>
+            <div id="erreur" class="col-lg-offset-3   col-md-offset-4 col-sm-11 col-xs-12 col-md-6 col-lg-4 ">
+              <ul>
+                <% for(var i= 0 ; i < erreur.length; i++)  {%> 
+                <li><%= erreur[i].msg %></li>
+                  <% } %>
+                </ul>
+            </div>
+            <% } %>
+          </div>
+          
+        </div>
+      </div>
+      <form class="form-login" id="signupForm" method="post" action="/Superadmin/creation">
+        <h2 class="form-login-heading">créer un compte maintenant</h2>
+        <div class="login-wrap">
+          <input type="text" name="nom" class="form-control" placeholder="Entrez votre nom au complet" autofocus>
+          <br>
+          <input type="tel" name="telephone" class="form-control" placeholder="Entrez votre numéro de téléphone" autofocus>
+          <br>
+          <input type="email" name="email" class="form-control" placeholder="Entrez votre email" autofocus>
+          <br>
+          <input type="number" name="code" class="form-control" placeholder="Entrez le code d'activation" autofocus>
+          <br>
+          <input type="password" id="motdepasse" name="motdepasse" class="form-control" placeholder="Mot de passe">
+          <br>
+          <input type="password" name="motdepasse1" class="form-control" placeholder="Confirmation du Mot de passe">
+          <br>
+          <button class="btn btn-theme btn-block" href="index.html" type="submit"><i class="fa fa-lock"></i> SE CONNECTER</button>
+          <hr>
+          <div class="login-social-link centered">
+            <p>ou vous pouvez vous connecter via votre réseau social</p>
+            <button class="btn btn-facebook" type="submit"><i class="fa fa-facebook"></i> Facebook</button>
+            <button class="btn btn-twitter" type="submit"><i class="fa fa-twitter"></i> Twitter</button>
+          </div>
+          <div class="registration">
+            Vous avez déjà un compte?<br/>
+            <a class="" href="login.html">
+              Connectez-vous!
+              </a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- js placed at the end of the document so the pages load faster -->
+  <script src="/assets/semantic/lib/jquery/jquery.min.js"></script>
+  <script src="/assets/semantic/lib/bootstrap/js/bootstrap.min.js"></script>
+  
+  <script src="/assets/semantic/lib/jquery.validate.js"></script>
+  <script>
+ 
+  
+    $().ready(function() {
+      // validate the comment form when it is submitted
+      jQuery.validator.addMethod("phoneGuinee", function (phone_number, element) {
+        phone_number = phone_number.replace(/\s+/g, "");
+        return this.optional(element) || phone_number.length >= 9 && phone_number.match(/^6[1,2,5,6]{1}[0-9]{7}$/);
+    }, "Veuillez Entrez le bon format de Numero");
+      // validate signup form on keyup and submit
+      $("#signupForm").validate({
+        rules: {
+          nom: {
+            required: true,
+            minlength: 2
+          },
+          motdepasse: {
+            required: true,
+            minlength: 5
+          },
+          motdepasse1: {
+            required: true,
+            minlength: 5,
+            equalTo: "#motdepasse"
+          },
+          email: {
+            required: true,
+            email: true
+          },
+          code: {
+            required: true,
+            minlength: 4
+          },
+          telephone: {
+                    required: true,
+                    phoneGuinee: true
+                }
+        },
+        messages: {
+          nom: {
+            required: "Veuillez renseigner un nom ",
+            minlength: "Votre nom  doit être composé d'au moins 2 caractères"
+          },
+          motdepasse: {
+            required: "Veuillez fournir un mot de passe",
+            minlength: "Votre mot de passe doit comporter au moins 5 caractères"
+          },
+          motdepasse1: {
+            required: "Veuillez fournir un mot de passe",
+            minlength: "Votre mot de passe doit comporter au moins 5 caractères",
+            equalTo: "Entrez le même mot de passe qui est  ci-dessus"
+          },
+          email: "S'il vous plaît, mettez une adresse email valide",
+          code: {
+            required: "Veuillez fournir un code d'activation",
+            minlength: "Votre code doit comporter au moins 5 nombre"
+          },
+          telephone: {
+            required: "Veuillez fournir un numéro de téléphone"
+          }
+        }
+      });
+  
+  
+      //code to hide topic selection, disable for demo
+      var newsletter = $("#newsletter");
+      // newsletter topics are optional, hide at first
+      var inital = newsletter.is(":checked");
+      var topics = $("#newsletter_topics")[inital ? "removeClass" : "addClass"]("gray");
+      var topicInputs = topics.find("input").attr("disabled", !inital);
+      // show when newsletter is checked
+      newsletter.click(function() {
+        topics[this.checked ? "removeClass" : "addClass"]("gray");
+        topicInputs.attr("disabled", !this.checked);
+      });
+    });
+    </script>
+  <!--BACKSTRETCH-->
+  <!-- You can use an image of whatever size. This script will stretch to fit in any screen size.-->
+  <script type="text/javascript" src="/assets/semantic/lib/jquery.backstretch.min.js"></script>
+  <script>
+    $.backstretch("/assets/semantic/img/login-bg.jpg", {
+      speed: 500
+    });
+  </script>
+  <script>
+
+    '<% if(typeof codeerreur !== "undefined"){ %>'
+    $("#notifi").css({ 
+      display: 'block'
+    });
+    setTimeout(function () {
+    $("#notifi").css({ 
+      display: 'none'
+    });
+    }, 5000)
+    '<% } %> '
+    '<% if(typeof erreur!== "undefined"){ %>'
+    $("#erreur").css({ 
+      display: 'block'
+    });
+    setTimeout(function () {
+    $("#erreur").css({ 
+      display: 'none'
+    });
+    }, 5000)
+    '<% } %> '
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,295 @@
+<!-- debut de head-->
+<%- include('head'); -%>
+
+<title>Kolima  Transfert || Admin </title>
+<!-- fin de head-->
+  <style>
+    #agencealert
+    {
+      position: fixed;
+      top: 45%;
+      left: 35%;
+      z-index: 1000;
+      display: none;
+    }
+  </style>
+  <script src="/assets/semantic/lib/jquery.validate.js"></script>
+  <script src="/assets/semantic/lib/moment.min.js"></script>
+  
+  <script src="/assets/semantic/lib/html2pdf.bundle.min.js"></script>
+  <script src="/assets/semantic/js/jquery.formatCurrency.js" ></script>
+  <script src="/assets/semantic/js/easy-number-separator.js"></script>
+  
+  
+</head>
+<!-- debut  de menue-->
+<%- include('menue'); -%>
+    <!--fin de menue end-->
+    <!-- **********************************************************************************************************************************************************
+        MAIN CONTENT
+        *********************************************************************************************************************************************************** -->
+    <!-- debut du body-->
+    <section id="main-content">
+      <section class="wrapper">
+        <div class="row mt-5">
+            <div class="col-lg-12">
+              
+                <div class="row content-panel">
+                    <div class="col-md-4 centered">
+                        <div class="profile-pic">
+                          <p><img src="/assets/semantic/img/store.png" class="img-circle"></p>
+                          <p>
+                          <%  if(unagence[0].statue == 1) { %>
+                              <button  data-toggle="modal"  data-bs-toggle="modal" data-bs-target="#desactive" class="btn btn-success"><i class="fa fa-check"></i><font _mstmutation="1"> Activé</font></button>      
+                              <% } if(unagence[0].statue == 0) {%>
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#active">
+                                  desactive
+                                </button>
+                          <% } %>
+                            </p>
+                        </div>
+                      </div>
+
+                  <!-- /col-md-4 -->
+                  <div class="col-md-8 profile-text">
+                    <h4><span class="text-secondary">Nom de l'agence : </span><%= unagence[0].nomagence %></h4>
+                    <h4><span class="text-secondary">Numéro de l'Agence : </span> <%= unagence[0].numeroAgence %></h4>
+                    <h4><span class="text-secondary">Téléphone de l' Agence : </span> <%= unagence[0].telephoneagence %></h4>
+                    <h4><span class="text-secondary">Email de l'Agence : </span> <%= unagence[0].emailagence %></h4>
+                    <h4><span class="text-secondary">Pays : </span> <%= unagence[0].pays %></h4>
+                    <h4><span class="text-secondary">Ville : </span><%= unagence[0].ville %></h4>
+                    <h4><span class="text-secondary">Zone : </span><%= unagence[0].zone %></h4>
+                   
+                   
+                  </div>
+                  <!-- /col-md-4 -->
+                 
+                  <!-- /col-md-4 -->
+                </div>
+                <!-- /row -->
+              </div>
+            <!-- /col-lg-12 -->
+            <div class="col-lg-12">
+                <div class="row content-panel">
+                    <div class="col-md-12 detailed">
+                        <h4>Statistique de l'Agence</h4>
+                        <div class="row centered mt mb">
+                          <div class="col-sm-4">
+                            <h1><i class="fa text-success fa-money"></i></h1>
+                            <h3 ><span id="lesolde">784  444</span> <span><%= unagence[0].monaie %></span> </h3>
+                            <h6>Solde Total</h6>
+                          </div>
+                          <div class="col-sm-4">
+                            <h1><i class="text-primary fa  fa-arrow-circle-down"></i></h1>
+                            <h3>
+                              <% if(typeof toutlesdepots !== "undefined"){ %> <%= toutlesdepots.nbre %> <% } %></h3>
+                            <h6>Nombre de Dépot</h6>
+                          </div>
+                          <div class="col-sm-4">
+                            <h1><i class="text-info fa fa-arrow-circle-up"></i></h1>
+                            <h3><% if(typeof nbreretraittout !== "undefined"){ %> <%= nbreretraittout.nbre %> <% } %></h3>
+                            <h6>Nombre de retrait</h6>
+                          </div>
+                          <div class="col-sm-4">
+                            <h1><i class="fa fa-arrow-circle-up"></i></h1>
+                            <h3> <% if(typeof sommetoutcommissionretrait !== "undefined"){ %> <%= sommetoutcommissiondepot.tout %> <% } %></h3>
+                            <h6>Total des Commissions de Depot </h6>
+                          </div>
+                          <div class="col-sm-4">
+                            <h1><i class="fa fa-arrow-circle-up"></i></h1>
+                            <h3><% if(typeof sommetoutcommissionretrait !== "undefined"){ %> <%= sommetoutcommissionretrait.toutcommssion %> <% } %></h3>
+                            <h6>Total des Commissions de Retrait </h6>
+                          </div>
+                        </div>
+<hr>
+                        <div class="row centered mt mb">
+                          <div class="col-sm-4">
+                            <h1><i class="text-success fa fa-money"></i></h1>
+                            <h3 ><span id="lesolde"><% if(typeof jourcommissiondepot !== "undefined"){ %> <%= commissionjourtretrait.toutcommssion + jourcommissiondepot.tout  %> <% } %></span> <span><%= unagence[0].monaie %></span> </h3>
+                            <h6>Total des Commissions Journalier </h6>
+                          </div>
+                          <div class="col-sm-4">
+                            <h1><i class="text-primary fa fa-arrow-circle-down"></i></h1>
+                            <h3> <% if(typeof nbredepotjour !== "undefined"){ %> <%= nbredepotjour.nbre %> <% } %></h3>
+                            <h6>Nombre de Dépot Journalier</h6>
+                          </div>
+                          <div class="col-sm-4">
+                            <h1><i class="text-info fa fa-arrow-circle-up"></i></h1>
+                            <h3><% if(typeof nbreretraitjour !== "undefined"){ %> <%= nbreretraitjour.nbre %> <% } %></h3>
+                            <h6>Nombre de Retrait Journalier</h6>
+                          </div>
+                          <div class="col-sm-4">
+                            <h1><i class="fa fa-arrow-circle-up"></i></h1>
+                            <h3> <% if(typeof jourcommissiondepot !== "undefined"){ %> <%= jourcommissiondepot.tout %> <% } %></h3>
+                            <h6>Commission  Journalier des Depots </h6>
+                          </div>
+                          <div class="col-sm-4">
+                            <h1><i class="fa fa-arrow-circle-up"></i></h1>
+                            <h3> <% if(typeof commissionjourtretrait !== "undefined"){ %> <%= commissionjourtretrait.toutcommssion %> <% } %> </h3>
+                            <h6>Comission Journalier des Retraits </h6>
+                          </div>
+                        </div><hr>
+                        <div class="row centered mt mb">
+                          <div class="col-sm-4">
+                            <h1><i class="text-success fa fa-money"></i></h1>
+                            <h3 ><span id="lesolde"><% if(typeof semainecommissiondepot !== "undefined"){ %> <%= semainecommissiondepot.tout + commissionsemainetretrait.toutcommssion  %> <% } %></span> <span><%= unagence[0].monaie %></span> </h3>
+                            <h6>Total des Commissions Hebdomandaires  </h6>
+                          </div>
+                          <div class="col-sm-4">
+                            <h1><i class="text-primary fa fa-arrow-circle-down"></i></h1>
+                            <h3> <% if(typeof nbredepotsemaine !== "undefined"){ %> <%= nbredepotsemaine.nbre %> <% } %>  </h3>
+                            <h6>Nombre de Dépot Hebdommandaires </h6>
+                          </div>
+                          <div class="col-sm-4">
+                            <h1><i class="text-info fa fa-arrow-circle-up"></i></h1>
+                            <h3> <% if(typeof nbreretraithebdommadaire !== "undefined"){ %> <%= nbreretraithebdommadaire.nbre %> <% } %> </h3>
+                            <h6>Nombre de Retrait Hebdomandaires</h6>
+                          </div>
+                          <div class="col-sm-4">
+                            <h1><i class="fa fa-arrow-circle-up"></i></h1>
+                            <h3> <% if(typeof semainecommissiondepot !== "undefined"){ %> <%= semainecommissiondepot.tout %> <% } %></h3>
+                            <h6>Commission  Hebdomandaires des Depots </h6>
+                          </div>
+                          <div class="col-sm-4">
+                            <h1><i class="fa fa-arrow-circle-up"></i></h1>
+                            <h3> <% if(typeof commissionsemainetretrait !== "undefined"){ %> <%= commissionsemainetretrait.toutcommssion %> <% } %></h3>
+                            <h6>Comission Hebdomandaires des Retraits </h6>
+                          </div>
+                        </div>
+                        <hr>
+                        <div class="row centered mt mb">
+                          <div class="col-sm-4">
+                            <h1><i class="text-success fa fa-money"></i></h1>
+                            <h3 ><span id="lesolde"><% if(typeof mensuelcommissiondepot !== "undefined"){ %> <%= mensuelcommissiondepot.tout + commissionmensuelretrait.toutcommssion %> <% } %></span> <span><%= unagence[0].monaie %></span> </h3>
+                            <h6>Total des Commissions Mensuel  </h6>
+                          </div>
+                          <div class="col-sm-4">
+                            <h1><i class="text-primary fa fa-arrow-circle-down"></i></h1>
+                            <h3> <% if(typeof nbredepotmensuel !== "undefined"){ %> <%= nbredepotmensuel.nbre %> <% } %></h3>
+                            <h6>Nombre de Dépot Mensuel</h6>
+                          </div>
+                          <div class="col-sm-4">
+                            <h1><i class="text-info fa fa-arrow-circle-up"></i></h1>
+                            <h3> <% if(typeof nbreretraitmensuel !== "undefined"){ %> <%= nbreretraitmensuel.nbre %> <% } %></h3>
+                            <h6>Nombre de Retrait  Mensuel</h6>
+                          </div>
+                          <div class="col-sm-4">
+                            <h1><i class="fa fa-arrow-circle-up"></i></h1>
+                            <h3> <% if(typeof mensuelcommissiondepot !== "undefined"){ %> <%= mensuelcommissiondepot.tout %> <% } %></h3>
+                            <h6>Commission  Mensuel des Depots </h6>
+                          </div>
+                          <div class="col-sm-4">
+                            <h1><i class="fa fa-arrow-circle-up"></i></h1>
+                            <h3> <% if(typeof commissionmensuelretrait !== "undefined"){ %> <%= commissionmensuelretrait.toutcommssion %> <% } %></h3>
+                            <h6>Comission Mensuel des Retraits </h6>
+                          </div>
+                        </div>
+                        <!-- /row -->
+                        <!-- /row -->
+                        <!-- /row -->
+                      </div>
+                  <!-- /col-md-4 -->
+                
+                  <!-- /col-md-4 -->
+                </div>
+                <!-- /row -->
+              </div>
+        </div>
+
+      <!--Boite modale fin-->
+     
+        <!-- /row -->
+      </section>
+    </section>
+    <!--main content end-->
+    
+  </section>
+  <!-- js placed at the end of the document so the pages load faster -->
+  <script src="/assets/semantic/lib/jquery-1.9.1.js"></script>
+  
+  <script src="/assets/semantic/lib/datatables/jquery.dataTables.min.js"></script>
+  <script src="/assets/semantic/lib/datatables/dataTables.bootstrap4.min.js"></script>
+  <script src="/assets/semantic/lib/datatables/datatables-demo.js"></script>
+  
+
+  <script src="/assets/semantic/lib/jquery.validate.js"></script>
+  
+<script>
+  easyNumberSeparator({
+    selector: '.number-separator',
+    separator: ' ',
+    resultInput: '#somme',
+  })
+  //
+  //Convertion <%= (unagence[0].solde ).toFixed(3) %> 
+  var lesode = '<%=  unagence[0].solde %> '
+  var lesoldes  = new Intl.NumberFormat('gn-GN').format(lesode);
+                    
+  $("#lesolde").html(lesoldes);
+</script>
+  <script>
+    
+    $().ready(function() {
+         jQuery.validator.addMethod("phoneGuinee", function (phone_number, element) {
+        phone_number = phone_number.replace(/\s+/g, "");
+        return this.optional(element) || phone_number.length >= 9 && phone_number.match(/^6[1,2,5,6]{1}[0-9]{7}$/);
+    }, "Veuillez Entrez le bon format de Numero");
+
+        $("#modifiesomme").validate({
+rules: {
+             
+             hsomme: {
+                    required: true,
+                },
+                 
+            },
+   messages: {
+     hsomme:{
+                    required: "Veuillez inserer un nombre",
+            }
+            },
+
+submitHandler: function(form){
+    $(".chargement").css({ 
+                      display: 'block'
+                    }); 
+$.ajax({
+    url: form.action,
+    type: form.method,
+    data: $(form).serialize(),
+    success: function(response) {
+     
+      if (response.idagence) {  
+                 $("#agencealert").css({ 
+                      display: 'block'
+                    });
+                    var idagence = response.idagence;
+                    setTimeout(function () {
+                    
+                  window.location.href = "/Superadmin/AgenceDetails/" + idagence
+                  }, 1000);
+         
+                 }  
+          
+        
+                   }            
+      });       
+}
+});
+       
+    });
+  </script>
+  <script class="include" type="text/javascript" src="/assets/semantic/lib/jquery.dcjqaccordion.2.7.js"></script>
+  <script src="/assets/semantic/lib/jquery.scrollTo.min.js"></script>
+  <script src="/assets/semantic/lib/jquery.nicescroll.js" type="text/javascript"></script>
+  <script src="/assets/semantic/lib/jquery.sparkline.js"></script>
+  <!--common script for all pages-->
+  <script src="/assets/semantic/lib/common-scripts.js"></script>
+  <script type="text/javascript" src="/assets/semantic/lib/gritter/js/jquery.gritter.js"></script>
+  <script type="text/javascript" src="/assets/semantic/lib/gritter-conf.js"></script>
+  <!--script for this page-->
+  
+  
+</body>
+
+</html>
