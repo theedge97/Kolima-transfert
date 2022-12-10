@@ -1,31 +1,34 @@
-const express = require('express')
-const cookieParser = require('cookie-parser')
+const { req, res } = require('express')
 
-const bodyParser = require("body-parser");
-//setup express app
-const app = express();
-// let’s you use the cookieParser in your application
-app.use(cookieParser());
-//set a simple for homepage route
-var router = express.Router();
+let express = require('express')
+let app = express()
+let bodyParser = require('body-parser') //permet de parser les donner envoyer par posts
+let session = require("express-session") //permet d'appeler la session
+let cookieParser = require('cookie-parser')
+var compression = require('compression');
 //nos moteur de templates 
 app.set('view engine', 'ejs')
-// parse requests of content-type - application/json
 //nos middleware
 app.use('/assets', express.static('public')) //le dossier servant a distribuer les css
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false}))
+app.use(bodyParser.json())
+app.use(session({ // le middleware de session
+    secret: "aaaaweeeeeeeeeee",
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false}
+}))
+app.use(cookieParser());
 
-// parse requests of content-type - application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }));
-
-app.listen(1997, () => console.log('The server is running port 1997...'));
-
+app.use(compression()); //Compress all routes
+app.disable('x-powered-by');
+ 
+var lien = require('./app/routes/Admin.routes.js');
 app.get("/", (req, res) => {
-  
   res.render('Super admin/login')
 });
 
-//require("./app/routes/Superadmin.routes")(app);
-require("./app/routes/Admin.routes")(app);
-require("./app/routes/Agence.routes")(app);
-require("./app/routes/Caissier.routes")(app);
+app.use("/", lien);
+app.listen(process.env.PORT || 1997, function(){
+  console.log('Server is listening on *: 1997');
+});
