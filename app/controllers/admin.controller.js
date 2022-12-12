@@ -16,7 +16,10 @@ const { toLower, isEmpty, isArray, toInteger  } = require('lodash');
 //nos middelware
 app.use(bodyParser.urlencoded({ extended: false}))
 app.use(bodyParser.json())
-
+//nos moteur de templates 
+app.set('view engine', 'ejs')
+//nos middleware
+app.use('/assets', express.static('public')) 
 app.use(cookieParser());
 const Codeactivation = require("../models/superadmin/code.models.js");
 const Superadmin = require("../models/superadmin/super_admin.models.js");
