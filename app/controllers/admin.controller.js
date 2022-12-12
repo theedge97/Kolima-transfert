@@ -252,22 +252,7 @@ await Superadmin.inscription(admin);
  }
 ]
 //Page d'acceuuil de  l'administrateur
-exports.Acceuil  =  [
-  async (req, res) => {
 
-   try {  
-     var nom = req.cookies.adminnom;
-     var telephone = req.cookies.admintelephone
-     var email = req.cookies.adminemail
-    console.log(req.cookies.adminnom)
-    res.render('Super Admin/acceuil', {nom: nom, telephone: telephone, email: email})
-     } catch(e) {
-         console.log(e);
-         res.sendStatus(500);
-     }
- 
-     }
- ]
  //Lien pour afficher le formulaire d'ajout d'agence
  exports.Ajoutagence  =  [
   async (req, res) => {
