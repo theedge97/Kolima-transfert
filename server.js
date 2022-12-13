@@ -24,11 +24,13 @@ app.use(compression()); //Compress all routes
 app.disable('x-powered-by');
  
 var lien = require('./app/routes/Admin.routes.js');
+var lien1 = require('./app/routes/Agence.routes.js')
 app.get("/", (req, res) => {
   res.render('Super admin/login')
 });
 
 app.use("/", lien);
+app.use('/Agence', lien1);
 app.listen(process.env.PORT || 1997, function(){
   console.log('Server is listening on *: 1997');
 });
