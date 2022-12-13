@@ -1,20 +1,8 @@
 var express = require('express');
-
-const cookieParser = require('cookie-parser');
-
-const bodyParser = require("body-parser");
-//setup express app
-const app = express()
-
-// let’s you use the cookieParser in your application
-app.use(cookieParser());
-
-app.use(bodyParser.json());
-
-module.exports = app => {
-    const agence = require("../controllers/agence.controller.js")
+var router = express.Router();
+const agence = require("../controllers/agence.controller.js")
   // Connexion au compte d'une agence
-  app.get("/Agence/connection", (req, res) => {
+  router.get("/connection", (req, res) => {
     //Verifions la langues 
     //agencelangue
     var langue = req.cookies.agencelangue;
@@ -28,83 +16,83 @@ module.exports = app => {
     }
   });
   //Accueil 
-  app.get("/Agence/Acceuil", agence.Acceuil);
+  router.get("/Acceuil", agence.Acceuil);
   //
-  app.post("/Agence/connection", agence.Connection);
+  router.post("/connection", agence.Connection);
   //Page envoie d'argent
-  app.get("/Agence/EnvoieArgent", agence.PageEnvoieargent);
+  router.get("/EnvoieArgent", agence.PageEnvoieargent);
   //Envoie d 'argent
-  app.post("/Agence/envoie", agence.EnvoieArgent);
+  router.post("/envoie", agence.EnvoieArgent);
   //Page De retrait argent
-  app.get("/Agence/RetraitArgent", agence.PageRetraitargent);
+  router.get("/RetraitArgent", agence.PageRetraitargent);
   //Page de Rapport des Transaction A Date 
-  app.get("/Agence/RapportTransactionJournalier", agence.RapportTransactionADate );
+  router.get("/RapportTransactionJournalier", agence.RapportTransactionADate );
   //Page de Rapports des Transaction Entre Deux Date 
-  app.get("/Agence/RapportTransactionDeuxDate", agence.RapportTransactionDeuxDate);
+  router.get("/RapportTransactionDeuxDate", agence.RapportTransactionDeuxDate);
  //Page De Rapport de Retrait des Transactions Entre Deux Date d une Agence 
- app.get("/Agence/RapportTransactionRetraitDeuxDate", agence.RapportTransactionRetraitDeuxDate);
+ router.get("/RapportTransactionRetraitDeuxDate", agence.RapportTransactionRetraitDeuxDate);
  //Historique des Compensations 
  ///Agence/historiquecompensation
- app.get("/Agence/historiquecompensation", agence.Historitoutcompenser);
+ router.get("/historiquecompensation", agence.Historitoutcompenser);
  //Afficher les transaction compenser lors d une Date 
- app.get("/Agence/FactureCompensationAgence/:idcompensation", agence.FactureCompensationsAgenceshistorie);
+ router.get("/FactureCompensationAgence/:idcompensation", agence.FactureCompensationsAgenceshistorie);
  //Recuperer les Informations du Client 
  ///Agence/InfoClient
- app.get("/Agence/InfoClient/:telephoneenvoyeur", agence.ClientInforRecupe);
+ router.get("/InfoClient/:telephoneenvoyeur", agence.ClientInforRecupe);
 
  //La Liste des Taux d echanges de la Monaie 
  ///Agence/tauxechanges
- app.get("/Agence/tauxechanges", agence.Tauxechanges);
+ router.get("/tauxechanges", agence.Tauxechanges);
  //Convertion des Monaies  Taux d echanges 
- app.get("/Agence/convertirtaux/:somme/:devise1/:devise2", agence.ConvertionMonaies);
+ router.get("/convertirtaux/:somme/:devise1/:devise2", agence.ConvertionMonaies);
 //Changement de la langue de l 'utilisateur
-app.get("/Agence/changelangue/:lang", agence.ChangeLanguage);
+router.get("/changelangue/:lang", agence.ChangeLanguage);
 //Changement de la langue dans la page
-app.get("/Agence/changelanguepage/:lang", agence.ChangeLanguagePage);
+router.get("/changelanguepage/:lang", agence.ChangeLanguagePage);
  //Deconnection du Compte de L agence 
-app.get("/Agence/Deconnecter", agence.Deconnecter)
+ router.get("/Deconnecter", agence.Deconnecter)
  //Page des Rapport des Transaction de Retaits 
-  app.get("/Agence/RapportTransactionRetraitJournalier", agence.RapportTransactionDeRetraitAdate);
+ router.get("/RapportTransactionRetraitJournalier", agence.RapportTransactionDeRetraitAdate);
   //Recherche des transacrion entre deux 2 dates
-  app.post("/Agence/RapportTransactionDeuxDatesrech", agence.RechRapportTrDeuxDate);
+  router.post("/RapportTransactionDeuxDatesrech", agence.RechRapportTrDeuxDate);
 //Recherche des TRansacion de Retrait entre Deux Date 
-  app.post("/Agence/RapportTransactionRetraitDeuxDatesrech", agence.RechRapportTrRetraitDeuxDate);
+router.post("/RapportTransactionRetraitDeuxDatesrech", agence.RechRapportTrRetraitDeuxDate);
   //Rechercher Tout les Transaction Depot et Retrait entre Deux Date
-  app.post("/Agence/RechercheToutTransacEntreDeuxDates", agence.RechToutTransacEntreDeuxDate);
+  router.post("/RechercheToutTransacEntreDeuxDates", agence.RechToutTransacEntreDeuxDate);
  //Selection Tout les Transactions depot et Retrait 
- app.get("/Agence/ToutTransactionvalider", agence.ToutTransactionRetraitDepot);
+ router.get("/ToutTransactionvalider", agence.ToutTransactionRetraitDepot);
   //Selection de tout les Tranaction depot et retrait journalierement 
- app.get("/Agence/ToutTransactionvaliderJournalierement", agence.JournalierTransactionRetraitDepot);
+  router.get("/ToutTransactionvaliderJournalierement", agence.JournalierTransactionRetraitDepot);
  //Page Pour selectionner tout les Transaction Retrait et Depot ENtre 2 Date  
- app.get("/Agence/ToutTransactionvaliderDeuxDate", agence.ToutTransactionEntreDeuxDateRetraitDepot);
+ router.get("/ToutTransactionvaliderDeuxDate", agence.ToutTransactionEntreDeuxDateRetraitDepot);
  //Parametrage de L agence 
- app.get("/Agence/parametre", agence.Parametrage);
+ router.get("/parametre", agence.Parametrage);
 
  //La Liste des caissier  /Agence/Lescaissiers
-  app.get("/Agence/Lescaissiers", agence.LesCaissiers);
+ router.get("/Lescaissiers", agence.LesCaissiers);
   //creation dun compte de caissier 
-  app.post("/Agence/CreationCaisse", agence.CreationCaisse);
+  router.post("/CreationCaisse", agence.CreationCaisse);
   //Voir details d un Agent de  La Caisse 
-  app.get("/Agence/CaissierDetails/:idcaiss", agence.DetailsAgentCaisses);
+  router.get("/CaissierDetails/:idcaiss", agence.DetailsAgentCaisses);
  //Changement du Statue d un Agent Caissier
- app.get("/Agent/ChangerStatue/:idcaiss/:idtype", agence.ChangementStatueCaissier);
+ router.get("/ChangerStatue/:idcaiss/:idtype", agence.ChangementStatueCaissier);
   //vertion 
- app.post("/Agence/retrait", agence.RetraitArgent);
+  router.post("/retrait", agence.RetraitArgent);
  //Mettre a jour les Informations du Caissier
- app.post("/Agence/MajCaissier", agence.MajCaissier);
+ router.post("/MajCaissier", agence.MajCaissier);
   //Valider le code 
-  app.post("/Agence/code", agence.Validationcode);
+  router.post("/code", agence.Validationcode);
   //Modifier le Mot de passe d un Caissier
-  app.post("/Agent/ModifierMotdepasseCaissier", agence.MajMotdepasse);
+  router.post("/ModifierMotdepasseCaissier", agence.MajMotdepasse);
 //Rectification  dune transaction
-  app.get("/Agence/Rectification", agence.Rectification);
+router.get("/Rectification", agence.Rectification);
   //Recuperer une ville 
-  app.get("/Agence/:idpays", agence.Uneville);
+  router.get("/:idpays", agence.Uneville);
   //Recuperer une monaie sans frais
-  app.get("/Agence/monaiesans/:lasomme/:paysid", agence.Unemonaie);
+  router.get("/monaiesans/:lasomme/:paysid", agence.Unemonaie);
   //Les Informations de Rectication d une Transaction /Agence/RectificationTransaction
-  app.post("/Agence/RectificationTransaction", agence.RectifTransactionCode);
+  router.post("/RectificationTransaction", agence.RectifTransactionCode);
   //Rectification des Transactions 
-  app.post("/Agence/RectificationTransactionInfo", agence.InformationTransacModifier);
- 
-};
+  router.post("/RectificationTransactionInfo", agence.InformationTransacModifier);
+  
+  module.exports = router;
