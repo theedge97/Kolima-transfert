@@ -16,10 +16,7 @@ const { toLower, isEmpty, isArray, toInteger  } = require('lodash');
 //nos middelware
 app.use(bodyParser.urlencoded({ extended: false}))
 app.use(bodyParser.json())
-//nos moteur de templates 
-app.set('view engine', 'ejs')
-//nos middleware
-app.use('/assets', express.static('public')) 
+
 app.use(cookieParser());
 const Codeactivation = require("../models/superadmin/code.models.js");
 const Superadmin = require("../models/superadmin/super_admin.models.js");
@@ -41,6 +38,7 @@ const CompteFinance = require("../models/superadmin/comptefinance.models.js")
 const  Ecriture = require('../models/superadmin/ecriture.models.js');
 const  Mvt = require('../models/superadmin/mouvement.models.js');
 const Tauxfraisenvoie = require('../models/superadmin/tauxfraisenvoie.models.js');
+const ListeTransfPays = require('../models/superadmin/listetransfertpays.models.js');
 
 //Inscription d'un administrateur
  exports.Inscription =  [
@@ -268,6 +266,8 @@ exports.Acceuil  =  [
  
      }
  ]
+
+
  //Lien pour afficher le formulaire d'ajout d'agence
  exports.Ajoutagence  =  [
   async (req, res) => {
@@ -377,6 +377,90 @@ exports.Listeagence  =  [
  
      }
  ]
+ //La Liste des Transfert des Pays 
+ exports.ListeMonaieTransfert  =  [
+  async (req, res) => {
+
+   try {  
+     var nom = req.cookies.adminnom;
+     var telephone = req.cookies.admintelephone
+     var email = req.cookies.adminemail
+     var listetransferttout = await ListeTransfPays.listetouttransfert()
+     var lespays = await Lespays.selectpays()
+    res.render('Super admin/listetransfertpays', {lespays : lespays ,listetransferttout: listetransferttout, nom: nom, telephone: telephone, email: email})
+     } catch(e) {
+         console.log(e);
+         res.sendStatus(500);
+     }
+ 
+     }
+ ]
+ //Ajout des Listes des Transferts 
+  exports.AjoutListedesMonaiesTransfert  =  [
+    async (req, res) => {
+  
+     try {  
+     
+      var nomonnaie = req.body.nomonnaie;
+      var paysid = req.body.paysid
+  
+      const lamonnaie = new ListeTransfPays({
+        nomtransfert : nomonnaie,
+        paysdestination : paysid
+      }); 
+      await ListeTransfPays.ajoutlistemonaie(lamonnaie)
+      res.redirect("/Superadmin/ListedesTransfertPays");
+   
+    
+     
+  
+      } catch(e) {
+           console.log(e);
+           res.sendStatus(500);
+       }
+   
+       }
+   ]
+   //Supprimer une monaie de transfert d'argent d un Pays 
+    //Suppresion d'une Agence
+ exports.SupprimerListeMonaietransfert  =  [
+  async (req, res) => {
+
+   try {  
+     
+    var idlistemonai = req.params.idlistemonai;
+
+      await ListeTransfPays.supprimermonaie(idlistemonai)
+      res.redirect("/Superadmin/ListedesTransfertPays");
+    } catch(e) {
+         console.log(e);
+         res.sendStatus(500);
+     }
+ 
+     }
+ ] 
+ //Modifier la Liste des Transfert 
+  exports.TransListeModifierMonaie  =  [
+    async (req, res) => {
+  
+     try {  
+     
+      var idliste = req.body.idliste;
+      var modifiernommonaie = req.body.modifiernommonaie;
+      var paysid = req.body.paysid
+      await ListeTransfPays.modifierlistetransfertmonaie(modifiernommonaie, paysid, idliste) 
+      res.redirect("/Superadmin/ListedesTransfertPays");
+   
+    
+     
+  
+      } catch(e) {
+           console.log(e);
+           res.sendStatus(500);
+       }
+   
+       }
+   ]
  //Details d'une Agence
  exports.Detailsagence  =  [
   async (req, res) => {
@@ -1123,11 +1207,133 @@ async (req, res, next) => {
      var idderniercompense = await Compensationns.derniercompenser(agenceid)
      var repportsolde = await Compensationns.repportanouveau(idderniercompense[0].idmaxcomp)
      console.log(repportsolde)
+     
      var retraitnomcompenser = await LesRetaits.retraitnomcompenser(agenceid)
       var depotnoncompenser = await LesDepots.lestransactiondepotnoncompenser(agenceid);
    
    res.send({ agence : agence[0], agenceid : agenceid , retraitnomcompenser: retraitnomcompenser, depotnoncompenser: depotnoncompenser , repportsoldedernier : repportsolde[0]})
 
+   }
+ }
+]
+//Toutes les Pays 
+
+exports.LesPaysSelect   =  [
+  async (req, res) => {
+
+   try {  
+    var lespayssel =  await Lespays.toutpays();
+    var monaie = await Monaies.lesmonaies();
+
+  
+     var nom = req.cookies.adminnom;
+     var telephone = req.cookies.admintelephone;
+     var email = req.cookies.adminemail;
+     res.render('Super admin/toutlespays', { monaie: monaie, lespayssel : lespayssel, nom: nom, telephone: telephone,})
+    
+    } catch(e) {
+         console.log(e);
+         res.sendStatus(500);
+     }
+ 
+     }
+ ] 
+ //Modification des Information du pays 
+ 
+exports.ModifierPaysInfo =  [
+  /*
+ce middelware permet de creer un compte adminiatrateur
+  */
+
+
+async (req, res, next) => {
+
+   // Extract the validation errors from a request.
+   const errors = validator.validationResult(req);
+   //les erreurs 
+   var erreurauth = []
+   var nomerreur = '';
+   var matriculerreur = '';
+   // Create a genre object with escaped and trimmed data
+   if (!errors.isEmpty()) {
+     // There are errors. Render the form again with sanitized values/error messages.
+     var erreur = errors.array();
+     res.render('Super admin/ToutTransacDeuxdate', { erreur: erreur})
+     
+     return;
+   }
+   else {
+     
+      
+     var monompays =  req.body.monompays;
+     var idpays = req.body.idpays;
+     var moindicatifs  = req.body.moindicatifs ;
+     var mocodeiso = req.body.mocodeiso;
+     var moladevise = req.body.moladevise;
+  
+    try {  
+
+    await Lespays.modifierinfopays(monompays, moindicatifs, mocodeiso, moladevise, idpays);
+    res.redirect("/Superadmin/Lespaysliste");
+          } catch(e) {
+            
+            console.log(e);
+               res.sendStatus(500);
+           }
+  
+   }
+ }
+]
+
+//Ajout d 'un Pays et ces Informtions 
+ 
+exports.AjoutPaysInfo =  [
+  /*
+ce middelware permet de creer un compte adminiatrateur
+  */
+
+
+async (req, res, next) => {
+
+   // Extract the validation errors from a request.
+   const errors = validator.validationResult(req);
+   //les erreurs 
+   var erreurauth = []
+   var nomerreur = '';
+   var matriculerreur = '';
+   // Create a genre object with escaped and trimmed data
+   if (!errors.isEmpty()) {
+     // There are errors. Render the form again with sanitized values/error messages.
+     var erreur = errors.array();
+     res.render('Super admin/ToutTransacDeuxdate', { erreur: erreur})
+     
+     return;
+   }
+   else {
+     
+      
+     var nompays =  req.body.nompays;
+     var indicatif  = req.body.indicatif ;
+     var codeiso = req.body.codeiso;
+     var ladevise = req.body.ladevise;
+  
+    try {  
+      const newpays = new Lespays({
+        pays : nompays,
+        indicatif : indicatif,
+        codeiso : codeiso,
+        devise : ladevise
+      });
+      
+   
+   await Lespays.ajoutpays(newpays)  ;
+    res.redirect("/Superadmin/Lespaysliste");
+          } catch(e) {
+            
+            console.log(e);
+               res.sendStatus(500);
+           }
+  
    }
  }
 ]
@@ -1365,10 +1571,7 @@ async (req, res, next) => {
       console.log(e);
       res.sendStatus(500);
   }
-      
-     
-
-        
+            
  
    }
  }

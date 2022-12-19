@@ -8,8 +8,6 @@ router.get("/AdminEntreprise/connection", (req, res) => {
   res.render('Admin Entreprise/connection')
 });
   // Create a new Customer 
- 
-
   router.get("/Acceuil", admin.Acceuil);
   router.post("/Superadmin/creation", admin.Creation)
   router.post("/Superadmin/connection", admin.Connection)
@@ -95,26 +93,33 @@ router.get("/AdminEntreprise/connection", (req, res) => {
   //Ajout d un Operation Comptables
   router.post("/Superadmin/AjoutOperationComptable", admin.AjoutOperationComptable);
   //Page pour afficher le Brouillard de Compte 
-  router.get("/Superadmin/BrouillardeCompte", admin.PageBrouillardeCompte);
+router.get("/Superadmin/BrouillardeCompte", admin.PageBrouillardeCompte);
   //Compte des Resultats 
-  //CompteResultats
+//La liste des Monaies en fonction des Pays 
+router.get("/Superadmin/ListedesTransfertPays", admin.ListeMonaieTransfert);
+//Ajout de la liste des monaies de transfert du pays
+router.post("/Superadmin/TransfertMonaieAjout", admin.AjoutListedesMonaiesTransfert);
+//Suppression dune Monaie de transfert argent 
+router.get("/Superadmin/SupprimerMonaieListe/:idlistemonai", admin.SupprimerListeMonaietransfert);
+//Modifier la liste des  Monaie de Transfert
+router.post("/Superadmin/ModifierListedesTransfertPays", admin.TransListeModifierMonaie )
 
-  ///Superadmin/BrouillardeCompteEntredeuxDate
-  router.post("/Superadmin/BrouillardeCompteEntredeuxDate", admin.BrouillardcpteentreDeuxdate);
+///Superadmin/BrouillardeCompteEntredeuxDate
+router.post("/Superadmin/BrouillardeCompteEntredeuxDate", admin.BrouillardcpteentreDeuxdate);
   //Ajout d'un frais 
-  router.post("/Superadmin/ajoutfrais", admin.Ajoutfrais);
+router.post("/Superadmin/ajoutfrais", admin.Ajoutfrais);
   //suppression d'un frais 
-  router.get("/Superadmin/FraisSupprimer/:idfrais", admin.Supprimerfrais);
+router.get("/Superadmin/FraisSupprimer/:idfrais", admin.Supprimerfrais);
   //Page des gain sur les frais 
-  router.get("/Superadmin/Gainfrais", admin.Lesgains);
+router.get("/Superadmin/Gainfrais", admin.Lesgains);
   //Modifier le gain du superagence 
-  router.get("/Gain/superagence/:valeur", admin.Gainsuperagence);
+router.get("/Gain/superagence/:valeur", admin.Gainsuperagence);
   //Modifier le gain de l'agence de depot /Gain/agencedepot/
-  router.get("/Gain/agencedepot/:valeur", admin.Gainagencedepot);
+router.get("/Gain/agencedepot/:valeur", admin.Gainagencedepot);
  //Modifier le gain de l'agence de retrait 
- router.get("/Gain/agenceretrait/:valeur", admin.Gainagenceretrait);
+router.get("/Gain/agenceretrait/:valeur", admin.Gainagenceretrait);
  //Page Pour afficher les Transaction valider par une Agence entre deux date
- router.get("/Superadmin/ToutTransactionvalider", admin.Toutransactionvalider);
+router.get("/Superadmin/ToutTransactionvalider", admin.Toutransactionvalider);
  ///Superadmin/RechercheToutTransacEntreDeuxDates
 //Rechercher tout les Transactions entre deux Dates D une Agence 
 router.post("/Superadmin/RechercheToutTransacEntreDeuxDates", admin.RechToutTransacEntreDeuxDateAgence);
