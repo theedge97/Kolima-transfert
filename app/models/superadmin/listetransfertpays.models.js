@@ -16,6 +16,17 @@ ListeTransfPays.listetouttransfert = result => {
       });
   });
   };
+  //Selctionner la monaie du Pays 
+ListeTransfPays.selectlisteuntransfert = (paysid) => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT listetransfertpays.idlistetransf  AS idlistetransf , listetransfertpays.nomtransfert AS nomtransfert , pays.pays AS pays , pays.idpays AS idpays  FROM listetransfertpays INNER JOIN pays ON pays.idpays = listetransfertpays.paysdestination WHERE listetransfertpays.paysdestination = ${paysid} `,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
   ListeTransfPays.modifierlistetransfertmonaie = ( nomtransfert, 	paysdestination, idlistetransf) => {
     return new Promise((resolve, reject)=>{
       sql.query(`UPDATE listetransfertpays SET nomtransfert = "${nomtransfert}", 	paysdestination = ${paysdestination}  WHERE idlistetransf = ${idlistetransf}`,  (error, employees)=>{

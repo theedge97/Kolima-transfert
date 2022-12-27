@@ -1,7 +1,5 @@
 <!-- debut de head-->
 <%- include('head'); -%>
-
-
 <title>Agence || Kolima  Transfert</title>
 <link href="/assets/semantic/css/jquery-ui.min.css" rel="stylesheet">
 <script src="/assets/semantic/lib/jquery.validate.js"></script>
@@ -13,7 +11,18 @@
 <script src="/assets/semantic/js/easy-number-separator.js"></script>
 <script src="/assets/semantic/js/jquery-ui.min.js"></script>
 <style>
-  #carte, #soldeinsuffissant{
+    .error
+  {
+      color: red;
+  }
+   #lespiner{
+            position: fixed;
+            top: 60%;
+            left: 47%;
+            z-index: 10000;
+            display: none;
+        }
+  #carte, #soldeinsuffissant , #erreurpays{
     display: none;
   }
   .ui-state-active,
@@ -44,7 +53,43 @@ color: #ffffff;
             <div class="col-lg-12  ">
              
               <div class="row account-contant">
-                            
+               <div class="col-12" id="lespiner">
+                <div style=" height: 3rem;"  class="d-flex align-items-center">
+                  <strong style="color: #4ECDC4;" class="">Chargement...</strong><br>
+                  <div class="spinner-border  ms-1"  style="color: #4ECDC4;" role="status" aria-hidden="true"></div>
+                </div>
+               </div>  
+               <div class="col-12">
+                
+<div class="toast-container position-fixed  bottom-0 end-0 p-3" style="z-index: 1000000;">
+                <div  class="toast bg-warning" role="alert"  id="monaiedifferente" style=" z-index: 1000000;" aria-live="assertive" aria-atomic="true">
+                  <div class="toast-header">
+                    <strong class="me-auto">Notification</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                  </div>
+                  <div class="toast-body">
+                    Veuillez selectionner deux Monnaies diffèrentes....!!! 
+                  </div>
+                </div>
+                </div>
+               </div>
+               
+               <div class="col-12">
+                
+                <div class="toast-container position-fixed  bottom-0 end-0 p-3" style="z-index: 1000000;">
+                                <div  class="toast bg-danger text-white" role="alert"  id="erreurpays" style=" z-index: 1000000;" aria-live="assertive" aria-atomic="true">
+                                  <div class="toast-header ">
+                                    <strong class="me-auto text-dark"> Erreurs Pays non Selectionner</strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                                  </div>
+                                  <div class="toast-body text-white">
+                                    Veuillez selectionner un Pays ....!!! 
+                                  </div>
+                                </div>
+                                </div>
+                               </div>
+
+
                 <div class="col-12">
                     <div class="card card-statistics">
                         <div class="card-body p-0">
@@ -55,7 +100,8 @@ color: #ffffff;
                                         <div class="form-titel border-bottom p-3">
                                             <h5 class="mb-0  textcoleur py-2">Envoie d' Argent     </h5>
                                             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ajcaissier" >Calculatrice </button>
-                                           
+                                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#convertplusfrais" >Convertir la somme plus frais d'envoie</button>
+
                                             <!-- Modal Ajout article-->
   <div class="modal fade" id="ajcaissier" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -101,6 +147,59 @@ color: #ffffff;
             <div class="form-group col-md-6">
               <label>Entrez la somme </label>
               <input type="text" class="form-control" name="somme2" id="somme2" >
+          </div>
+          </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+                            <!--Fin -->
+                                 <!-- Modal Pour la convertion de la monaie plus des frais-->
+  <div class="modal fade" id="convertplusfrais" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-primary">
+          <h5 class="modal-title " id="exampleModalLabel">Convertir une Somme plus le Frais d'envoie </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="converttauxplusfrais" class="cmxform form-horizontal style-form"  method="post" action="/Agence/convertirtauxplusfrais">
+            <div class="row">
+                
+                <div class="form-group col-md-6 ">
+                  <% if(typeof lesmonaies !== "undefined"){ %> 
+                    <label>Veuillez selectionner la Monaie </label>
+                    <select id="unedevise1frais"  required class="form-control target" name="unedevise1frais">
+                      
+                            <% for(var i= 0 ; i < lesmonaies.length; i++)  {%> 
+                            <option  value="<%= lesmonaies[i].idmonaie %>"><%= lesmonaies[i].monaie %></option>
+                              <% } %>  
+                        </select>
+                        <% } %>
+                </div>
+              <div class="form-group col-md-6">
+                <label>Entrez la somme </label>
+                <input type="text"  name="somplusfrais" id="somplusfrais"   class="form-control number-separator" >
+                <input type="hidden" name="sommeplusfrais" id="sommeplusfrais"  />
+            </div>
+            </div>
+            <div class="row ">
+                
+              <div class="form-group col-md-6 ">
+                <% if(typeof lesmonaies !== "undefined"){ %>   
+                  <label>Veuillez selectionner la Monaie </label>
+                  <select id="unedevise2frais"  class="form-control target" name="unedevise2frais">
+                          <% for(var j= 0 ; j < lesmonaies.length; j++)  {%> 
+                          <option  value="<%= lesmonaies[j].idmonaie %>"><%= lesmonaies[j].monaie %></option>
+                            <% } %>
+                          
+                      </select>
+                      <% } %>
+              </div>
+            <div class="form-group col-md-6">
+              <label>Entrez la somme </label>
+              <input type="text" class="form-control" name="somme2frais" id="somme2frais" >
           </div>
           </div>
             </form>
@@ -360,7 +459,7 @@ color: #ffffff;
                                                         <% if(typeof lespays !== "undefined"){ %>
                                                           <select    class="form-control " id="paysdestination" name="paysdestination">
                                                           
-                                                                   <option>Veuillez selectionner un pays </option>
+                                                                   <option value="null">Veuillez selectionner un pays </option>
                                                                     <% for(var i= 0 ; i < lespays.length; i++)  {%> 
                                                                     <option  value="<%= lespays[i].idpays %>"><%= lespays[i].pays %></option>
                                                                       <% } %>
@@ -377,12 +476,18 @@ color: #ffffff;
                                                                 
                                                                
                                                           </select>
-                                                         
-                                                      
+                                                    </div>
+                                                    <div class="form-group col-md-4 col-md-offset-1">
+                                                      <label for="monaietransfertpays" class="control-label ">Selectionner la monnaie de transfert du pays </label>
+                                                     
+                                                        <select    class="form-control " id="monaietransfertpays" name="monaietransfertpays">
+                                                                
+                                                               
+                                                          </select>
                                                     </div>
                                                     <div class="form-group col-md-4 col-md-offset-1">
                                                       <label for="montant" class="control-label " >Montant a Envoyé : </label>
-                                                      <input type="text" class="form-control number-separator" id="montantaenvoyer"   placeholder="Entrez le montant a envoyé ">
+                                                      <input type="text" class="form-control number-separator" id="montantaenvoyer" name="montantaenvoyer"   placeholder="Entrez le montant a envoyé ">
                                                       
                                                       <input type="hidden"  id="montant" name="montant"  class="form-control p-3"  required>
                                                     </div>
@@ -400,7 +505,7 @@ color: #ffffff;
                                                     </div>
                                                     <div class="form-group col-md-4 col-md-offset-1">
                                                       <label for="montant" class="control-label " >Montant a recevoir en monaie locale  <span id="devisereveur"></span> : </label>
-                                                      <input id="hmonaierecevoir" name="hmonaierecevoir number-separator" class="form-control" readonly>
+                                                      <input id="hmonaierecevoir" name="hmonaierecevoir" class="form-control" readonly>
                                                     
                                                       <input type="hidden" id="monaierecevoir" name="monaierecevoir" class="form-control" readonly>
                                                       <input type="hidden" id="fraisdepot" name="fraisdepot" class="form-control" >
@@ -419,7 +524,7 @@ color: #ffffff;
                                                         
                                                           
                                                                   
-                                                                  <option>--------</option>
+                                                                  <option value="">--------</option>
                                                                   <option value="1" id="avec" >Avec une pièce</option>
                                                                   <option value="0"  id="sans" >Sans pièce</option>
                                                                 
@@ -510,15 +615,17 @@ setTimeout(function () {
     resultInput: '#montant',
   })
   
+  easyNumberSeparator({
+    selector: '.number-separator',
+    separator: ' ',
+    resultInput: '#sommeplusfrais',
+  })
+  
   '<% if(typeof lesclients !== "undefined"){ %>'
-  var client = [
-                                                          
+  var client = [                   
                                                          "<% for(var i= 0 ; i < lesclients.length; i++)  {%>" +
                                                           '<%= lesclients[i].Contactexpediteur %>'  , 
-                                                            "<% } %>"
-                                                          
-                                                     
-                                               
+                                                            "<% } %>"                                            
   ]
   '<% } %>'
   $( "#expediteurcontact" ).autocomplete({
@@ -571,10 +678,10 @@ $( "#fermer" ).click(function() {
             required: true,
             minlength: 2
           } ,
-          frais: {
+          hfrais: {
             required: true,
           },
-          monaieenvoie: {
+          montantaenvoyer: {
             required: true
           },
           receveurcontact :  {
@@ -589,18 +696,17 @@ $( "#fermer" ).click(function() {
                 },
                 monaierecevoir: {
                   required: true,
-                }
-                ,
-          piece: {
-            required: true
-          },
-          code: {
-              required: true
-          },
-          numerocarte: {
-            required: true,
-            minlength: 2
-          }
+                },
+                hmonaieenvoie: {
+                 required: true
+               },
+               hmonaierecevoir: {
+                 required: true
+               },
+                numerocarte: {
+                 required: true,
+                 minlength: 2
+               }
         },
         messages: {
           expediteurnom: {
@@ -622,29 +728,24 @@ $( "#fermer" ).click(function() {
           paysdestination: {
             required: " Veuillez selectionner le pays"
           },
-          monaieenvoie:{
+          montantaenvoyer:{
             required: "Veuillez Bien Entrez la Somme d  envoie "
           },
           montant: {
             required: "Veuillez fournir un montant",
-            number: "Veuillez inserer un nombre"
           },
-          piece: {
-            required: "Veuillez selectionner "
+          hmonaieenvoie: {
+            required: "Veuillez fournir la montant a recevoir a devise locale "
           },
-          frais: {
-            required: "Veuillez Bien entrez la Somme d envoie"
+          hfrais: {
+            required: "Veuillez entrez le frais d envoie"
           },
-          monaierecevoir:{
-              required: "Veuillez Bien Entrez la Somme d  envoie "
-          },
-          code:{
-            required: "veuillez recharger la page"
+          hmonaierecevoir:{
+            required: "veuillez entrez la somme d'envoie"
           },
           numerocarte: {
             required: "Veuillez fournir un numero de carte",  
-            minlength: "Votre un numero de carte  superieur a 2 caractere "
-          }
+         }
         },
         submitHandler: function(form){
      
@@ -773,13 +874,18 @@ $('#soldeinsuffissant').modal('show')
 $( "#paysdestination" ).change(function() {
   
   var url = "/Agence/" + this.value; 
-
-
+//Selectionner les Villes d un Pays 
+$("#lespiner").css({ 
+                      display: 'block'
+                    });
    $.ajax({
         type: "GET",
         url: url,
         dataType: "json",
          success: function (response){
+          $("#lespiner").css({ 
+                      display: 'none'
+                    });
            if(response.lesvilles !== ""){
             
       var len =  response.lesvilles.length;
@@ -790,6 +896,31 @@ $( "#paysdestination" ).change(function() {
   t.html(response.lesvilles[i].ville);
   t.val(response.lesvilles[i].idville)
   $('#villedestination').append(t);
+ }
+           }
+         }
+  });
+  
+var urlm = "/Agence/lesmonaietransfert/" + this.value;
+  //selectionner la Monaie du Pays 
+  $.ajax({
+        type: "GET",
+        url: urlm,
+        dataType: "json",
+         success: function (response){
+          $("#lespiner").css({ 
+                      display: 'none'
+                    });
+           if(response.lesmonaiedupays !== ""){
+            
+      var len =  response.lesmonaiedupays.length;
+ 
+      $('#monaietransfertpays').html(" ")
+ for (var  i = 0; i < len; i++) {
+  var l = $('<option  ></option>');
+  l.html(response.lesmonaiedupays[i].nomtransfert);
+  l.val(response.lesmonaiedupays[i].idlistetransf)
+  $('#monaietransfertpays').append(l);
 
 
  }
@@ -801,16 +932,25 @@ $( "#paysdestination" ).change(function() {
 });
 //recuperer la somme sans frais
 $( "#montantaenvoyer" ).blur(function() {
+  $("#lespiner").css({ 
+                      display: 'block'
+                    });
  var paysid = $('#paysdestination').val();
  var montant = $('#montant').val();
  var url = "/Agence/monaiesans/" + montant + "/" + paysid; 
-  
+ $("#lespiner").css({ 
+                      display: 'block'
+                    });
 
    $.ajax({
         type: "GET",
         url: url,
         dataType: "json",
          success: function (response){
+         
+          $("#lespiner").css({ 
+                      display: 'none'
+                    });
           if(response.soldeinsuffissant){
 //Solde Insuffissant 
 
@@ -864,10 +1004,10 @@ $('#soldeinsuffissant').modal('show')
           
            if (response.erreurpays) {
              //gritter-notice-wrapper
+           
              $("#erreurpays").css({ 
                       display: 'block'
                     });
-                    $('#ers').html(response.erreurpays);
                     setTimeout(function () {
               $("#erreurpays").css({ 
                       display: 'none'
@@ -895,11 +1035,13 @@ $('#soldeinsuffissant').modal('show')
 });
 //Monaie1 
 //Monaie1 
-$( "#som" ).change(function() {
+$( "#som" ).blur(function() {
   
   //var url = "/Gain/agenceretrait/" + this.value;
 var sd =   $("#somme1").val() 
-
+$("#lespiner").css({ 
+                      display: 'block'
+                    });
    $("#somme2").val('') 
   var devise1 = $("#unedevise1").val()
   var devise2 = $("#unedevise2").val();
@@ -911,6 +1053,9 @@ var sd =   $("#somme1").val()
    url: url,
    dataType: "json",
     success: function (response){
+      $("#lespiner").css({ 
+                      display: 'none'
+                    });
       if (response.sommeconverti) {  
         var nb = response.sommeconverti
         $( "#somme2" ).val(nb)
@@ -923,15 +1068,83 @@ var sd =   $("#somme1").val()
 
     }
 });
+  }else{
+    $("#lespiner").css({ 
+                      display: 'none'
+                    });
+    
+    $("#monaiedifferente").css({ 
+                      display: 'block'
+                    });
+                    
+setTimeout(function () {
+  $("#monaiedifferente").css({ 
+                      display: 'none'
+                    });
+                  }, 3000);
   }
 
-  }else{
-    alert("Veuillez Selectionner les Deux valeurs")
   }
 
  
 });
 //
+//Convertion de Somme plus frais 
+
+$( "#somplusfrais" ).blur(function() {
+  
+  //var url = "/Gain/agenceretrait/" + this.value;
+var sd =   $("#sommeplusfrais").val() ;
+
+$("#lespiner").css({ 
+                      display: 'block'
+                    });
+   $("#somme2").val('') 
+  var devise1 = $("#unedevise1frais").val()
+  var devise2 = $("#unedevise2frais").val();
+  if (devise1 != "" && devise2 != "") {
+    if (devise1 !== devise2 ) {
+    var url = "/Agence/convertirtauxplusfrais/" + sd + "/" + devise1 + "/" + devise2 ; 
+    $.ajax({
+   type: "GET",
+   url: url,
+   dataType: "json",
+    success: function (response){
+      $("#lespiner").css({ 
+                      display: 'none'
+                    });
+      if (response.sommeconverti) {  
+        var nb = response.sommeconverti
+        $( "#somme2frais" ).val(nb)
+               }  
+    if (response.convertioninexiste) {
+      
+      $('#convertioninexiste').modal('show')
+              
+    }
+
+    }
+});
+  }else{
+    $("#lespiner").css({ 
+                      display: 'none'
+                    });
+    
+    $("#monaiedifferente").css({ 
+                      display: 'block'
+                    });
+                    
+setTimeout(function () {
+  $("#monaiedifferente").css({ 
+                      display: 'none'
+                    });
+                  }, 3000);
+  }
+
+  }
+
+ 
+});
 //Rechercher le nom du client expediteurcontact
 $( "#expediteurcontact" ).change(function(e) {
   
@@ -947,7 +1160,7 @@ $("#lespiner").css({
             url: url,
             dataType: "json",
              success: function (response){
-                $("#lespiner").css({ 
+              $("#lespiner").css({ 
                       display: 'none'
                     });
                     var info = response.InfoClient;

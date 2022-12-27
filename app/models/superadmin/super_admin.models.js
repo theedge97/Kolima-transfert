@@ -33,6 +33,27 @@ Superadmin.Trouvercompte = (telephone) => {
       });
   });
   };
+//Modifier les Mot de passe de L administrateur 
+Superadmin.majmodepassecompte = (telephone , motdepasse) => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`UPDATE  admin SET  motdepasse = "${motdepasse}"    WHERE telephone = "${telephone}"  `, (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
   
-  
+//Mettre a jour les Informations du Compte
+Superadmin.majinfocompte = (nom, telephone, email , idcompte) => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`UPDATE  admin SET  nom = "${nom}", telephone  = "${telephone}",  email  = "${email}"    WHERE id = ${idcompte}  `, (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
   module.exports = Superadmin;

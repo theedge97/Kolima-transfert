@@ -10,10 +10,11 @@ const Client = function(leclient) {
     this.Contactreceveur = leclient.Contactreceveur;
     this.Carteidentite = leclient.Carteidentite;
     this.Numerocarte = leclient.Numerocarte;
+    this.Agenceidlier = leclient.Agenceidlier;
     this.paysdestionation = leclient.paysdestionation;
     this.villedestination = leclient.villedestination;
     
-  };
+  }; 
   
 
 //Inscription du client
@@ -43,9 +44,9 @@ const Client = function(leclient) {
   });
   };
   //Recuperation des Information de L envoyeur 
-  Client.recupererInfo =  ( telephoneenvoyeur) => {
+  Client.recupererInfo =  ( telephoneenvoyeur , idagence) => {
     return new Promise((resolve, reject)=>{
-      sql.query(`SELECT Nomexpediteur, Contactexpediteur ,Nomreceveur , Contactreceveur , Numerocarte FROM client WHERE Contactexpediteur = "${telephoneenvoyeur}" `,  (error, employees)=>{
+      sql.query(`SELECT Nomexpediteur, Contactexpediteur ,Nomreceveur , Contactreceveur , Numerocarte FROM client WHERE Contactexpediteur = "${telephoneenvoyeur}"  AND Agenceidlier =${idagence}`,  (error, employees)=>{
           if(error){
               return reject(error);
           }
@@ -54,9 +55,20 @@ const Client = function(leclient) {
   });
   };
   //Selectioner les Numero des Clients  dun Pays 
-  Client.SelectClientPays = ( ) => {
+  Client.SelectClientAgenceid = (idagence) => {
     return new Promise((resolve, reject)=>{
-      sql.query(`SELECT * FROM client  `, (error, employees)=>{
+      sql.query(`SELECT * FROM client  WHERE Agenceidlier = ${idagence} `, (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+  //Recuperer les informations du client et son id 
+  Client.Recupereridduclient = (idagence , expediteur , receveur ) => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT 	idclient FROM client  WHERE Agenceidlier = ${idagence} AND 	Contactexpediteur = "${expediteur}" AND Contactreceveur = "${receveur}" `, (error, employees)=>{
           if(error){
               return reject(error);
           }

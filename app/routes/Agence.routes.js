@@ -45,6 +45,9 @@ const agence = require("../controllers/agence.controller.js")
  router.get("/tauxechanges", agence.Tauxechanges);
  //Convertion des Monaies  Taux d echanges 
  router.get("/convertirtaux/:somme/:devise1/:devise2", agence.ConvertionMonaies);
+ //convertion des Monaies de Taux d'echange plus le Frais d envoie
+ 
+ router.get("/convertirtauxplusfrais/:somme/:devise1/:devise2", agence.ConvertionMonaiesPlusFrais);
 //Changement de la langue de l 'utilisateur
 router.get("/changelangue/:lang", agence.ChangeLanguage);
 //Changement de la langue dans la page
@@ -84,10 +87,12 @@ router.post("/RapportTransactionRetraitDeuxDatesrech", agence.RechRapportTrRetra
   router.post("/code", agence.Validationcode);
   //Modifier le Mot de passe d un Caissier
   router.post("/ModifierMotdepasseCaissier", agence.MajMotdepasse);
-//Rectification  dune transaction
-router.get("/Rectification", agence.Rectification);
+  //Rectification  dune transaction
+  router.get("/Rectification", agence.Rectification);
   //Recuperer une ville 
   router.get("/:idpays", agence.Uneville);
+  //Recuperer les monaie de Transfert d 'un Pays 
+  router.get("/lesmonaietransfert/:idpays", agence.MonaiedunPays);
   //Recuperer une monaie sans frais
   router.get("/monaiesans/:lasomme/:paysid", agence.Unemonaie);
   //Les Informations de Rectication d une Transaction /Agence/RectificationTransaction

@@ -14,7 +14,7 @@ const Entreprise = function(entre) {
     this.dateabonnement = entre.dateabonnement;
     //
   };
-//Selectionner les entreprises
+//Selectionner les entreprises   
   Entreprise.recuperer = result => {
     return new Promise((resolve, reject)=>{
       sql.query("SELECT * FROM entreprise",  (error, employees)=>{

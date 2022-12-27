@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({ extended: false}))
 app.use(bodyParser.json())
 
 app.use(cookieParser());
-const Codeactivation = require("../models/superadmin/code.models.js");
+const Codeactivation = require("../models/superadmin/activationcode.models.js");
 const Superadmin = require("../models/superadmin/super_admin.models.js");
 const Lespays = require("../models/superadmin/pays.models.js") 
 const Lesville = require("../models/superadmin/ville.models.js");
@@ -71,7 +71,7 @@ async (req, res, next) => {
    if (!errors.isEmpty()) {
      // There are errors. Render the form again with sanitized values/error messages.
      var erreur = errors.array();
-     res.render('Super admin/register', { erreur: erreur})
+     res.render('Super_admin/register', { erreur: erreur})
      
      return;
    }
@@ -133,19 +133,19 @@ async (req, res, next) => {
       if (vrai == true) {
         console.log('mioiooi')
         
-res.cookie('adminnom', connect[0]['nom']);
+res.cookie('adminnom', connect[0]['nom'], {maxAge: 86400000});
 
-res.cookie('admintelephone', connect[0]['telephone']);
+res.cookie('admintelephone', connect[0]['telephone'], {maxAge: 86400000});
 
-res.cookie('adminemail', connect[0]['email']);
-      res.redirect("/Acceuil");
+res.cookie('adminemail', connect[0]['email'], {maxAge: 86400000});
+      res.redirect("/Superadmin/Acceuil");
       }else{
-        res.render('Super Admin/login', {erreurmotpasse: "Votre mot de passe ne correspond pas"})
+        res.render('Super_admin/login', {erreurmotpasse: "Votre mot de passe ne correspond pas"})
      
       } 
      
     }else{
-      res.render('Super Admin/login', {erreurnumero: "Votre numero ne correspond pas"})
+      res.render('Super_admin/login', {erreurnumero: "Votre numero ne correspond pas"})
      
       }
      
@@ -168,7 +168,6 @@ ce middelware permet de creer un compte
  body('nom').isLength({ min: 3}).withMessage('Veuilez bien saisir un nom long').trim(),
  body('code').isNumeric().withMessage('Veuilez saisir un code de type nombre').trim(),
  body('telephone').isNumeric().withMessage('Veuilez saisir un numéro téléphone').trim(),
- body('telephone').matches(/^6[1,2,5,6]{1}[0-9]{7}$/).withMessage('Veuilez bien saisir un numéro de téléphone  valide').trim(),
  body('email').isEmail().withMessage('Veuilez bien saisir un email').normalizeEmail(),
  body('motdepasse', 'Veuillez saisir un mot de passe de plus de quatre caractère').isLength({ min: 4 }).trim(),
  body('motdepasse').custom((value, { req }) => {
@@ -192,7 +191,7 @@ async (req, res, next) => {
      // There are errors. Render the form again with sanitized values/error messages.
      var erreur = errors.array();
      console.log(erreur)
-     res.render('Super Admin/register', {erreur: erreur})
+     res.render('Super_admin/register', {erreur: erreur})
       
      return;
    }
@@ -206,23 +205,22 @@ async (req, res, next) => {
       var code = req.body.code
     
       try {  
-        var codeverifie  = await Codeactivation.verifier(code);
+        var codeverifie  = await Codeactivation.VerifionsCode(code);
         console.log(codeverifie)
         //Verification si le code est vraie
       if (codeverifie == "") {
-        res.render('Super Admin/register', {codeerreur: "veuillez bien saisir le code d'activation"})
+        res.render('Super_admin/register', {codeerreur: "veuillez bien saisir le code d'activation"})
       
       } else{
         // Creation de professeurs
-       
+    await Codeactivation.SuppresionCode(codeverifie[0].idcode)
     var hasher =  await  bcrypt.hashSync(req.body.motdepasse, 10, (err, hash) => {
           if (err) {
             console.error(err)
             return
           }
         })
-        console.log(hasher)
- const admin = new Superadmin({
+const admin = new Superadmin({
   nom : req.body.nom,
   telephone : req.body.telephone,
   email : req.body.email,
@@ -237,7 +235,7 @@ res.cookie('adminemail', req.body.email);
 
 
 await Superadmin.inscription(admin);
-        res.redirect("/Acceuil");
+        res.redirect("/Superadmin/Acceuil");
         console.log("c'est activer")
       }
        
@@ -249,20 +247,187 @@ await Superadmin.inscription(admin);
    }
  }
 ]
-//Page d'acceuuil de  l'administrateur
-exports.Acceuil  =  [
+//La Page de Creation d un Compte Administrateur
+exports.PageCreationCompte  =  [
   async (req, res) => {
 
    try {  
-     var nom = req.cookies.adminnom;
-     var telephone = req.cookies.admintelephone
-     var email = req.cookies.adminemail
     
-    res.render('Super Admin/acceuil', {nom: nom, telephone: telephone})
+    res.render('Super_admin/register')
      } catch(e) {
          console.log(e);
          res.sendStatus(500);
      }
+ 
+     }
+ ]
+ //Page de Connection de L administrateur
+ exports.PageLogin  =  [
+  async (req, res) => {
+
+   try {  
+    
+  res.render('Super_admin/login')
+     } catch(e) {
+         console.log(e);
+         res.sendStatus(500);
+     }
+ 
+     }
+ ]
+
+ //Deconnection de la Page de l administrateur
+    //Deconnection du compte de l agence 
+    exports.Deconnecter =  [
+      async (req, res) => {
+    
+       try {  
+         res.clearCookie("adminnom");
+         res.clearCookie("admintelephone");
+         res.clearCookie("adminemail");
+         
+             
+         res.redirect("/Superadmin/Login");
+  
+        } catch(e) {
+             console.log(e);
+             res.sendStatus(500);
+         }
+     
+         }
+     ]
+  
+     //Page pour acceder aux Parametre de L administrateur
+      //Parametrage d une Agence 
+ exports.Parametrage  =  [
+  async (req, res) => {
+    
+    if (req.cookies.admintelephone != null ) {
+   try {  
+    var nom = req.cookies.adminnom;
+    var telephone = req.cookies.admintelephone
+    var email = req.cookies.adminemail
+    
+    //Recuperons les Informations du Compte de L administrateur 
+    var compteadmininfo = await Superadmin.Trouvercompte(telephone);
+    
+    res.render('Super_admin/parametre', { nom: nom, telephone: telephone, email: email ,  compteadmininfo :  compteadmininfo[0]})
+     } catch(e) {
+         console.log(e);
+         res.sendStatus(500);
+     }
+
+
+    }else{
+      res.redirect("/Superadmin/Login")
+    }
+ 
+     }
+ ]
+
+ //Modification du Mot de passe de L Administrateur
+ exports.MajMotdepasse =  [
+  async (req, res, next) => {
+  
+    if (req.cookies.admintelephone != null ) {
+       // Extract the validation errors from a request.
+     const errors = validator.validationResult(req);
+     //les erreurs 
+     var erreurauth = []
+     var nomerreur = '';
+     var matriculerreur = '';
+     // Create a genre object with escaped and trimmed data
+     if (!errors.isEmpty()) {
+       // There are errors. Render the form again with sanitized values/error messages.
+       var erreur = errors.array();
+       res.render('Super_admin/ToutTransacDeuxdate', { erreur: erreur})
+       return;
+     }
+     else {
+      try{
+        var motdepassemaj = req.body.motdepassemaj;
+        var telephone = req.cookies.admintelephone;
+        var hasher =  await  bcrypt.hashSync(motdepassemaj , 10, (err, hash) => {
+          if (err) {
+            console.error(err)
+            return
+          }
+        })
+        await Superadmin.majmodepassecompte(telephone, hasher)
+        
+        
+      res.redirect("/Superadmin/parametre")
+  
+      } catch(e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+     }
+
+    }else{
+      res.redirect("/Superadmin/Login")
+    }
+    
+   }
+  ]
+
+   //Mise a jour des Informations du Compte admin 
+ exports.MajCompteAdmin =  [
+  async (req, res, next) => {
+  
+     // Extract the validation errors from a request.
+     const errors = validator.validationResult(req);
+     //les erreurs 
+     var erreurauth = []
+     var nomerreur = '';
+     var matriculerreur = '';
+     // Create a genre object with escaped and trimmed data
+     if (!errors.isEmpty()) {
+       // There are errors. Render the form again with sanitized values/error messages.
+       var erreur = errors.array();
+       res.render('Super_admin/ToutTransacDeuxdate', { erreur: erreur})
+       
+       return;
+     }
+     else {
+      try{
+        var nom = req.body.nom;
+        var email = req.body.email;
+        var telephone = req.body.telephone;
+        var idcompte = req.body.idcompte;
+        await Superadmin.majinfocompte(nom, telephone, email, idcompte)
+        res.cookie('adminnom', req.body.nom);
+
+        res.cookie('admintelephone', req.body.telephone);
+        
+        res.cookie('adminemail', req.body.email);
+        
+        res.redirect("/Superadmin/parametre")
+      } catch(e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+     }
+   }
+  ]
+
+//Page d'acceuuil de  l'administrateur
+exports.Acceuil  =  [
+  async (req, res) => {
+if(req.cookies.admintelephone != null){
+  try {  
+    var nom = req.cookies.adminnom;
+    var telephone = req.cookies.admintelephone
+    var email = req.cookies.adminemail
+   res.render('Super_admin/acceuil', {nom: nom, telephone: telephone})
+    } catch(e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+}else{
+  res.redirect("/Superadmin/Login")
+}
+  
  
      }
  ]
@@ -272,20 +437,26 @@ exports.Acceuil  =  [
  exports.Ajoutagence  =  [
   async (req, res) => {
 
-   try {  
-     var nom = req.cookies.adminnom;
-     var telephone = req.cookies.admintelephone
-     var email = req.cookies.adminemail
-    console.log(req.cookies.adminnom)
-    var pays = await Lespays.selectpays();
-    var ville = await Lesville.selectville();
-console.log(pays)
-     
-    res.render('Super admin/ajoutagence', {lespays: pays, lesville: ville,  nom: nom, telephone: telephone, email: email})
-     } catch(e) {
-         console.log(e);
-         res.sendStatus(500);
-     }
+    if(req.cookies.admintelephone != null){
+      try {  
+        var nom = req.cookies.adminnom;
+        var telephone = req.cookies.admintelephone
+        var email = req.cookies.adminemail
+       console.log(req.cookies.adminnom)
+       var pays = await Lespays.selectpays();
+       var ville = await Lesville.selectville();
+       console.log(pays)
+        
+       res.render('Super_admin/ajoutagence', {lespays: pays, lesville: ville,  nom: nom, telephone: telephone, email: email})
+        } catch(e) {
+            console.log(e);
+            res.sendStatus(500);
+        }
+    
+    }else{
+
+      res.redirect("/Superadmin/Login")
+    }
  
      }
  ]
@@ -353,7 +524,7 @@ async (req, res, next) => {
            res.sendStatus(500);
        }
     //verifier si le matricule existe dans la base de donner
-
+ 
  
    } 
  }
@@ -362,18 +533,23 @@ async (req, res, next) => {
 exports.Listeagence  =  [
   async (req, res) => {
 
-   try {  
-     var nom = req.cookies.adminnom;
-     var telephone = req.cookies.admintelephone
-     var email = req.cookies.adminemail
-     var lesagences = await Agence.lesagences(); 
-     console.log(lesagences)
-     
-    res.render('Super admin/listeagence', {lesagences: lesagences, nom: nom, telephone: telephone, email: email})
-     } catch(e) {
-         console.log(e);
-         res.sendStatus(500);
-     }
+    if(req.cookies.admintelephone != null){ 
+      try {  
+        var nom = req.cookies.adminnom;
+        var telephone = req.cookies.admintelephone
+        var email = req.cookies.adminemail
+        var lesagences = await Agence.lesagences(); 
+        console.log(lesagences)
+        
+       res.render('Super_admin/listeagence', {lesagences: lesagences, nom: nom, telephone: telephone, email: email})
+        } catch(e) {
+            console.log(e);
+            res.sendStatus(500);
+        }
+    
+    }else{
+      res.redirect("/Superadmin/Login")
+    }
  
      }
  ]
@@ -381,44 +557,48 @@ exports.Listeagence  =  [
  exports.ListeMonaieTransfert  =  [
   async (req, res) => {
 
-   try {  
-     var nom = req.cookies.adminnom;
-     var telephone = req.cookies.admintelephone
-     var email = req.cookies.adminemail
-     var listetransferttout = await ListeTransfPays.listetouttransfert()
-     var lespays = await Lespays.selectpays()
-    res.render('Super admin/listetransfertpays', {lespays : lespays ,listetransferttout: listetransferttout, nom: nom, telephone: telephone, email: email})
-     } catch(e) {
-         console.log(e);
-         res.sendStatus(500);
-     }
+    if(req.cookies.admintelephone != null){  
+      try {  
+        var nom = req.cookies.adminnom;
+        var telephone = req.cookies.admintelephone
+        var email = req.cookies.adminemail
+        var listetransferttout = await ListeTransfPays.listetouttransfert()
+        var lespays = await Lespays.selectpays()
+       res.render('Super_admin/listetransfertpays', {lespays : lespays ,listetransferttout: listetransferttout, nom: nom, telephone: telephone, email: email})
+        } catch(e) {
+            console.log(e);
+            res.sendStatus(500);
+        }
+    }else{
+
+      res.redirect("/Superadmin/Login")
+    }
+   
  
      }
  ]
  //Ajout des Listes des Transferts 
   exports.AjoutListedesMonaiesTransfert  =  [
     async (req, res) => {
-  
-     try {  
+      if(req.cookies.admintelephone){  
+
+        try {  
      
-      var nomonnaie = req.body.nomonnaie;
-      var paysid = req.body.paysid
-  
-      const lamonnaie = new ListeTransfPays({
-        nomtransfert : nomonnaie,
-        paysdestination : paysid
-      }); 
-      await ListeTransfPays.ajoutlistemonaie(lamonnaie)
-      res.redirect("/Superadmin/ListedesTransfertPays");
-   
-    
-     
-  
-      } catch(e) {
-           console.log(e);
-           res.sendStatus(500);
+          var nomonnaie = req.body.nomonnaie;
+          var paysid = req.body.paysid
+      
+          const lamonnaie = new ListeTransfPays({
+            nomtransfert : nomonnaie,
+            paysdestination : paysid
+          }); 
+          await ListeTransfPays.ajoutlistemonaie(lamonnaie)
+          res.redirect("/Superadmin/ListedesTransfertPays");
+          } catch(e) {
+               console.log(e);
+               res.sendStatus(500);
+           }
+       
        }
-   
        }
    ]
    //Supprimer une monaie de transfert d'argent d un Pays 
@@ -490,7 +670,7 @@ exports.Listeagence  =  [
     var commissionmensuelretrait = await LesRetaits.commissionmensuelretrait(idagence)
     var lescomptes = await CompteFinance.Selectcomptefinance();
   
-     res.render('Super admin/agencedetails', {lescomptes: lescomptes, commissionmensuelretrait : commissionmensuelretrait[0], commissionsemainetretrait : commissionsemainetretrait[0], commissionjourtretrait: commissionjourtretrait[0] ,nbreretraitmensuel : nbreretraitmensuel[0], nbreretraithebdommadaire : nbreretraithebdommadaire[0],nbreretraitjour : nbreretraitjour[0], nbredepotmensuel : nbredepotmensuel[0]  ,nbredepotsemaine : nbredepotsemaine[0] ,nbredepotjour : nbredepotjour[0] ,mensuelcommissiondepot : mensuelcommissiondepot[0], semainecommissiondepot : semainecommissiondepot[0] ,jourcommissiondepot: jourcommissiondepot[0],  sommetoutcommissiondepot : sommetoutcommissiondepot[0] , sommetoutcommissionretrait : sommetoutcommissionretrait[0] ,nbreretraittout: nbreretraittout[0], toutlesdepots: toutlesdepots[0], historiquerecharge :  historiquerecharge, unagence: unagence, nom: nom, telephone: telephone, email: email})
+     res.render('Super_admin/agencedetails', {lescomptes: lescomptes, commissionmensuelretrait : commissionmensuelretrait[0], commissionsemainetretrait : commissionsemainetretrait[0], commissionjourtretrait: commissionjourtretrait[0] ,nbreretraitmensuel : nbreretraitmensuel[0], nbreretraithebdommadaire : nbreretraithebdommadaire[0],nbreretraitjour : nbreretraitjour[0], nbredepotmensuel : nbredepotmensuel[0]  ,nbredepotsemaine : nbredepotsemaine[0] ,nbredepotjour : nbredepotjour[0] ,mensuelcommissiondepot : mensuelcommissiondepot[0], semainecommissiondepot : semainecommissiondepot[0] ,jourcommissiondepot: jourcommissiondepot[0],  sommetoutcommissiondepot : sommetoutcommissiondepot[0] , sommetoutcommissionretrait : sommetoutcommissionretrait[0] ,nbreretraittout: nbreretraittout[0], toutlesdepots: toutlesdepots[0], historiquerecharge :  historiquerecharge, unagence: unagence, nom: nom, telephone: telephone, email: email})
      } catch(e) {
          console.log(e);
          res.sendStatus(500);
@@ -629,21 +809,27 @@ await Mvt.ajoutmvt(newmvt);
   exports.Lesmonaie  =  [
     async (req, res) => {
   
-     try {  
-       var lesmonaie = await Monaies.lesmonaies();
-
-       var  idagence = req.params.idagence;
-       var nom = req.cookies.adminnom;
-       var telephone = req.cookies.admintelephone
-       var email = req.cookies.adminemail
-     
-      res.render('Super admin/monaie', {lesmonaie: lesmonaie, nom: nom, telephone: telephone, email: email})
+      if(req.cookies.admintelephone != null){  
+        try {  
+          var lesmonaie = await Monaies.lesmonaies();
+   
+          var  idagence = req.params.idagence;
+          var nom = req.cookies.adminnom;
+          var telephone = req.cookies.admintelephone
+          var email = req.cookies.adminemail
+        
+         res.render('Super_admin/monaie', {lesmonaie: lesmonaie, nom: nom, telephone: telephone, email: email})
+         
+        
+         } catch(e) {
+              console.log(e);
+              res.sendStatus(500);
+          }
       
-     
-      } catch(e) {
-           console.log(e);
-           res.sendStatus(500);
-       }
+      }else{
+
+        res.redirect("/Superadmin/Login")
+      }
    
        }
    ] 
@@ -652,22 +838,28 @@ await Mvt.ajoutmvt(newmvt);
    exports.LesTauxfraisenvoie  =  [
     async (req, res) => {
   
-     try {  
-       var lesmonaies = await Tauxfraisenvoie.SelectMonaiesnoenregistrer();
-       var lesfraistaux = await Tauxfraisenvoie.SelectFraisEnvoie()
-       var monaie = await Monaies.lesmonaies();
+      if(req.cookies.admintelephone != null){ 
 
-       var nom = req.cookies.adminnom;
-       var telephone = req.cookies.admintelephone
-       var email = req.cookies.adminemail
-     
-      res.render('Super admin/lestauxfraisechange', {monaie: monaie, lesfraistaux : lesfraistaux, lesmonaies: lesmonaies, nom: nom, telephone: telephone, email: email})
-      
-     
-      } catch(e) {
-           console.log(e);
-           res.sendStatus(500);
-       }
+        try {  
+          var lesmonaies = await Tauxfraisenvoie.SelectMonaiesnoenregistrer();
+          var lesfraistaux = await Tauxfraisenvoie.SelectFraisEnvoie()
+          var monaie = await Monaies.lesmonaies();
+   
+          var nom = req.cookies.adminnom;
+          var telephone = req.cookies.admintelephone
+          var email = req.cookies.adminemail
+        
+         res.render('Super_admin/lestauxfraisechange', {monaie: monaie, lesfraistaux : lesfraistaux, lesmonaies: lesmonaies, nom: nom, telephone: telephone, email: email})
+         
+        
+         } catch(e) {
+              console.log(e);
+              res.sendStatus(500);
+          }
+       }else{
+
+        res.redirect("/Superadmin/Login")
+      }
    
        }
    ] 
@@ -801,20 +993,25 @@ res.redirect("/Superadmin/Lesmonaies");
 exports.Configurationtaux  =  [
   async (req, res) => {
 
-   try {  
-     var lestaux = await Taux.lestaux();
-    var lesmonaies = await Monaies.lesmonaies();
-     var  idagence = req.params.idagence;
-     var nom = req.cookies.adminnom;
-     var telephone = req.cookies.admintelephone;
-     var email = req.cookies.adminemail;
-     res.render('Super admin/tauxechange', {lestaux: lestaux, nom: nom, telephone: telephone, email: email, lesmonaies: lesmonaies})
+    if(req.cookies.admintelephone != null){  
+
+      try {  
+        var lestaux = await Taux.lestaux();
+       var lesmonaies = await Monaies.lesmonaies();
+        var  idagence = req.params.idagence;
+        var nom = req.cookies.adminnom;
+        var telephone = req.cookies.admintelephone;
+        var email = req.cookies.adminemail;
+        res.render('Super_admin/tauxechange', {lestaux: lestaux, nom: nom, telephone: telephone, email: email, lesmonaies: lesmonaies})
+       
+       } catch(e) {
+            console.log(e);
+            res.sendStatus(500);
+        }
     
-    } catch(e) {
-         console.log(e);
-         res.sendStatus(500);
-     }
- 
+    }else{
+      res.redirect("/Superadmin/Login")
+    }
      }
  ] 
 //Ajout d'un taux d'echanges 
@@ -883,19 +1080,24 @@ exports.Configurationtaux  =  [
  exports.Lesfrais  =  [
   async (req, res) => {
 
-   try {  
-     var lesfrais = await Frais.lesfrais()
-    var lesmonaies = await Monaies.lesmonaies();
-     console.log(lesfrais)
-     var nom = req.cookies.adminnom;
-     var telephone = req.cookies.admintelephone;
-     var email = req.cookies.adminemail;
-     res.render('Super admin/lesfrais', {lesfrais: lesfrais, nom: nom, telephone: telephone, email: email, lesmonaies: lesmonaies})
-    
-    } catch(e) {
-         console.log(e);
-         res.sendStatus(500);
-     }
+    if(req.cookies.admintelephone != null){   
+
+      try {  
+        var lesfrais = await Frais.lesfrais()
+       var lesmonaies = await Monaies.lesmonaies();
+        console.log(lesfrais)
+        var nom = req.cookies.adminnom;
+        var telephone = req.cookies.admintelephone;
+        var email = req.cookies.adminemail;
+        res.render('Super_admin/lesfrais', {lesfrais: lesfrais, nom: nom, telephone: telephone, email: email, lesmonaies: lesmonaies})
+       
+       } catch(e) {
+            console.log(e);
+            res.sendStatus(500);
+        }
+    }else{
+      res.redirect("/Superadmin/Login")
+    }
  
      }
  ] 
@@ -947,19 +1149,25 @@ exports.Configurationtaux  =  [
  exports.Lesgains  =  [
   async (req, res) => {
 
-   try {  
-    var lesgain = await Gain.lesgains();
-    console.log(lesgain[0])
-     var nom = req.cookies.adminnom;
-     var telephone = req.cookies.admintelephone;
-     var email = req.cookies.adminemail;
-     res.render('Super admin/lesgains', {lesgain: lesgain[0], nom: nom, telephone: telephone, email: email})
-    
-    } catch(e) {
-         console.log(e);
-         res.sendStatus(500);
-     }
- 
+    if(req.cookies.admintelephone != null){   
+
+      try {  
+        var lesgain = await Gain.lesgains();
+        console.log(lesgain[0])
+         var nom = req.cookies.adminnom;
+         var telephone = req.cookies.admintelephone;
+         var email = req.cookies.adminemail;
+         res.render('Super_admin/lesgains', {lesgain: lesgain[0], nom: nom, telephone: telephone, email: email})
+        
+        } catch(e) {
+             console.log(e);
+             res.sendStatus(500);
+         }
+     
+    }else{
+
+      res.redirect("/Superadmin/Login")
+    }
      }
  ] 
  //Modification du gain de l' Agence Principale 
@@ -1001,7 +1209,7 @@ res.send({success: 'Modification '})
    try {  
   var  valeur = req.params.valeur;
   await Gain.modifieragenceretrait(valeur);
-  console.log(valeur)
+
 res.send({success: 'Modification '})
     } catch(e) {
          console.log(e);
@@ -1014,19 +1222,25 @@ res.send({success: 'Modification '})
 exports.Toutransactionvalider  =  [
   async (req, res) => {
 
-   try {  
-     var nom = req.cookies.adminnom;
-     var telephone = req.cookies.admintelephone
-     var email = req.cookies.adminemail;
+    if(req.cookies.admintelephone != null){  
+
+      try {  
+        var nom = req.cookies.adminnom;
+        var telephone = req.cookies.admintelephone
+        var email = req.cookies.adminemail;
+       
+        var lesagences = await Agence.lesagences(); 
+        
+       res.render('Super_admin/transactionvalide', { lesagences : lesagences , nom: nom, telephone: telephone, email: email})
+        } catch(e) {
+            console.log(e);
+            res.sendStatus(500);
+        }
     
-     var lesagences = await Agence.lesagences(); 
-     
-    res.render('Super admin/transactionvalide', { lesagences : lesagences , nom: nom, telephone: telephone, email: email})
-     } catch(e) {
-         console.log(e);
-         res.sendStatus(500);
-     }
- 
+    }else{
+
+      res.redirect("/Superadmin/Login")
+    }
      }
  ]
  //Rechercher tout les Transaction d une agence entre deux Dates 
@@ -1048,7 +1262,7 @@ async (req, res, next) => {
    if (!errors.isEmpty()) {
      // There are errors. Render the form again with sanitized values/error messages.
      var erreur = errors.array();
-     res.render('Super admin/ToutTransacDeuxdate', { erreur: erreur})
+     res.render('Super_admin/ToutTransacDeuxdate', { erreur: erreur})
      
      return;
    }
@@ -1078,19 +1292,24 @@ async (req, res, next) => {
 exports.Toutlestransactions  =  [
   async (req, res) => {
 
-   try {  
-     var nom = req.cookies.adminnom;
-     var telephone = req.cookies.admintelephone
-     var email = req.cookies.adminemail;
+    if(req.cookies.admintelephone != null){  
+      try {  
+        var nom = req.cookies.adminnom;
+        var telephone = req.cookies.admintelephone
+        var email = req.cookies.adminemail;
+       
+        var lesagences = await Agence.lesagences(); 
+        
+       res.render('Super_admin/touttransaction', { lesagences : lesagences , nom: nom, telephone: telephone, email: email})
+        } catch(e) {
+            console.log(e);
+            res.sendStatus(500);
+        }
     
-     var lesagences = await Agence.lesagences(); 
-     
-    res.render('Super admin/touttransaction', { lesagences : lesagences , nom: nom, telephone: telephone, email: email})
-     } catch(e) {
-         console.log(e);
-         res.sendStatus(500);
-     }
- 
+   
+    }else{
+      res.redirect("/Superadmin/Login")
+    }
      }
  ]
 
@@ -1113,7 +1332,7 @@ async (req, res, next) => {
    if (!errors.isEmpty()) {
      // There are errors. Render the form again with sanitized values/error messages.
      var erreur = errors.array();
-     res.render('Super admin/ToutTransacDeuxdate', { erreur: erreur})
+     res.render('Super_admin/ToutTransacDeuxdate', { erreur: erreur})
      
      return;
    }
@@ -1159,19 +1378,25 @@ async (req, res, next) => {
 exports.Compensation  =  [
   async (req, res) => {
 
-   try {  
-     var nom = req.cookies.adminnom;
-     var telephone = req.cookies.admintelephone
-     var email = req.cookies.adminemail;
+    if(req.cookies.admintelephone != null){   
+
+      try {  
+        var nom = req.cookies.adminnom;
+        var telephone = req.cookies.admintelephone
+        var email = req.cookies.adminemail;
+       
+        var lesagences = await Agence.lesagences(); 
+        
+       res.render('Super_admin/compensation', { lesagences : lesagences , nom: nom, telephone: telephone, email: email})
+        } catch(e) {
+            console.log(e);
+            res.sendStatus(500);
+        }
     
-     var lesagences = await Agence.lesagences(); 
-     
-    res.render('Super admin/compensation', { lesagences : lesagences , nom: nom, telephone: telephone, email: email})
-     } catch(e) {
-         console.log(e);
-         res.sendStatus(500);
-     }
- 
+    }else{
+
+      res.redirect("/Superadmin/Login")
+    }
      }
  ]
  //Recherche des Transactions a Compenser pour une Agence
@@ -1193,7 +1418,7 @@ async (req, res, next) => {
    if (!errors.isEmpty()) {
      // There are errors. Render the form again with sanitized values/error messages.
      var erreur = errors.array();
-     res.render('Super admin/ToutTransacDeuxdate', { erreur: erreur})
+     res.render('Super_admin/ToutTransacDeuxdate', { erreur: erreur})
      
      return;
    }
@@ -1206,7 +1431,7 @@ async (req, res, next) => {
      var agence = await Agence.recupereunagence(agenceid);
      var idderniercompense = await Compensationns.derniercompenser(agenceid)
      var repportsolde = await Compensationns.repportanouveau(idderniercompense[0].idmaxcomp)
-     console.log(repportsolde)
+     console.log(idderniercompense)
      
      var retraitnomcompenser = await LesRetaits.retraitnomcompenser(agenceid)
       var depotnoncompenser = await LesDepots.lestransactiondepotnoncompenser(agenceid);
@@ -1221,21 +1446,27 @@ async (req, res, next) => {
 exports.LesPaysSelect   =  [
   async (req, res) => {
 
-   try {  
-    var lespayssel =  await Lespays.toutpays();
-    var monaie = await Monaies.lesmonaies();
+    if(req.cookies.admintelephone != null){    
 
-  
-     var nom = req.cookies.adminnom;
-     var telephone = req.cookies.admintelephone;
-     var email = req.cookies.adminemail;
-     res.render('Super admin/toutlespays', { monaie: monaie, lespayssel : lespayssel, nom: nom, telephone: telephone,})
+      try {  
+        var lespayssel =  await Lespays.toutpays();
+        var monaie = await Monaies.lesmonaies();
     
-    } catch(e) {
-         console.log(e);
-         res.sendStatus(500);
-     }
- 
+      
+         var nom = req.cookies.adminnom;
+         var telephone = req.cookies.admintelephone;
+         var email = req.cookies.adminemail;
+         res.render('Super_admin/toutlespays', { monaie: monaie, lespayssel : lespayssel, nom: nom, telephone: telephone,})
+        
+        } catch(e) {
+             console.log(e);
+             res.sendStatus(500);
+         }
+     
+    }else{
+
+      res.redirect("/Superadmin/Login")
+    }
      }
  ] 
  //Modification des Information du pays 
@@ -1258,7 +1489,7 @@ async (req, res, next) => {
    if (!errors.isEmpty()) {
      // There are errors. Render the form again with sanitized values/error messages.
      var erreur = errors.array();
-     res.render('Super admin/ToutTransacDeuxdate', { erreur: erreur})
+     res.render('Super_admin/ToutTransacDeuxdate', { erreur: erreur})
      
      return;
    }
@@ -1291,8 +1522,6 @@ exports.AjoutPaysInfo =  [
   /*
 ce middelware permet de creer un compte adminiatrateur
   */
-
-
 async (req, res, next) => {
 
    // Extract the validation errors from a request.
@@ -1305,7 +1534,7 @@ async (req, res, next) => {
    if (!errors.isEmpty()) {
      // There are errors. Render the form again with sanitized values/error messages.
      var erreur = errors.array();
-     res.render('Super admin/ToutTransacDeuxdate', { erreur: erreur})
+     res.render('Super_admin/ToutTransacDeuxdate', { erreur: erreur})
      
      return;
    }
@@ -1358,7 +1587,7 @@ async (req, res, next) => {
    if (!errors.isEmpty()) {
      // There are errors. Render the form again with sanitized values/error messages.
      var erreur = errors.array();
-     res.render('Super admin/ToutTransacDeuxdate', { erreur: erreur})
+     res.render('Super_admin/ToutTransacDeuxdate', { erreur: erreur})
      
      return;
    }
@@ -1423,43 +1652,54 @@ async (req, res, next) => {
 exports.LesAgenceCompensers =  [
   async (req, res) => {
 
-   try {  
-     var nom = req.cookies.adminnom;
-     var telephone = req.cookies.admintelephone
-     var email = req.cookies.adminemail;
+    if(req.cookies.admintelephone != null){ 
+
+      try {  
+        var nom = req.cookies.adminnom;
+        var telephone = req.cookies.admintelephone
+        var email = req.cookies.adminemail;
+       
+        var lesagencecompenser = await  Compensationns.lesagencecompenser(); 
+        
+       res.render('Super_admin/agencescompenser', { lesagencecompenser : lesagencecompenser , nom: nom, telephone: telephone, email: email})
+        } catch(e) {
+            console.log(e);
+            res.sendStatus(500);
+        }
     
-     var lesagencecompenser = await  Compensationns.lesagencecompenser(); 
-     
-    res.render('Super admin/agencescompenser', { lesagencecompenser : lesagencecompenser , nom: nom, telephone: telephone, email: email})
-     } catch(e) {
-         console.log(e);
-         res.sendStatus(500);
-     }
- 
+    }else{
+
+      res.redirect("/Superadmin/Login")
+    }
      }
  ]
  //Selectionner l historique de Compensation d une Agence 
  
  exports.HistoriqueCompensersAgences =  [
    async (req, res) => {
- 
-    try {  
-      var nom = req.cookies.adminnom;
-      var telephone = req.cookies.admintelephone
-      var email = req.cookies.adminemail;
-      
-      var idagence = req.params.idagence;
-      var agence = await Agence.recupereunagence(idagence);
-     
-     
-      var compensehistorik = await  Compensationns.historiqueagencecompenser(idagence); 
-     
-     res.render('Super admin/historiqueagencecompenser', { agence :  agence[0], compensehistorik : compensehistorik, nom: nom, telephone: telephone, email: email})
-      } catch(e) {
-          console.log(e);
-          res.sendStatus(500);
-      }
-  
+    if(req.cookies.admintelephone != null){ 
+    
+      try {  
+        var nom = req.cookies.adminnom;
+        var telephone = req.cookies.admintelephone
+        var email = req.cookies.adminemail;
+        
+        var idagence = req.params.idagence;
+        var agence = await Agence.recupereunagence(idagence);
+       
+       
+        var compensehistorik = await  Compensationns.historiqueagencecompenser(idagence); 
+       
+       res.render('Super_admin/historiqueagencecompenser', { agence :  agence[0], compensehistorik : compensehistorik, nom: nom, telephone: telephone, email: email})
+        } catch(e) {
+            console.log(e);
+            res.sendStatus(500);
+        }
+    
+    }else{
+
+      res.redirect("/Superadmin/Login")
+    }
       }
   ]
   //Facture de Compensation d une Agence 
@@ -1477,7 +1717,7 @@ exports.LesAgenceCompensers =  [
      var agence = await Agence.recupereunagence(idagence);
      var lesretraits = await LesRetaits.historiretraitcompenser(idcompensation, idagence)
       var unecompensation = await Compensationns.infohistocomp(idcompensation)
-      res.render('Super admin/facturecompensation', {unecompensation : unecompensation[0], lesretraits : lesretraits,  lesdepotcomp : lesdepotcomp, agence :  agence[0], nom: nom, telephone: telephone, email: email})
+      res.render('Super_admin/facturecompensation', {unecompensation : unecompensation[0], lesretraits : lesretraits,  lesdepotcomp : lesdepotcomp, agence :  agence[0], nom: nom, telephone: telephone, email: email})
        } catch(e) {
            console.log(e);
            res.sendStatus(500);
@@ -1488,19 +1728,25 @@ exports.LesAgenceCompensers =  [
 //Les types de comptes 
 exports.LestypeComptes  =  [
   async (req, res) => {
+    if(req.cookies.admintelephone != null){ 
+   
+      try {  
+        var typedecompte = await TypeCompte.Selectcompte();
+         var nom = req.cookies.adminnom;
+         var telephone = req.cookies.admintelephone;
+         var email = req.cookies.adminemail;
+         res.render('Super_admin/typescomptes', {typedecompte : typedecompte, nom: nom, telephone: telephone,})
+        
+        } catch(e) {
+             console.log(e);
+             res.sendStatus(500);
+         }
+     
+    }else{
 
-   try {  
-    var typedecompte = await TypeCompte.Selectcompte();
-     var nom = req.cookies.adminnom;
-     var telephone = req.cookies.admintelephone;
-     var email = req.cookies.adminemail;
-     res.render('Super admin/typescomptes', {typedecompte : typedecompte, nom: nom, telephone: telephone,})
-    
-    } catch(e) {
-         console.log(e);
-         res.sendStatus(500);
-     }
- 
+      res.redirect("/Superadmin/Login")
+    }
+   
      }
  ] 
  //La list des Comptes Finances 
@@ -1508,19 +1754,24 @@ exports.LestypeComptes  =  [
 exports.ListeCompteFinance  =  [
   async (req, res) => {
 
-   try {  
-    var typedecompte = await TypeCompte.Selectcompte();
-    var comptefinances = await CompteFinance.Selectcomptefinance();
-    var nom = req.cookies.adminnom;
-     var telephone = req.cookies.admintelephone;
-     var email = req.cookies.adminemail;
-     res.render('Super admin/comptefinance', {comptefinances : comptefinances, typedecompte : typedecompte, nom: nom, telephone: telephone})
-    
-    } catch(e) {
-         console.log(e);
-         res.sendStatus(500);
-     }
- 
+    if(req.cookies.admintelephone != null){ 
+
+      try {  
+        var typedecompte = await TypeCompte.Selectcompte();
+        var comptefinances = await CompteFinance.Selectcomptefinance();
+        var nom = req.cookies.adminnom;
+         var telephone = req.cookies.admintelephone;
+         var email = req.cookies.adminemail;
+         res.render('Super_admin/comptefinance', {comptefinances : comptefinances, typedecompte : typedecompte, nom: nom, telephone: telephone})
+        
+        } catch(e) {
+             console.log(e);
+             res.sendStatus(500);
+         }
+     
+     }else{
+      res.redirect("/Superadmin/Login")
+    }
      }
  ]
  //Ajout d un compte Finance 
@@ -1542,7 +1793,7 @@ async (req, res, next) => {
    if (!errors.isEmpty()) {
      // There are errors. Render the form again with sanitized values/error messages.
      var erreur = errors.array();
-     res.render('Super admin/ToutTransacDeuxdate', { erreur: erreur})
+     res.render('Super_admin/ToutTransacDeuxdate', { erreur: erreur})
      
      return;
    }
@@ -1617,20 +1868,26 @@ exports.Supprimercomptefinance  =  [
  exports.SaissieComptable  =  [
   async (req, res) => {
 
-   try {  
-    var typedecompte = await TypeCompte.Selectcompte();
-    var lescomptes = await CompteFinance.Selectcomptefinance();
-    var nom = req.cookies.adminnom;
-     var telephone = req.cookies.admintelephone;
-     var email = req.cookies.adminemail;
+    if(req.cookies.admintelephone != null){ 
+      try {  
+        var typedecompte = await TypeCompte.Selectcompte();
+        var lescomptes = await CompteFinance.Selectcomptefinance();
+        var nom = req.cookies.adminnom;
+         var telephone = req.cookies.admintelephone;
+         var email = req.cookies.adminemail;
+         
+         res.render('Super_admin/saissiecomptable', {lescomptes : lescomptes, nom: nom, telephone: telephone})
+        
+        } catch(e) {
+             console.log(e);
+             res.sendStatus(500);
+         }
      
-     res.render('Super admin/saissiecomptable', {lescomptes : lescomptes, nom: nom, telephone: telephone})
-    
-    } catch(e) {
-         console.log(e);
-         res.sendStatus(500);
-     }
- 
+     }else{
+
+      res.redirect("/Superadmin/Login")
+    }
+   
      }
  ]
  //Ajout  d un saissie Comptables
@@ -1712,20 +1969,25 @@ res.send( {sucessoperation: "Votre Operation  a effectuer avec success"})
   exports.PageEtatsFinancier  =  [
     async (req, res) => {
   
-     try {  
-      var typedecompte = await TypeCompte.Selectcompte();
-      var lescomptes = await CompteFinance.Selectcomptefinance();
-      var nom = req.cookies.adminnom;
-       var telephone = req.cookies.admintelephone;
-       var email = req.cookies.adminemail;
+      if(req.cookies.admintelephone != null){ 
+        try {  
+          var typedecompte = await TypeCompte.Selectcompte();
+          var lescomptes = await CompteFinance.Selectcomptefinance();
+          var nom = req.cookies.adminnom;
+           var telephone = req.cookies.admintelephone;
+           var email = req.cookies.adminemail;
+           
+           res.render('Super_admin/etatsfinancier', {lescomptes : lescomptes, nom: nom, telephone: telephone})
+          
+          } catch(e) {
+               console.log(e);
+               res.sendStatus(500);
+           }
        
-       res.render('Super admin/etatsfinancier', {lescomptes : lescomptes, nom: nom, telephone: telephone})
-      
-      } catch(e) {
-           console.log(e);
-           res.sendStatus(500);
-       }
-   
+      }else{
+        res.redirect("/Superadmin/Login")
+      }
+     
        }
    ]
 
@@ -1757,18 +2019,23 @@ res.send( {sucessoperation: "Votre Operation  a effectuer avec success"})
      exports.PageBrouillardeCompte  =  [
       async (req, res) => {
     
-       try {  
-        var nom = req.cookies.adminnom;
-         var telephone = req.cookies.admintelephone;
-         var email = req.cookies.adminemail;
+        if(req.cookies.admintelephone != null){  
+          try {  
+            var nom = req.cookies.adminnom;
+             var telephone = req.cookies.admintelephone;
+             var email = req.cookies.adminemail;
+             
+             res.render('Super_admin/brouillardcompte', {nom: nom, telephone: telephone})
+            
+            } catch(e) {
+                 console.log(e);
+                 res.sendStatus(500);
+             }
          
-         res.render('Super admin/brouillardcompte', {nom: nom, telephone: telephone})
-        
-        } catch(e) {
-             console.log(e);
-             res.sendStatus(500);
-         }
-     
+        }else{
+          res.redirect("/Superadmin/Login")
+        }
+      
          }
      ]
 //Recherche du Brouillard de Compte entre Deux Date
@@ -1800,7 +2067,10 @@ exports.BrouillardcpteentreDeuxdate  =  [
  //Affichage des comptes des resultats 
  exports.CompteResultat  =  [
   async (req, res) => {
-     try {  
+    
+    if(req.cookies.admintelephone != null){  
+
+      try {  
         var nom = req.cookies.adminnom;
          var telephone = req.cookies.admintelephone;
          var email = req.cookies.adminemail;
@@ -1809,15 +2079,17 @@ exports.BrouillardcpteentreDeuxdate  =  [
         var lescharges = await Mvt.lescomptechargestoto();
         var lesproduits = await Mvt.lescompteproduitstoto();
       
-   console.log(lescharges);
-   console.log(lesproduits);
-         res.render('Super admin/compteresultats', {lescharges: lescharges, lesproduits: lesproduits, nom: nom, telephone: telephone})
+         res.render('Super_admin/compteresultats', {lescharges: lescharges, lesproduits: lesproduits, nom: nom, telephone: telephone})
         
         } catch(e) {
             console.log(e);
             res.sendStatus(500);
         }
 
+     }else{
+
+      res.redirect("/Superadmin/Login")
+    }
     
  
  
@@ -1833,7 +2105,7 @@ exports.BrouillardcpteentreDeuxdate  =  [
          
         
       var lescomptes = await CompteFinance.Selectcomptefinance();
-         res.render('Super admin/modifierecriture', { lescomptes: lescomptes, nom: nom, telephone: telephone})
+         res.render('Super_admin/modifierecriture', { lescomptes: lescomptes, nom: nom, telephone: telephone})
         
         } catch(e) {
             console.log(e);
@@ -2037,19 +2309,26 @@ res.send( {erreurcompte: erreurcompte})
 //Page Pour rechercher la Balance a Date 
 exports.BalanceAdate =  [
   async (req, res) => {
-     try {  
+    
+    if(req.cookies.admintelephone != null){  
+      try {  
         var nom = req.cookies.adminnom;
          var telephone = req.cookies.admintelephone;
          var email = req.cookies.adminemail;
          
         
-         res.render('Super admin/balanceadate', { nom: nom, telephone: telephone})
+         res.render('Super_admin/balanceadate', { nom: nom, telephone: telephone})
         
         } catch(e) {
             console.log(e);
             res.sendStatus(500);
         }
 
+    
+     }else{
+
+      res.redirect("/Superadmin/Login")
+    }
     
  
  
@@ -2073,19 +2352,25 @@ exports.BalanceAdate =  [
    //Page Pour recherhcher la Balance entre 2 date 
 exports.BalancePeriodique =  [
   async (req, res) => {
-     try {  
+    
+    if(req.cookies.admintelephone != null){  
+
+      try {  
         var nom = req.cookies.adminnom;
          var telephone = req.cookies.admintelephone;
          var email = req.cookies.adminemail;
          
         
-         res.render('Super admin/balanceperiodique', { nom: nom, telephone: telephone})
+         res.render('Super_admin/balanceperiodique', { nom: nom, telephone: telephone})
         
         } catch(e) {
             console.log(e);
             res.sendStatus(500);
         }
 
+    }else{
+      res.redirect("/Superadmin/Login")
+    }
     
  
  
@@ -2114,6 +2399,8 @@ exports.BalancePeriodique =  [
    
  exports.Bilan  =  [
   async (req, res) => {
+    
+    if(req.cookies.admintelephone != null){ 
       try {  
         var nom = req.cookies.adminnom;
          var telephone = req.cookies.admintelephone;
@@ -2124,13 +2411,16 @@ exports.BalancePeriodique =  [
       
        
    
-         res.render('Super admin/bilan', {nom: nom, lesactifs: lesactifs, lespassifs: lespassifs,   })
+         res.render('Super_admin/bilan', {nom: nom, lesactifs: lesactifs, lespassifs: lespassifs,   })
      
         } catch(e) {
             console.log(e);
             res.sendStatus(500);
         }
-
+    
+     }else{
+      res.redirect("/")
+    }
     
  
  

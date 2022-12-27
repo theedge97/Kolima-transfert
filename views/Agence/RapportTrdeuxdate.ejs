@@ -8,10 +8,21 @@
 
   <!-- fin de head-->
   <style>
-    #blockmodifier
+    #blockmodifier, #recherchedate
     {
       display: none;
     }
+    .error
+  {
+      color: red;
+  }
+   #lespiner{
+            position: fixed;
+            top: 60%;
+            left: 47%;
+            z-index: 10000;
+            display: none;
+        }
   </style>
  
 </head>
@@ -38,8 +49,13 @@
             <div class="col-lg-12  ">
              
               <div class="row account-contant">
-                            
-                <div class="col-12">
+                <div class="col-12" id="lespiner">
+                  <div style=" height: 3rem;"  class="d-flex align-items-center">
+                    <strong style="color: #4ECDC4;" class="">Chargement...</strong><br>
+                    <div class="spinner-border  ms-1"  style="color: #4ECDC4;" role="status" aria-hidden="true"></div>
+                  </div>
+                 </div>            
+                <div  class="col-12">
                     <div class="card card-statistics">
                         <div class="card-body p-0">
                             <div class="row no-gutters">
@@ -139,7 +155,7 @@
                                         <div class="p-4" >
                                                 
                                      
-        <div class="row mt">
+        <div id="recherchedate" class="row mt">
             <div class="col-md-12 ">
                 <div class="">
                   <h4><i class="fa fa-angle-right"></i><font _mstmutation="1">Liste des Rapports des Transactions  de Dépots Entre  <span id="debut"></span> et <span id="fin"></span>  </font> </h4>
@@ -316,13 +332,17 @@ pagebreak: {mode: 'avoid-all', before:'#pageX'}
               }
             },
             submitHandler: function(form){
-         
+              $("#lespiner").css({ 
+                      display: 'block'
+                    });
          $.ajax({
              url: form.action,
              type: form.method,
              data: $(form).serialize(),
              success: function(response) {
-             
+              $("#lespiner").css({ 
+                      display: 'none'
+                    });
     
                   if (response.codeerreurs) { 
                     
@@ -338,6 +358,10 @@ pagebreak: {mode: 'avoid-all', before:'#pageX'}
                     }
                       
                     if (response.transactdatedeux) { 
+                      
+                      $("#recherchedate").css({ 
+                          display: 'block'
+                        });
                      var table = response.transactdatedeux;
                         var tableau = document.querySelector(".tablet");                    
                     for (var i = 0; i < table.length; i++) {

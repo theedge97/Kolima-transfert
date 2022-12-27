@@ -2,15 +2,24 @@ var express = require('express');
 var router = express.Router();
 
 const admin = require("../controllers/admin.controller.js");
-
-
-router.get("/AdminEntreprise/connection", (req, res) => {
-  res.render('Admin Entreprise/connection')
-});
-  // Create a new Customer 
-  router.get("/Acceuil", admin.Acceuil);
+  // Acces a la page de Creation de Compte 
+  router.get("/Superadmin/creationcompte", admin.PageCreationCompte);
+  router.get("/Superadmin/Acceuil", admin.Acceuil);
+  router.get("/Superadmin/Login", admin.PageLogin);
   router.post("/Superadmin/creation", admin.Creation)
   router.post("/Superadmin/connection", admin.Connection)
+  //Deconnecter le Compte de L administrateur
+  router.get("/Superadmin/Deconnecter", admin.Deconnecter);
+  //Parametrage 
+  router.get("/Superadmin/Parametre", admin.Parametrage);
+  //Modification du Mote de passe 
+  ///Superadmin/ModifierMotdepasseCompte
+  router.post("/Superadmin/ModifierMotdepasseCompte", admin.MajMotdepasse);
+  //Modification des Information du Compte de L administrateur 
+  router.post("/Superadmin/MajCompteAdmin", admin.MajCompteAdmin);
+  //Creation d un Compte Admin 
+  router.post("/Superadmin/creationcompte", admin.Creation);
+ 
   //Creation d'une agence
   router.post("/Superadmin/creationagence", admin.CreationAgence)
   router.get("/Superadmin/AjoutAgence", admin.Ajoutagence);

@@ -3,7 +3,7 @@ const sql = require("../db.js");
 
 // constructor
 const Transaction = function(leclient) {
-    this.Datetransaction	 = leclient.Datetransaction	;
+    this.Datetransaction = leclient.Datetransaction	;
     this.Datevalidation = leclient.Datevalidation;
     this.Statue = leclient.Statue;
     this.Agenceenvoieid	 = leclient.Agenceenvoieid;
@@ -16,6 +16,7 @@ const Transaction = function(leclient) {
     this.Frais = leclient.Frais;
     this.Fraisdepot = leclient.Fraisdepot;
     this.Fraisretrait = leclient.Fraisretrait;  
+    this.monaiepaysid = leclient.monaiepaysid;
     this.Fraisprincipale = leclient.Fraisprincipale;
     this.Clientid = leclient.Clientid;
     this.Caissierids = leclient.Caissierids;
@@ -218,7 +219,7 @@ Transaction.toutcomissiondeuxdatesss = (   debut, fin) => {
   //Recuperations des frais de transaction 
   Transaction.recupefrais = (idtransac) => {
     return new Promise((resolve, reject)=>{
-      sql.query(` SELECT * FROM transaction INNER JOIN client ON client.idclient = transaction.Clientid  INNER JOIN pays ON pays.idpays = transaction.Paysidenvoie INNER JOIN lesmonaie ON lesmonaie.idmonaie = pays.devise WHERE TRANSACTION.idtransac =  ${idtransac} `,  (error, employees)=>{
+      sql.query(` SELECT * FROM transaction INNER JOIN client ON client.idclient = transaction.Clientid  INNER JOIN pays ON pays.idpays = transaction.Paysidenvoie INNER JOIN lesmonaie ON lesmonaie.idmonaie = pays.devise WHERE transaction.idtransac =  ${idtransac} `,  (error, employees)=>{
           if(error){
               return reject(error);
           }

@@ -61,7 +61,7 @@
                                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                       <form method="post" action="/Agent/ModifierMotdepasseCaissier"   id="majmotpasse"> 
+                                       <form method="post" action="/Agence/ModifierMotdepasseCaissier"   id="majmotpasse"> 
                                                                    
                                     <div class="mb-3"> 
                                     <input type="password" class="form-control p-3" id="motdepassemaj" name="motdepassemaj" required> 
@@ -96,7 +96,7 @@ Voulez-vous Désactiver   le  compte de <%= lecaissier.nomcaissier %>  <%= lecai
 </div>
 <div class="modal-footer">
 <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">Non</button>
-<a href="/Agent/ChangerStatue/<%= lecaissier.idcaiss %>/0"><button type="button" class="btn btn-warning text-white">Oui</button></a>
+<a href="/Agence/ChangerStatue/<%= lecaissier.idcaiss %>/0"><button type="button" class="btn btn-warning text-white">Oui</button></a>
 </div>
 </div>
 </div>
@@ -114,7 +114,7 @@ Voulez-vous Désactiver   le  compte de <%= lecaissier.nomcaissier %>  <%= lecai
                 Voulez-vous Activer   le  compte de    <%= lecaissier.nomcaissier %> <%= lecaissier.prenomcaissier %>                         </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">Non</button>
-                <a href="/Agent/ChangerStatue/<%= lecaissier.idcaiss %>/1"><button type="button" class="btn btn-success text-white">Oui</button></a>
+                <a href="/Agence/ChangerStatue/<%= lecaissier.idcaiss %>/1"><button type="button" class="btn btn-success text-white">Oui</button></a>
             </div>
         </div>
     </div>

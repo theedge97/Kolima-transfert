@@ -9,44 +9,14 @@
           <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
         </div>
         <!--logo start-->
-        <a href="index.html" class="logo text-decoration-none"><b>KOLIMA <span>Transfert</span></b></a>
+        <a href="#" class="logo text-decoration-none"><b>KOLIMA <span>Transfert</span></b></a>
         <!--logo end-->
-        <div class="nav notify-row" id="top_menu">
-          <!--  notification start -->
-          <ul class="nav top-menu">
-            <!-- settings start -->
-            <li class="dropdown">
-              <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
-                <i class="fa fa-tasks"></i>
-                <span class="badge bg-theme">4</span>
-                </a>
-             
-            </li>
-            <!-- settings end -->
-            <!-- inbox dropdown start-->
-            <li id="header_inbox_bar" class="dropdown">
-              <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
-                <i class="fa fa-envelope-o"></i>
-                <span class="badge bg-theme">5</span>
-                </a>
-             
-            </li>
-            <!-- inbox dropdown end -->
-            <!-- notification dropdown start-->
-            <li id="header_notification_bar" class="dropdown">
-              <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
-                <i class="fa fa-bell-o"></i>
-                <span class="badge bg-warning">7</span>
-                </a>
-            </li>
-            <!-- notification dropdown end -->
-          </ul>
-          <!--  notification end -->
-        </div>
+       
         <div class="top-menu">
-          <ul class="nav pull-right top-menu">
-            <li><a class="logout" href="login.html">Deconnecter </a></li>
-          </ul>
+            
+                       
+          <button data-bs-toggle="modal" data-bs-target="#deconnecter" class="btn btn-danger nav pull-right top-menu mt-2">Déconnection</button>
+       
         </div>
       </header>
       <!--header end-->
@@ -58,7 +28,7 @@
         <div id="sidebar" class="nav-collapse ">
           <!-- sidebar menu start-->
           <ul class="sidebar-menu" id="nav-accordion">
-            <p class="centered"><a href="profile.html"><img src="/assets/semantic/img/user.png" class="img-circle" width="80"></a></p>
+            <p class="centered"><a ><img src="/assets/semantic/img/user.png" class="img-circle" width="80"></a></p>
             <h5 class="centered">
               <% if(typeof nom !== "undefined"){ %>
                 <%= nom %>
@@ -66,7 +36,7 @@
           <% } %>
               </h5>
             <li class="mt">
-              <a class="active" href="/Acceuil">
+              <a class="active" href="/Superadmin/Acceuil">
                 <i class="fa fa-dashboard"></i>
                 <span>Tableau de bord</span>
                 </a>
@@ -118,6 +88,9 @@
                 <li><a href="/Superadmin/Lesfrais"> Liste des frais d'envoie</a></li>
                 <li><a href="/Superadmin/Gainfrais">Gain des frais d'envoie </a></li>
                 <li><a href="/Superadmin/Lestauxfraisechange">Les Taux Frais d'echange </a></li>
+                <li><a href="/Superadmin/Lespaysliste">Liste des Pays </a></li>
+                <li><a href="/Superadmin/ListedesTransfertPays">Liste des Transfert d un Pays  </a></li>
+                
              
               </ul>
             </li>
@@ -142,7 +115,33 @@
                 
               </ul>
             </li>
+            <li>
+              <a href="/Superadmin/parametre">
+                
+                <i class="fa fa-cog"></i>
+                <span>Parametre</span>
+                </a>
+            </li>
           </ul>
           <!-- sidebar menu end-->
         </div>
       </aside>
+                                                      <!--Boite  suppression-->
+                                                      <div class="modal fade" id="deconnecter" tabindex="-1" role="dialog" aria-labelledby="defaultModal" aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                              <div class="modal-header bg-danger">
+                                                                <h5 class="modal-title " id="exampleModalLabel">Attention, Déconnection !</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                              </div>
+                                                                <div class="modal-body text-dark">
+                                                                    Voulez-vous vous déconnectez ? 
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">Non</button>
+                                                                    <a href="/Superadmin/Deconnecter"><button type="button" data-bs-toggle="modal" data-bs-target="#regroupementambassade" id="oui"  class="btn btn-danger">Oui</button></a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--Boite suppression fin-->  

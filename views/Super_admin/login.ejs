@@ -7,8 +7,7 @@
   <meta name="description" content="">
   <meta name="author" content="Dashboard">
   <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
-  <title>Kolima Transfert</title>
-
+  <title> Connection  || Kolima Transfert</title>
   <!-- Favicons -->
   <link href="/assets/semantic/img/favicon.png" rel="icon">
   <link href="/assets/semantic/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -21,13 +20,7 @@
   <link href="/assets/semantic/css/style.css" rel="stylesheet">
   <link href="/assets/semantic/css/style-responsive.css" rel="stylesheet">
   
-  <!-- =======================================================
-    Template Name: Dashio
-    Template URL: https://templatemag.com/dashio-bootstrap-admin-template/
-    Author: TemplateMag.com
-    License: https://templatemag.com/license/
-  ======================================================= -->
-  <style>
+<style>
     #notifi{
 text-align: left;
 font-size: 17px;
@@ -72,61 +65,64 @@ display: block;
     <div class="container">
       <div class="row">
         
-        <% if(typeof codeerreur !== "undefined"){ %>
+        <% if(typeof erreurmotpasse !== "undefined"){ %>
           <div id="notifi" class="col-lg-offset-3   col-md-offset-4 col-sm-11 col-xs-12 col-md-6 col-lg-4 ">
-            <h2><%= codeerreur %></h2>
+            <h2><%= erreurmotpasse %></h2>
           </div>
           
           <% } %>
-          <% if(typeof erreur !== "undefined"){ %>
+          <% if(typeof erreurnumero !== "undefined"){ %>
             <div id="erreur" class="col-lg-offset-3   col-md-offset-4 col-sm-11 col-xs-12 col-md-6 col-lg-4 ">
-              <ul>
-                <% for(var i= 0 ; i < erreur.length; i++)  {%> 
-                <li><%= erreur[i].msg %></li>
-                  <% } %>
-                </ul>
+              <h2><%= erreurnumero %></h2>
             </div>
             <% } %>
           </div>
-          
-        </div>
-      </div>
-      <form class="form-login" id="signupForm" method="post" action="/Superadmin/creation">
-        <h2 class="form-login-heading">créer un compte maintenant</h2>
+      <form class="form-login" method="post" id="signupForm" action="/Superadmin/connection">
+        <h2 class="form-login-heading">se connecter maintenant</h2>
         <div class="login-wrap">
-          <input type="text" name="nom" class="form-control" placeholder="Entrez votre nom au complet" autofocus>
+          <input type="tel" name="telephone" id="telephone" class="form-control" placeholder="Entrez votre numéro de téléphone" autofocus>
           <br>
-          <input type="tel" name="telephone" class="form-control" placeholder="Entrez votre numéro de téléphone" autofocus>
-          <br>
-          <input type="email" name="email" class="form-control" placeholder="Entrez votre email" autofocus>
-          <br>
-          <input type="number" name="code" class="form-control" placeholder="Entrez le code d'activation" autofocus>
-          <br>
-          <input type="password" id="motdepasse" name="motdepasse" class="form-control" placeholder="Mot de passe">
-          <br>
-          <input type="password" name="motdepasse1" class="form-control" placeholder="Confirmation du Mot de passe">
-          <br>
+          <input type="password" name="motdepasse" id="motdepasse" class="form-control mt-5" placeholder=" Entrez votre Mot de passe"><br>
+          
           <button class="btn btn-theme btn-block" href="index.html" type="submit"><i class="fa fa-lock"></i> SE CONNECTER</button>
           <hr>
-          <div class="login-social-link centered">
-            <p>ou vous pouvez vous connecter via votre réseau social</p>
-            <button class="btn btn-facebook" type="submit"><i class="fa fa-facebook"></i> Facebook</button>
-            <button class="btn btn-twitter" type="submit"><i class="fa fa-twitter"></i> Twitter</button>
-          </div>
+         
           <div class="registration">
-            Vous avez déjà un compte?<br/>
-            <a class="" href="login.html">
-              Connectez-vous!
+            Vous n'avez pas encore de compte?<br/>
+            <a class="" href="/Superadmin/creationcompte">
+              Créer un compte!
               </a>
           </div>
         </div>
+        <!-- Modal -->
+        <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Mot de passe oublié ?</h4>
+              </div>
+              <div class="modal-body">
+                <p>Entrez votre adresse e-mail pour réinitialiser votre mot de passe.</p>
+                <input type="text" name="email" placeholder="E-mail" autocomplete="off" class="form-control placeholder-no-fix">
+              </div>
+              <div class="modal-footer">
+                <button data-dismiss="modal" class="btn btn-default" type="button">Annuler</button>
+                <button class="btn btn-theme" type="button">Soumettre</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- modal -->
       </form>
     </div>
   </div>
   <!-- js placed at the end of the document so the pages load faster -->
   <script src="/assets/semantic/lib/jquery/jquery.min.js"></script>
   <script src="/assets/semantic/lib/bootstrap/js/bootstrap.min.js"></script>
-  
+  <!--BACKSTRETCH-->
+  <!-- You can use an image of whatever size. This script will stretch to fit in any screen size.-->
+  <script type="text/javascript" src="/assets/semantic/lib/jquery.backstretch.min.js"></script>
   <script src="/assets/semantic/lib/jquery.validate.js"></script>
   <script>
  
@@ -140,26 +136,9 @@ display: block;
       // validate signup form on keyup and submit
       $("#signupForm").validate({
         rules: {
-          nom: {
-            required: true,
-            minlength: 2
-          },
           motdepasse: {
             required: true,
             minlength: 5
-          },
-          motdepasse1: {
-            required: true,
-            minlength: 5,
-            equalTo: "#motdepasse"
-          },
-          email: {
-            required: true,
-            email: true
-          },
-          code: {
-            required: true,
-            minlength: 4
           },
           telephone: {
                     required: true,
@@ -167,23 +146,9 @@ display: block;
                 }
         },
         messages: {
-          nom: {
-            required: "Veuillez renseigner un nom ",
-            minlength: "Votre nom  doit être composé d'au moins 2 caractères"
-          },
           motdepasse: {
             required: "Veuillez fournir un mot de passe",
             minlength: "Votre mot de passe doit comporter au moins 5 caractères"
-          },
-          motdepasse1: {
-            required: "Veuillez fournir un mot de passe",
-            minlength: "Votre mot de passe doit comporter au moins 5 caractères",
-            equalTo: "Entrez le même mot de passe qui est  ci-dessus"
-          },
-          email: "S'il vous plaît, mettez une adresse email valide",
-          code: {
-            required: "Veuillez fournir un code d'activation",
-            minlength: "Votre code doit comporter au moins 5 nombre"
           },
           telephone: {
             required: "Veuillez fournir un numéro de téléphone"
@@ -205,17 +170,14 @@ display: block;
       });
     });
     </script>
-  <!--BACKSTRETCH-->
-  <!-- You can use an image of whatever size. This script will stretch to fit in any screen size.-->
-  <script type="text/javascript" src="/assets/semantic/lib/jquery.backstretch.min.js"></script>
   <script>
     $.backstretch("/assets/semantic/img/login-bg.jpg", {
       speed: 500
     });
   </script>
-  <script>
+   <script>
 
-    '<% if(typeof codeerreur !== "undefined"){ %>'
+    '<% if(typeof erreurmotpasse !== "undefined"){ %>'
     $("#notifi").css({ 
       display: 'block'
     });
@@ -225,7 +187,7 @@ display: block;
     });
     }, 5000)
     '<% } %> '
-    '<% if(typeof erreur!== "undefined"){ %>'
+    '<% if(typeof erreurnumero!== "undefined"){ %>'
     $("#erreur").css({ 
       display: 'block'
     });

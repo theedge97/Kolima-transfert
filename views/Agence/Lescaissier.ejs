@@ -4,14 +4,22 @@
 
 <title>Agence || Kolima  Transfert</title>
 <link href="/assets/semantic/lib/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
- 
-
-  <!-- fin de head-->
   <style>
     #blockmodifier
     {
       display: none;
     }
+    .error
+  {
+      color: red;
+  }
+   #lespiner{
+            position: fixed;
+            top: 60%;
+            left: 47%;
+            z-index: 10000;
+            display: none;
+        }
   </style>
  
 </head>
@@ -38,6 +46,12 @@
             <div class="col-lg-12  ">
              
               <div class="row account-contant">
+                <div class="col-12" id="lespiner">
+                  <div style="height: 3rem;"  class="d-flex align-items-center">
+                    <strong style="color: #4ECDC4;" class="">Chargement...</strong><br>
+                    <div class="spinner-border  ms-1"  style="color: #4ECDC4;" role="status" aria-hidden="true"></div>
+                  </div>
+                 </div> 
                             
                 <div class="col-12">
                     <div class="card-statistics">
@@ -166,12 +180,7 @@
                                             </div>
                                             <!--Fin Boite Modale-->
                                           </div>
-
-                                         
-                                      
-                                        <div class="p-4" >
-                                                
-                                     
+<div class="p-4" >                           
         <div class="row mt">
             <div class="col-md-12">
                 <div class="">
@@ -328,6 +337,9 @@
      $("#spinerload").css({ 
                display: 'block'
              });    
+             $("#lespiner").css({ 
+                      display: 'block'
+                    });
              
 var formData = new FormData(form); 
 $.ajax({
@@ -336,7 +348,9 @@ $.ajax({
          type: form.method,
          data: $(form).serialize(),
     success: function(response) {
-     
+      $("#lespiner").css({ 
+                      display: 'none'
+                    });
 
                if (response.success) { 
                  $("#spinerload").css({ 

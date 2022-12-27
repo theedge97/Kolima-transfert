@@ -27,12 +27,15 @@ var lien = require('./app/routes/Admin.routes.js');
 var lien1 = require('./app/routes/Agence.routes.js');
 var lien2 = require('./app/routes/Caissier.routes.js')
 app.get("/", (req, res) => {
-  res.render('Super admin/login')
+  res.render('Super_admin/login')
 });
 
 app.use("/", lien);
-app.use('/Agence', lien1);
-app.use('/Caissier', lien2);
-app.listen( 1997, function(){
+
+app.use("/Agence", lien1);
+
+app.use("/Caissier", lien2);
+
+app.listen(process.env.PORT || 1997, function(){
   console.log('Server is listening on *: 1997');
 });

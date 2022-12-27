@@ -2,13 +2,12 @@
 const sql = require("../db.js");
 
 // constructor
-
-
-// constructor
 const Lespays = function(unpays) {
     this.idpays = unpays.idpays;
     this.pays = unpays.pays;
-
+    this.indicatif = unpays.indicatif;
+    this.codeiso = unpays.codeiso;
+    this.devise = unpays.devise;
   };
 //Selectionner les Pays
  
@@ -22,6 +21,18 @@ const Lespays = function(unpays) {
       });
   });
   };
+  //Selectionnner tout les Pays et leur monaies 
+  Lespays.toutpays = ( ) => {
+    return new Promise((resolve, reject)=>{
+      sql.query(` SELECT * FROM pays INNER JOIN lesmonaie ON lesmonaie.idmonaie = pays.devise`,  (error, payss)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(payss);
+      });
+  });
+  };
+
   
   //Selectionner un pays 
    Lespays.unpays = (idpays ) =>{
@@ -45,12 +56,23 @@ const Lespays = function(unpays) {
       });
   });
   }; 
-  //Selectionner le nombre de distributeur
- /*
-
- Distributeur.nbrdistrib = (entrepriseid) => {
+  
+  //Ajouter une Ville 
+  Lespays.ajoutpays = (newPays) => {
+    
     return new Promise((resolve, reject)=>{
-      sql.query(` SELECT COUNT(id_rateleurs)  FROM rateleurs WHERE 	id_entreprise = ${entrepriseid} `,  (error, employees)=>{
+      sql.query("INSERT INTO pays SET ?", newPays,  (error, enregistre)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(enregistre);
+      });
+  });
+  };
+  //Modifier les Informations du pays
+  Lespays.modifierinfopays = ( nompays , indicatif, codeiso , devise, idpays ) => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`UPDATE pays SET pays = '${nompays}' , indicatif = '${indicatif}' , codeiso = '${codeiso}', devise = ${devise}  WHERE idpays = ${idpays}`,  (error, employees)=>{
           if(error){
               return reject(error);
           }
@@ -58,7 +80,5 @@ const Lespays = function(unpays) {
       });
   });
   };
- */
-  
   
   module.exports = Lespays;

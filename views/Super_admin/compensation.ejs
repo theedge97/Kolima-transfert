@@ -1,11 +1,7 @@
 <!-- debut de head-->
 <%- include('head'); -%>
-
-
-<title>Agence || Kolima  Transfert</title>
+<title>Compensation || Kolima  Transfert</title>
 <link href="/assets/semantic/lib/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
- 
-
   <!-- fin de head-->
   <style>
     #blockmodifier
@@ -13,7 +9,6 @@
       display: none;
     }
   </style>
- 
 </head>
 <script src="/assets/semantic/lib/jquery.validate.js"></script>
 <script src="/assets/semantic/lib/moment.min.js"></script>
@@ -21,8 +16,6 @@
 <script src="/assets/semantic/lib/html2pdf.bundle.min.js"></script>
 <script src="/assets/semantic/js/jquery.formatCurrency.js" ></script>
 <script src="/assets/semantic/js/easy-number-separator.js"></script>
-
-
 <!-- debut  de menue-->
 <%- include('menue'); -%>
     <!--fin de menue end-->
@@ -565,15 +558,12 @@ pagebreak: {mode: 'avoid-all', before:'#pageX'}
   input.setAttribute("type", "hidden");
   input.setAttribute("name", "retraitidss");
   input.setAttribute("value", element.idretrait);
-  
   compasationform.appendChild(input);  
-     
- 
-                    }
+   }
 
 //calculons le total des somme entre depot retrait et commission
 var letotal = (-totaldepot)  + (lescommissiondepot + lescommissionretrait + totalretrait)
-alert(letotal)
+
 var totalsm = new Intl.NumberFormat('gn-GN').format(letotal);
   var total = document.getElementById('total');
   total.innerHTML = totalsm;
@@ -601,15 +591,13 @@ var totalsm = new Intl.NumberFormat('gn-GN').format(letotal);
 
   
   var solde = new Intl.NumberFormat('gn-GN').format(agence.solde);
-  
+ 
  var repportsoldedernier = response.repportsoldedernier;
- var soldeancien = 0
- if ( repportsoldedernier == [ ]) {
-  alert(
-    'fff'
-  )
+ var  soldeancien = repportsoldedernier.repportsolde;
+ if ( typeof repportsoldedernier =="undefined" || repportsoldedernier == null) {
+ soldeancien = 0;
  }
-  soldeancien = repportsoldedernier.repportsolde;
+ 
   var totalreport = document.getElementById('totalreport');
   var rp = new Intl.NumberFormat('gn-GN').format(soldeancien);
   

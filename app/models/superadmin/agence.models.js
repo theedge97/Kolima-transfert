@@ -17,6 +17,7 @@ const Agence = function(agence) {
     this.statue = agence.statue;
     this.motdepasse = agence.motdepasse;
   };
+
 //insertion d'une Agence
   Agence.inscription = (newAgence) => {
     
@@ -32,7 +33,7 @@ const Agence = function(agence) {
 
 
   //recuperation de la liste de tout les agences
-  Agence.lesagences = result => {
+Agence.lesagences = result => {
     return new Promise((resolve, reject)=>{
       sql.query("SELECT * FROM agence INNER JOIN pays on pays.idpays = agence.paysid INNER JOIN ville ON ville.idville = agence.villeid ",  (error, agences)=>{
           if(error){

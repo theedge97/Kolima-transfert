@@ -2,11 +2,22 @@
 <%- include('head'); -%>
 
 
-<title>Agence || Kolima  Transfert</title>
+<title>Retrait  || Agence Kolima  Transfert</title>
 <style>
   #carte{
     display: none;
   }
+  .error
+  {
+      color: red;
+  }
+  #lespiner{
+            position: fixed;
+            top: 60%;
+            left: 47%;
+            z-index: 10000;
+            display: none;
+        }
 </style>
   <!-- fin de head-->
  
@@ -34,7 +45,12 @@
             <div class="col-lg-12  ">
              
               <div class="row account-contant">
-                            
+                <div class="col-12" id="lespiner">
+                  <div style=" height: 3rem;"  class="d-flex align-items-center">
+                    <strong style="color: #4ECDC4;" class="">Chargement...</strong><br>
+                    <div class="spinner-border  ms-1"  style="color: #4ECDC4;" role="status" aria-hidden="true"></div>
+                  </div>
+                 </div>          
                 <div class="col-12">
                     <div class="card card-statistics">
                         <div class="card-body p-0">
@@ -346,6 +362,9 @@
               }
             },
             submitHandler: function(form){
+              $("#lespiner").css({ 
+                      display: 'block'
+                    });
          
          $.ajax({
              url: form.action,
@@ -353,9 +372,11 @@
              data: $(form).serialize(),
              success: function(response) {
              
-    
+              $("#lespiner").css({ 
+                      display: 'none'
+                    });
                   if (response.codeerreurs) { 
-                    $('#codeerreurs').modal('show')
+                    $('#codeerreurs').modal('show')     
                         setTimeout(function () {
                             $('#codeerreurs').modal('hidden')
         }, 3000)

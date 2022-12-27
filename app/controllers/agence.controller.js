@@ -51,6 +51,7 @@ const Caissiers = require("../models/superadmin/caissier.models.js");
 const Compensationns = require("../models/superadmin/historiquecompensation.models.js");
 const Tauxfraisenvoie = require("../models/superadmin/tauxfraisenvoie.models.js")
 const Solderecharche = require("../models/superadmin/solderecharche.models.js");
+const ListeTransfPays = require("../models/superadmin/listetransfertpays.models.js");
 const e = require('express');
 //Inscription d'un administrateur
  exports.Inscription =  [
@@ -243,10 +244,10 @@ exports.PageEnvoieargent  =  [
    try {  
     var nom = req.cookies.agencenom;
     var telephone = req.cookies.agencetelephone
-    
+    var agenceid = req.cookies.agenceid;
    var pays = await Lespays.selectpays();
    var ville = await Lesville.selectville();
-   var lesclients = await Client.SelectClientPays()
+   var lesclients = await Client.SelectClientAgenceid(agenceid)
    var langue = req.cookies.agencelangue;
    
    var email = req.cookies.agenceemail
@@ -257,8 +258,7 @@ exports.PageEnvoieargent  =  [
     const MY_NAMESPACE = '6ec0bd7f-11c0-43da-975e-2a8ad9ebae0b';
       
     var krypt  = nom + nombrealeatoir + code1 + telephone;
-      var code = codeargent.v5(krypt, MY_NAMESPACE);
-      
+    var code = codeargent.v5(krypt, MY_NAMESPACE);    
     var codeargents = code.slice(0, 8) ;
     res.render('Agence/EnvoieargentEn', {langue: langue, lesclients: lesclients, lesmonaies: lesmonaies, lespays: pays, code: codeargents, lesville: ville, nom: nom, telephone: telephone, email: email})
 
@@ -296,6 +296,14 @@ ce middelware permet de creer un compte adminiatrateur
  body('receveurnom').isLength({ min: 3}).withMessage('Veuilez bien saisir le nom du receveur long').trim(),
  body('expediteurcontact').isNumeric().withMessage('Veuilez bien saisir le telephone de l expediteur').trim(),
  body('receveurcontact').isNumeric().withMessage('Veuilez bien saisir le telephone du receveur').trim(),
+ body('monaieenvoie').isLength({ min: 1}).withMessage('Veuilez entrez la somme a envoyer').trim(),
+ body('monaierecevoir').isLength({ min: 1}).withMessage('Veuilez Mentionner la somme a envoyer').trim(),
+ body('fraisdepot').isLength({ min: 1}).withMessage('Veuilez Mentionner la somme a envoyer').trim(),
+ body('fraisretrait').isLength({ min: 1}).withMessage('Veuilez Mentionner la somme a envoyer').trim(),
+ body('fraisprincipale').isLength({ min: 1}).withMessage('Veuilez Mentionner la somme a envoyer').trim(),
+ body('code').isLength({ min: 1}).withMessage('Veuilez Mentionner la somme a envoyer').trim(),
+ body('piece').isLength({ min: 1}).withMessage('Veuilez Mentionner la somme a envoyer').trim(),
+
 
 async (req, res, next) => {
 
@@ -307,9 +315,10 @@ async (req, res, next) => {
    var matriculerreur = '';
    // Create a genre object with escaped and trimmed data
    if (!errors.isEmpty()) {
+    console.log(errors)
      // There are errors. Render the form again with sanitized values/error messages.
      var erreur = errors.array();
-     res.render('Super admin/register', { erreur: erreur})
+     res.render('Super_admin/register', { erreur: erreur})
      
      return;
    }
@@ -333,11 +342,17 @@ async (req, res, next) => {
       var fraisretrait = req.body.fraisretrait;
       var fraisdepot = req.body.fraisdepot;
       var agenceid = req.cookies.agenceid;
+      var monaiepaysid = req.body.monaietransfertpays;
       //Verifions si l agence a du solde pour envoyer l argent
       //Recuperons le solde de L'agence 
       var soldeagence = await Agence.recupereunagence(agenceid);
       var agencesolde = soldeagence[0].solde ;
 if (agencesolde >= montant) {
+   var 	idclient = null;
+   //Verifions si le client n  a jamais ete enregistrer dans la bdd
+   var verifieclientid = await Client.Recupereridduclient(agenceid, expediteurcontact, receveurcontact);
+  var  idinsert  = null;
+  
   const leclient = new Client({
     Nomexpediteur : expediteurnom,
     Contactexpediteur: expediteurcontact,
@@ -345,13 +360,22 @@ if (agencesolde >= montant) {
     Contactreceveur : receveurcontact,
     Carteidentite: piece,
     Numerocarte: numerocarte,
+    Agenceidlier : 	agenceid,
     paysdestionation: paysdestination,
     villedestination : villedestination
   });
 
-  
+   if (verifieclientid == null || verifieclientid == "") {
+    
+   idinsert = await Client.inscription(leclient);
+    
+  }else{
+     idinsert = verifieclientid[0].idclient;
+    
+  }
+   
+
   try {  
-    var idinsert = await Client.inscription(leclient);
     var envoiepays = await Lespays.unpays(paysdenvoie);
     var destinationpays = await Lespays.unpays(paysdestination);
     var destinationville = await Lesville.uneville(villedestination);
@@ -369,10 +393,13 @@ if (agencesolde >= montant) {
       Frais : lesfrais,
       Fraisdepot : fraisdepot,
       Fraisretrait : fraisretrait,
+      monaiepaysid : monaiepaysid,
       Fraisprincipale : fraisprincipale,
       compensation : null
     })
     await Transaction.effectuer(transac)
+    var soldediminuer = montant - fraisdepot;
+    await Agence.diminutionsolde(agenceid, soldediminuer) 
     var nom = req.cookies.agencenom;
     var telephone = req.cookies.agencetelephone;
     var email = req.cookies.agenceemail;
@@ -391,11 +418,7 @@ if (agencesolde >= montant) {
   
 
 }
-
-      
-      
       //verifier si le matricule existe dans la base de donner
- 
  
    }
  }
@@ -515,8 +538,6 @@ exports.Validationcode  = [
   /*
 ce middelware permet de creer un compte adminiatrateur
   */
-
- 
 async (req, res, next) => {
 
   try {  
@@ -555,8 +576,8 @@ async (req, res, next) => {
   //Ajout de La commission de L agence Principale 
   await Comissionprincipale.ajoutcomi(Comission)
   //Diminution et augmentation des Solde de l Agence d envoie 
-  var soldediminuer = infotransaction[0].Sommeenvoie - infotransaction[0].Fraisdepot;
-  await Agence.diminutionsolde(infotransaction[0].Agenceenvoieid , soldediminuer) 
+  //var soldediminuer = infotransaction[0].Sommeenvoie - infotransaction[0].Fraisdepot;
+ // await Agence.diminutionsolde(infotransaction[0].Agenceenvoieid , soldediminuer) 
   //augmentation du solde de l agence de retrait 
   var soldeaugmente = infotransaction[0].montantlocale + infotransaction[0].Fraisretrait;
   await Agence.augmentationsolde(idagenceretrait, soldeaugmente);
@@ -587,6 +608,22 @@ res.send({lesvilles: lesvilles})
  
      }
  ]
+ //Recuperer les Monaie d un Pays 
+ exports.MonaiedunPays   =  [
+  async (req, res) => {
+
+   try {  
+     var  paysid = req.params.idpays;
+     var lesmonaiedupays = await ListeTransfPays.selectlisteuntransfert(paysid);
+console.log(lesmonaiedupays)
+res.send({lesmonaiedupays: lesmonaiedupays})
+    } catch(e) {
+         console.log(e);
+         res.sendStatus(500);
+     }
+ 
+     }
+ ]
  //recuperation de la somme sans frais d'envoie 
  //Recuperer la somme sans  frais 
 exports.Unemonaie  =  [
@@ -608,7 +645,7 @@ exports.Unemonaie  =  [
      //verifions si l argent peut etre envoyer 
 
 
-      if ( paysid!== "" && !isEmpty(paysid) ) {
+      if ( paysid !==  'null'  ) {
       
        
      //Recuperation du Frais  d envoie du Pays envoyeurs
@@ -621,20 +658,19 @@ exports.Unemonaie  =  [
     if (letaux!== "" && !isEmpty(letaux) ) {
     var  frais =   lefrais;
      var fr = lefrais;
-    // var ladevise = lefrais[0].monaie;
      fr = parseInt(fr);
      lasomme = parseInt(lasomme)
      var rt = lasomme - fr;
      console.log(lefrais)
-    // res.send({ soldeinsuffissant: "solde Insuffissant"  });
-     //Veuillez 55
+   
      //Verfions si les devises ne corresponde pas
      //unemonaiepays
      var monaierecevoir = rt;
      var monaieenvie = await Monaie.unemonaiepays(idpays)
      var monaiereceveur = await Monaie.unemonaiepays(paysid);
     var untaux = null;
-    var ladevise = monaieenvie[0].monaie;
+    var ladevise = monaieenvie[0].monaie; 
+
     //Recuperons le montant a envoyer plus frais
 
     var montantplusfrais = lasomme + lefrais;
@@ -651,7 +687,7 @@ exports.Unemonaie  =  [
     var fraisprincipale = ((frais * gainprincipale)/toto);
     var fraisdepot = ((frais * gaindepot)/toto);
     var fraisretrait = ((frais * gainretarait)/toto);
-  console.log(fraisdepot)
+ 
     
      if (monaieenvie[0].monaie != monaiereceveur[0].monaie ) {
        //Si les devise ne correspond pas on convertie la somme 
@@ -670,7 +706,7 @@ exports.Unemonaie  =  [
       var toprincipale = await Taux.untaux(monaieenvie[0].monaie, "GNF");
        
       fraisprincipale = convertion(monaieenvie[0].monaie, toprincipale[0].V1, "GNF", toprincipale[0].V2, fraisprincipale);
-    console.log(fraisprincipale)
+   
     }
    
     monaierecevoir = sommes;
@@ -684,9 +720,6 @@ exports.Unemonaie  =  [
     }
      }else{
       
-    console.log(fraisdepot)  
-    console.log(fraisretrait)
-    console.log(fraisprincipale);
       //SI c'est la meme monaie 
       res.send({fraisdepot : fraisdepot, fraisretrait : fraisretrait, fraisprincipale : fraisprincipale, lasomme: rt, ladevise: ladevise, devisereveur: ladevise, monaierecevoir: monaierecevoir, frais: frais})
   
@@ -769,8 +802,9 @@ exports.ClientInforRecupe  =  [
     var telephone = req.cookies.agencetelephone
     var email = req.cookies.agenceemail
     var paysid = req.cookies.agenceidpays
+    var agenceid = req.cookies.agenceid;
     var telephoneenvoyeur = req.params.telephoneenvoyeur;
-    var InfoClient = await Client.recupererInfo(telephoneenvoyeur)
+    var InfoClient = await Client.recupererInfo(telephoneenvoyeur , agenceid)
   if (InfoClient !== "" && !isEmpty(InfoClient) ) {
     if (req.cookies.agencelangue == "En") {
       res.send({InfoClient: InfoClient[0]}) 
@@ -890,10 +924,7 @@ async (req, res, next) => {
       var idclient = req.body.idclient;
    await   Client.ModifierInfoClient(expediteurnom, expediteurcontact, receveurnom, receveurcontact, numerocarte, idclient);
      console.log("Modification effectuer ")
-     res.send({valide : "Information Modifier "})
-
-      
- 
+     res.send({valide : "Information Modifier "})   
    }
  }
 ]
@@ -1758,6 +1789,55 @@ exports.FactureCompensationsAgenceshistorie =  [
        var m2 =  devise2
        var v2 = untaux[0].V2;
        var sommeconverti =   convertion(m1, v1, m2, v2, somme);
+       res.send({sommeconverti : sommeconverti})
+    }else{
+      console.log("inexistence")
+res.send({convertioninexiste : "La Convertion est  inexistant"})
+    }
+
+
+     } catch(e) {
+         console.log(e);
+         res.sendStatus(500);
+     }
+
+
+    }else{
+
+      res.redirect("/Agence/connection")
+    }
+ 
+     }
+ ]  
+ //Convertion d une monanaie vers une autre monaie plus frais
+ exports.ConvertionMonaiesPlusFrais  =  [
+  async (req, res) => {
+    
+    if (req.cookies.agencenom != null ) {
+      
+   try {  
+    
+    var somme = req.params.somme;
+    var devise1 = req.params.devise1;
+    var devise2 = req.params.devise2;
+   var untaux = await Taux.lestauxechanges(devise1, devise2);
+     
+    if ( !isEmpty(untaux)) {
+      var m1 =  devise1
+       var v1 =  untaux[0].V1;
+       var m2 =  devise2
+       var v2 = untaux[0].V2;
+        //Recuperont le Pourcentage de Frais D envoies d une Monaies
+    var letaux = await Tauxfraisenvoie.SelectTaux(m1)
+    var t = letaux[0].letaux;
+    
+     var lefrais = (somme * parseInt(t))/100;
+     //la somme a envoyer moin les frais
+     var sommemoinfrais = somme - lefrais;
+       var sommeconverti =   convertion(m1, v1, m2, v2, sommemoinfrais);
+     
+     console.log(lefrais)
+      
        res.send({sommeconverti : sommeconverti})
     }else{
       console.log("inexistence")

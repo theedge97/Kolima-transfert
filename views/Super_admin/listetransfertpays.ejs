@@ -1,11 +1,6 @@
-<!-- debut de head-->
 <%- include('head'); -%>
-
-
 <title>Administrateur || Kolima  Transfert</title>
 <link href="/assets/semantic/lib/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
- 
-
   <!-- fin de head-->
   <style>
     #blockmodifier
@@ -13,7 +8,6 @@
       display: none;
     }
   </style>
- 
 </head>
 <script src="/assets/semantic/lib/jquery.validate.js"></script>
 <script src="/assets/semantic/lib/moment.min.js"></script>
@@ -21,12 +15,7 @@
 <script src="/assets/semantic/lib/html2pdf.bundle.min.js"></script>
 <script src="/assets/semantic/js/jquery.formatCurrency.js" ></script>
 <script src="/assets/semantic/js/easy-number-separator.js"></script>
-
-
-<!-- debut  de menue-->
 <%- include('menue'); -%>
- 
-
 <!--fin de menue end-->
     <!-- **********************************************************************************************************************************************************
         MAIN CONTENT
@@ -216,9 +205,7 @@
   <!--script for this page-->
    <script src="/assets/semantic/lib/jquery.validate.js"></script>
    <script>
-  
-   
-     $().ready(function() {
+  $().ready(function() {
        // validate the comment form when it is submitted
        jQuery.validator.addMethod("phoneGuinee", function (phone_number, element) {
          phone_number = phone_number.replace(/\s+/g, "");
@@ -237,8 +224,6 @@
            }
          }
        });
-   
-   
        //code to hide topic selection, disable for demo
        var newsletter = $("#newsletter");
        // newsletter topics are optional, hide at first
