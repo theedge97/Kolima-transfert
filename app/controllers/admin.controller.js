@@ -7,16 +7,11 @@ const validator = require('express-validator');
 const { body ,validationResult  } = require('express-validator');
 const bcrypt = require("bcryptjs")//permet de hacher le mot de passe
 const saltRounds = 10;
-
-//const cookieParser = require('cookie-parser')
-
-//const bodyParser = require("body-parser");
 const cookieParser = require('cookie-parser');
 const { toLower, isEmpty, isArray, toInteger  } = require('lodash');
 //nos middelware
 app.use(bodyParser.urlencoded({ extended: false}))
 app.use(bodyParser.json())
-
 app.use(cookieParser());
 const Codeactivation = require("../models/superadmin/activationcode.models.js");
 const Superadmin = require("../models/superadmin/super_admin.models.js");
@@ -39,13 +34,11 @@ const  Ecriture = require('../models/superadmin/ecriture.models.js');
 const  Mvt = require('../models/superadmin/mouvement.models.js');
 const Tauxfraisenvoie = require('../models/superadmin/tauxfraisenvoie.models.js');
 const ListeTransfPays = require('../models/superadmin/listetransfertpays.models.js');
-
 //Inscription d'un administrateur
  exports.Inscription =  [
   /*
 ce middelware permet de creer un compte adminiatrateur
   */
-
  body('nom').isLength({ min: 3}).withMessage('Veuilez bien saisir un nom long').trim(),
  body('telephone').isNumeric().withMessage('Veuilez bien saisir un nombre').trim(),
  body('telephone').matches(/^6[1,2,5,6]{1}[0-9]{7}$/).withMessage('Veuilez bien saisir un numero valide').trim(),
@@ -55,12 +48,10 @@ ce middelware permet de creer un compte adminiatrateur
   if (value !== req.body.motdepasse1) {
     throw new Error('les mots de passe ne sont pas identique');
   }
-  
   // Indicates the success of this synchronous custom validator
   return true;
 }),
 async (req, res, next) => {
-
    // Extract the validation errors from a request.
    const errors = validator.validationResult(req);
    //les erreurs 
@@ -72,26 +63,20 @@ async (req, res, next) => {
      // There are errors. Render the form again with sanitized values/error messages.
      var erreur = errors.array();
      res.render('Super_admin/register', { erreur: erreur})
-     
      return;
    }
    else {
-     
       var nom = req.body.nom
       var email = req.body.email
       var motsdepasse = req.body.motsdepasse
       var telephone = req.body.telephone;
-      
       try {  
-        
        
          } catch(e) {
              console.log(e);
              res.sendStatus(500);
          }
       //verifier si le matricule existe dans la base de donner
- 
- 
    }
  }
 ]
@@ -104,7 +89,6 @@ ce middelware permet de creer un compte
  body('telephone').matches(/^6[1,2,5,6]{1}[0-9]{7}$/).withMessage('Veuilez bien saisir un numero valide').trim(),
  body('motdepasse', 'Veuillez saisir un mot de passe de plus de quatre caractere').isLength({ min: 4 }).trim(),
 async (req, res, next) => {
-
    // Extract the validation errors from a request.
    const errors = validator.validationResult(req);
    //les erreurs 
@@ -113,49 +97,32 @@ async (req, res, next) => {
      // There are errors. Render the form again with sanitized values/error messages.
      var erreur = errors.array();
      res.render('user/inscription', { erreur: erreur});
-     
      return;
    }
    else {
-    
     var telephone = req.body.telephone
     var motdepasse = req.body.motdepasse
-    
     try {  
-      
-
       var connect = await Superadmin.Trouvercompte(telephone)
-     
-    
       if (connect !== "" && !isEmpty(connect) ) {
       var vrai = bcrypt.compareSync(req.body.motdepasse, connect[0]['motdepasse']);
       console.log(vrai) 
       if (vrai == true) {
-        console.log('mioiooi')
-        
 res.cookie('adminnom', connect[0]['nom'], {maxAge: 86400000});
-
 res.cookie('admintelephone', connect[0]['telephone'], {maxAge: 86400000});
-
 res.cookie('adminemail', connect[0]['email'], {maxAge: 86400000});
       res.redirect("/Superadmin/Acceuil");
       }else{
         res.render('Super_admin/login', {erreurmotpasse: "Votre mot de passe ne correspond pas"})
-     
       } 
-     
     }else{
       res.render('Super_admin/login', {erreurnumero: "Votre numero ne correspond pas"})
-     
       }
-     
        } catch(e) {
            console.log(e);
            res.sendStatus(500);
        }
     //verifier si le matricule existe dans la base de donner
-
- 
    } 
  }
 ]
@@ -164,7 +131,6 @@ res.cookie('adminemail', connect[0]['email'], {maxAge: 86400000});
   /*
 ce middelware permet de creer un compte
   */
-
  body('nom').isLength({ min: 3}).withMessage('Veuilez bien saisir un nom long').trim(),
  body('code').isNumeric().withMessage('Veuilez saisir un code de type nombre').trim(),
  body('telephone').isNumeric().withMessage('Veuilez saisir un numéro téléphone').trim(),
@@ -174,12 +140,10 @@ ce middelware permet de creer un compte
   if (value !== req.body.motdepasse1) {
     throw new Error('les mots de passe ne sont pas identique');
   }
-  
   // Indicates the success of this synchronous custom validator
   return true;
 }),
 async (req, res, next) => {
-
    // Extract the validation errors from a request.
    const errors = validator.validationResult(req);
    //les erreurs 
@@ -192,18 +156,14 @@ async (req, res, next) => {
      var erreur = errors.array();
      console.log(erreur)
      res.render('Super_admin/register', {erreur: erreur})
-      
      return;
    }
    else {
-     
       var nom = req.body.nom
       var email = req.body.email
       var motsdepasse = req.body.motsdepasse
       var telephone = req.body.telephone;
-      
       var code = req.body.code
-    
       try {  
         var codeverifie  = await Codeactivation.VerifionsCode(code);
         console.log(codeverifie)
@@ -226,19 +186,13 @@ const admin = new Superadmin({
   email : req.body.email,
   motdepasse : hasher
 });
-
 res.cookie('adminnom', req.body.nom);
-
 res.cookie('admintelephone', req.body.telephone);
-
 res.cookie('adminemail', req.body.email);
-
-
 await Superadmin.inscription(admin);
         res.redirect("/Superadmin/Acceuil");
         console.log("c'est activer")
-      }
-       
+      }    
          } catch(e) {
              console.log(e);
              res.sendStatus(500);
@@ -250,23 +204,18 @@ await Superadmin.inscription(admin);
 //La Page de Creation d un Compte Administrateur
 exports.PageCreationCompte  =  [
   async (req, res) => {
-
    try {  
-    
     res.render('Super_admin/register')
      } catch(e) {
          console.log(e);
          res.sendStatus(500);
      }
- 
      }
  ]
  //Page de Connection de L administrateur
  exports.PageLogin  =  [
   async (req, res) => {
-
    try {  
-    
   res.render('Super_admin/login')
      } catch(e) {
          console.log(e);
@@ -284,9 +233,7 @@ exports.PageCreationCompte  =  [
        try {  
          res.clearCookie("adminnom");
          res.clearCookie("admintelephone");
-         res.clearCookie("adminemail");
-         
-             
+         res.clearCookie("adminemail");   
          res.redirect("/Superadmin/Login");
   
         } catch(e) {
