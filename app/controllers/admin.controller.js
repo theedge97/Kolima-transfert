@@ -511,7 +511,7 @@ retraitsommeparpays.forEach(element => {
   lessommeretrait.push(element['sommeretrait'])
   labelsretraitsommme.push(element['nompays'])
   });
-//Recuperons la somme total dedepot par pays
+//Recuperons la somme total dedepot par pays apas
 var depotsommeparpays = await Transaction.depotsommetransparpayshebdo();
 var labelsdepotsomme = Array();
 var lessommesdepots = Array();
