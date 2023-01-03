@@ -41,71 +41,71 @@
                 <div class="page-title text-primary mb-2 mb-sm-0">
                     <h1 class="text-dark">Saisie Comptables</h1>
                 </div>
-               
+
             </div>
         </div>
         <div class="row">
             <div class="align-items-center row">
                 <div id="erreurdeoperation" class="text-center bg-warning text-white offset-md-3 col-lg-4  py-3">
-                <h3>Saisie Incompatible </h3>  
+                <h3>Saisie Incompatible </h3>
                 </div>
-              </div> 
+              </div>
               <div class="align-items-center row">
                 <div id="sucessoperation" class="text-center bg-primary text-white offset-md-3 col-lg-4  py-3">
-                <h3>Operation Validé  </h3>  
+                <h3>Operation Validé  </h3>
                 </div>
                 <button class="btn btn-primary" id="spinerload" type="button" disabled>
                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                     Chargement...
                   </button>
-              </div> 
+              </div>
         </div>
-        
+
         <div class="row" >
-         
-          
+
+
             <div class="col-xxl-9 mt-5 col-lg-9">
                 <form method="post" id="operation" action="/Superadmin/AjoutOperationComptable" class="cmxform form-verticale style-form">
                    <div class="row">
                     <div class=" col-lg-4">
                         <input class=" form-control p-1" placeholder="Entrez le libellé d'ecriture " id="libecriture" name="libecriture" type="text">
-                      
+
                     </div>
                     <div class=" col-lg-4">
                         <input class=" form-control p-1"  id="datecriture" name="datecriture" type="date">
-                      
+
                     </div>
                     <div class=" col-lg-4">
                         <input class=" form-control p-1" placeholder="Entrez le numero de reference"  id="reference" name="reference" type="text">
-                      
+
                     </div>
                    </div>
                     <div class="row">
                         <label for="numeroagence" class="control-label text-dark  col-lg-offset-2 col-lg-4">Compte  :</label>
                         <label for="numeroagence" class="control-label text-dark  col-lg-offset-2 col-lg-4">Débit  :</label>
                         <label for="numeroagence" class="control-label text-dark  col-lg-offset-2 col-lg-4">Crédit :</label>
-                       
+
 
                     </div>
-                       
+
                    <div class="row" >
                     <div class="col-lg-4 col-sm-12">
-    
+
                           <input class=" form-control p-1" type="text" placeholder="selectionner le Compte" name="numcpte" list="cat">
                           <datalist id="cat">
-                            <% for(var i= 0 ; i < lescomptes.length; i++)  {%> 
+                            <% for(var i= 0 ; i < lescomptes.length; i++)  {%>
                                 <option  value="<%= lescomptes[i].numcpte %>"><%= lescomptes[i].numcpte %> : <%= lescomptes[i].intcompte %></option>
                                   <% } %>
                           </datalist>
                     </div>
-                    
+
                     <div class=" col-lg-4 col-sm-12">
                         <input class=" form-control p-1" placeholder="Entrez la somme" id="debit" name="debit" type="number" required>
-                      
+
                     </div>
                     <div class=" col-lg-4 col-sm-12">
                         <input class=" form-control p-1" placeholder="Entrez la somme" id="credit" name="credit" type="number" required>
-                      
+
                     </div>
 
                    </div>
@@ -118,20 +118,20 @@
             <div class="col-lg-3">
                 <button  id="ajouter" class="btn btn-primary">Ajoutez Une ligne</button>
             </div>
-          
-        </div>    
+
+        </div>
     </section>
     </section>
     <!--main content end-->
-    
+
   </section>
   <!-- js placed at the end of the document so the pages load faster -->
   <script src="/assets/semantic/lib/jquery/jquery.min.js"></script>
   <script src="/assets/semantic/lib/jquery.validate.js"></script>
 
   <script>
- 
-  
+
+
     $().ready(function() {
       // validate the comment form when it is submitted
       jQuery.validator.addMethod("phoneGuinee", function (phone_number, element) {
@@ -179,57 +179,57 @@
          }
         },
         submitHandler: function(form){
-            $("#spinerload").css({ 
+            $("#spinerload").css({
                       display: 'block'
                     });
-     
+
 $.ajax({
     url: form.action,
     type: form.method,
     data: $(form).serialize(),
     success: function(response) {
-     
-         if (response.erreurdeoperation) {  
-                 $("#erreurdeoperation").css({ 
+
+         if (response.erreurdeoperation) {
+                 $("#erreurdeoperation").css({
                       display: 'block'
                     });
-                    $("#spinerload").css({ 
+                    $("#spinerload").css({
                       display: 'none'
                     });
                     setTimeout(function () {
-                        $("#erreurdeoperation").css({ 
+                        $("#erreurdeoperation").css({
                       display: 'none'
                     });
                     }, 3000);
-         
-                 }  
-                      
-                 if (response.sucessoperation) {  
-                 $("#sucessoperation").css({ 
+
+                 }
+
+                 if (response.sucessoperation) {
+                 $("#sucessoperation").css({
                       display: 'block'
                     });
-                    $("#spinerload").css({ 
+                    $("#spinerload").css({
                       display: 'none'
                     });
                     setTimeout(function () {
-                        $("#sucessoperation").css({ 
+                        $("#sucessoperation").css({
                       display: 'none'
-                    }); 
+                    });
                     window.location.href = "/Superadmin/SaissieComptables";
-                   
+
                 }, 3000);
-         
-                 }       
-        
-        
-                   }            
-      });       
+
+                 }
+
+
+                   }
+      });
 }
 
 
       });
-  
-  
+
+
       //code to hide topic selection, disable for demo
       var newsletter = $("#newsletter");
       // newsletter topics are optional, hide at first
@@ -241,19 +241,19 @@ $.ajax({
         topics[this.checked ? "removeClass" : "addClass"]("gray");
         topicInputs.attr("disabled", !this.checked);
       });
-  // Recuperer la liste d'unne ville correspondant a un pays 
-  
- 
+  // Recuperer la liste d'unne ville correspondant a un pays
+
+
 
 
     });
     </script>
           <script>
               function ajouterligne() {
-  //Creer la ligne                 
+  //Creer la ligne
   var row = document.createElement('div')
   row.setAttribute("class", "row");
-  //Creation de la premiere div 
+  //Creation de la premiere div
   var div1 = document.createElement('div')
   div1.setAttribute("class", "col-lg-4");
   var input1 = document.createElement('input')
@@ -265,7 +265,7 @@ $.ajax({
 
   div1.appendChild(input1);
   row.appendChild(div1);
-  
+
   //Deuxieme div
   var div2 = document.createElement('div')
   div2.setAttribute("class", "col-lg-4");
@@ -274,7 +274,7 @@ $.ajax({
   input2.setAttribute("type", "text");
   input2.setAttribute("name", "debit");
   input2.setAttribute("placeholder", "Entrez la somme")
- 
+
   div2.appendChild(input2);
   row.appendChild(div2);
    //Troissieme div
@@ -295,11 +295,11 @@ $.ajax({
 
               }
                $('#ajouter').on('click', function(e){
-              
+
               ajouterligne()
  })
           </script>
-    
+
   <script src="/assets/semantic/lib/bootstrap/js/bootstrap.min.js"></script>
   <script class="include" type="text/javascript" src="/assets/semantic/lib/jquery.dcjqaccordion.2.7.js"></script>
   <script src="/assets/semantic/lib/jquery.scrollTo.min.js"></script>
@@ -309,7 +309,7 @@ $.ajax({
   <script src="/assets/semantic/lib/common-scripts.js"></script>
   <script type="text/javascript" src="/assets/semantic/lib/gritter/js/jquery.gritter.js"></script>
   <script type="text/javascript" src="/assets/semantic/lib/gritter-conf.js"></script>
-  
+
 </body>
 
 </html>

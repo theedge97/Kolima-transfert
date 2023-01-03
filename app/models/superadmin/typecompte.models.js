@@ -1,7 +1,7 @@
 
 const sql = require("../db.js");
 
-// constructor 
+// constructor
 const TypeCompte = function(cpte) {
   this.libcpte = cpte.libcpte;
 };

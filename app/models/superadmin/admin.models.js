@@ -46,5 +46,5 @@ const Client = function(leclient) {
       });
   });
   };
-  
+
   module.exports = Client;

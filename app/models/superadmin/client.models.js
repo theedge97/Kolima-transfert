@@ -2,7 +2,7 @@
 const sql = require("../db.js");
 
 
-// constructore 
+// constructore
 const Client = function(leclient) {
     this.Nomexpediteur = leclient.Nomexpediteur;
     this.Contactexpediteur = leclient.Contactexpediteur;
@@ -13,14 +13,14 @@ const Client = function(leclient) {
     this.Agenceidlier = leclient.Agenceidlier;
     this.paysdestionation = leclient.paysdestionation;
     this.villedestination = leclient.villedestination;
-    
-  }; 
-  
+
+  };
+
 
 //Inscription du client
- 
+
   Client.inscription = (newClient) => {
-    
+
     return new Promise((resolve, reject)=>{
       sql.query("INSERT INTO client SET ?", newClient,  (error, enregistre)=>{
           if(error){
@@ -30,10 +30,10 @@ const Client = function(leclient) {
       });
   });
   };
-  //Modificattion des Informations du Client lors d úne Transaction 
-  
+  //Modificattion des Informations du Client lors d úne Transaction
+
   Client.ModifierInfoClient = (nomexpediteur, contactexpediteur, nomreceveur, contactreceveur, numcarte , idclient ) => {
-    
+
     return new Promise((resolve, reject)=>{
       sql.query(`UPDATE client SET  Nomexpediteur= "${nomexpediteur}", Contactexpediteur = "${contactexpediteur}", Nomreceveur = "${nomreceveur}", Contactreceveur= "${contactreceveur}", Carteidentite= 1, Numerocarte="${numcarte}" WHERE idclient = ${idclient}  `,  (error, enregistre)=>{
           if(error){
@@ -43,7 +43,7 @@ const Client = function(leclient) {
       });
   });
   };
-  //Recuperation des Information de L envoyeur 
+  //Recuperation des Information de L envoyeur
   Client.recupererInfo =  ( telephoneenvoyeur , idagence) => {
     return new Promise((resolve, reject)=>{
       sql.query(`SELECT Nomexpediteur, Contactexpediteur ,Nomreceveur , Contactreceveur , Numerocarte FROM client WHERE Contactexpediteur = "${telephoneenvoyeur}"  AND Agenceidlier =${idagence}`,  (error, employees)=>{
@@ -54,7 +54,7 @@ const Client = function(leclient) {
       });
   });
   };
-  //Selectioner les Numero des Clients  dun Pays 
+  //Selectioner les Numero des Clients  dun Pays
   Client.SelectClientAgenceid = (idagence) => {
     return new Promise((resolve, reject)=>{
       sql.query(`SELECT * FROM client  WHERE Agenceidlier = ${idagence} `, (error, employees)=>{
@@ -65,7 +65,7 @@ const Client = function(leclient) {
       });
   });
   };
-  //Recuperer les informations du client et son id 
+  //Recuperer les informations du client et son id
   Client.Recupereridduclient = (idagence , expediteur , receveur ) => {
     return new Promise((resolve, reject)=>{
       sql.query(`SELECT 	idclient FROM client  WHERE Agenceidlier = ${idagence} AND 	Contactexpediteur = "${expediteur}" AND Contactreceveur = "${receveur}" `, (error, employees)=>{
@@ -76,5 +76,5 @@ const Client = function(leclient) {
       });
   });
   };
-  
+
   module.exports = Client;

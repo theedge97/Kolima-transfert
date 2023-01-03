@@ -9,7 +9,7 @@
   }
 </style>
   <!-- fin de head-->
- 
+
 </head>
 <script src="/assets/semantic/lib/jquery.validate.js"></script>
 <script src="/assets/semantic/lib/moment.min.js"></script>
@@ -28,18 +28,18 @@
     <!-- debut du body-->
     <section id="main-content">
       <section class="wrapper">
-      
+
         <div class="row mt-5">
-         
+
             <div class="col-lg-12  ">
-             
+
               <div class="row account-contant">
-                            
+
                 <div class="col-12">
                     <div class="card card-statistics">
                         <div class="card-body p-0">
                             <div class="row no-gutters">
-                                
+
                                 <div class="col-xl-12 col-md-12 col-12">
                                     <div class="page-account-form">
                                         <div class="form-titel border-bottom p-3">
@@ -55,11 +55,11 @@
                                                   <div class="modal-body">
                                                     <p>Le Taux de Convertion de Ce Pays n' existe pas . </p>
                                                   </div>
-                                                 
+
                                                 </div>
                                               </div>
                                             </div>
-                                            
+
 
                                             <!--Fin Boite Modale -->
                                             <!--Boite modale innexistance de Frais envoie erreurfrais -->
@@ -73,7 +73,7 @@
                                                   <div class="modal-body">
                                                     <p>Cette  somme ne peut pas etre envoyer car elle ne figure pas dans l'intervalle des sommes envoyer. </p>
                                                   </div>
-                                                 
+
                                                 </div>
                                               </div>
                                             </div>
@@ -89,7 +89,7 @@
                                                   <div class="modal-body">
                                                     <p>Votre Solde est Insuffisant . Vous ne pouvez pas envoyer cette somme . Veuillez Contacter l'Administrateur pour recharger votre Compte ....! </p>
                                                   </div>
-                                                 
+
                                                 </div>
                                               </div>
                                             </div>
@@ -99,7 +99,7 @@
                                              <!--BOite modale Imprimer Facture du Client -->
 
   <!-- Modal -->
- 
+
   <!-- Modal -->
   <div class="modal  fade" id="facture" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable  modal-xl">
@@ -112,7 +112,7 @@
            <div>
             <div class="row">
               <div class="col-lg-6 col-sm-6">
-                <span id="envoiedate"></span> 
+                <span id="envoiedate"></span>
               </div>
             <div class="col-lg-6 col-sm-6 text-rigth">
               <span >Reçus d'envoie </span>
@@ -130,7 +130,7 @@
                   <p><span>Type de pièce : <span id="envoietypepiece">Ci</span> </span> <span>Numéro de la pièce : <span id="envoienumpiece"></span></span></p>
                 </div>
              </div>
-  
+
              <div class="row border pb-2 pe-2 ps-2 m-1 rounded-2">
               <h4>Bénéficiaire</h4>
               <div class="col-lg-12">
@@ -138,7 +138,7 @@
                  <p>Nom et Prenom : <span id="envoienombenef"> </span></p>
                  </div>
             </div>
-            
+
             <div class="row border pb-2 pe-2 ps-2 m-1 rounded-2">
               <h4>Transaction </h4>
               <div class="col-lg-12">
@@ -158,18 +158,18 @@
               <div class="col-lg-6 col-sm-6 text-right">
                 Client
               </div>
-  
+
             </div>
-  
-                   
-  
+
+
+
              </div>
            </div>
           -------------------------------------------------------------------------------------------------------------------------------------------------------
            <div>
             <div class="row">
               <div class="col-lg-6 col-sm-6">
-                <span id="envoiedate1"></span> 
+                <span id="envoiedate1"></span>
               </div>
             <div class="col-lg-6 col-sm-6  text-rigth">
               <span>Reçus d'envoie </span>
@@ -187,7 +187,7 @@
                   <p><span>Type de pièce : <span id="envoietypepiece1">Ci</span> </span> <span>Numero de la pièce : <span id="envoienumpiece1"> </span></span></p>
                 </div>
              </div>
-  
+
              <div class="row border pb-2 pe-2 ps-2 m-1 rounded-2">
               <h4>Bénéficiaire</h4>
               <div class="col-lg-12">
@@ -195,7 +195,7 @@
                  <p>Nom et Prenom : <span id="envoienombenef1"> </span></p>
                  </div>
             </div>
-            
+
             <div class="row border pb-2 pe-2 ps-2 m-1 rounded-2">
               <h4>Transaction </h4>
               <div class="col-lg-12">
@@ -210,19 +210,19 @@
             <hr class="mt-1">
             <div class="row">
               <div class="col-lg-6 col-sm-6">
-                Caissier 
+                Caissier
               </div>
               <div class="col-lg-6 col-sm-6 text-right">
                 Client
               </div>
-  
+
             </div>
-  
-                   
-  
+
+
+
              </div>
            </div>
-           
+
 
         </div>
         <div class="modal-footer">
@@ -245,7 +245,7 @@
                                                   <div class="modal-body">
                                                     <p>Votre Transaction a été validé. </p>
                                                   </div>
-                                                 
+
                                                 </div>
                                               </div>
                                             </div>
@@ -254,7 +254,7 @@
                                         <div class="p-4">
                                             <form id="signupForm" class="cmxform form-horizontal style-form" id="signupForm" method="post" action="/Caissier/envoie">
                                                 <div class="row ">
-                                                    
+
                                                     <div class="form-group col-md-4 col-md-offset-2">
                                                       <label for="expediteurnom" class="control-label ">Nom de l'Expediteur :</label>
                                                       <input type="text" class="form-control" name="expediteurnom" id="expediteurnom" placeholder="Entrez le nom de l'Expediteur ">
@@ -273,52 +273,52 @@
                                             </div>
                                                     <div class="form-group col-md-4 col-md-offset-1">
                                                       <label for="paysdestination" class="control-label ">Selectionnez le pays destination</label>
-                                                     
+
                                                         <% if(typeof lespays !== "undefined"){ %>
                                                           <select    class="form-control " id="paysdestination" name="paysdestination">
-                                                          
+
                                                                    <option>Veuillez selectionner un pays </option>
-                                                                    <% for(var i= 0 ; i < lespays.length; i++)  {%> 
+                                                                    <% for(var i= 0 ; i < lespays.length; i++)  {%>
                                                                     <option  value="<%= lespays[i].idpays %>"><%= lespays[i].pays %></option>
                                                                       <% } %>
-                                                                    
-                                                               
+
+
                                                           </select>
                                                           <% } %>
-                                                      
+
                                                     </div>
                                                     <div class="form-group col-md-4 col-md-offset-1">
                                                       <label for="villedestination" class="control-label ">Selectionnez la ville de destination</label>
-                                                     
+
                                                         <select    class="form-control " id="villedestination" name="villedestination">
-                                                                
-                                                               
+
+
                                                           </select>
-                                                         
-                                                      
+
+
                                                     </div>
                                                     <div class="form-group col-md-4 col-md-offset-1">
                                                       <label for="montant" class="control-label " >Montant a Envoyé : </label>
                                                       <input type="text" class="form-control number-separator" id="montantaenvoyer"   placeholder="Entrez le montant a envoyé ">
-                                                      
+
                                                       <input type="hidden"  id="montant" name="montant"  class="form-control p-3"  required>
                                                     </div>
                                                     <div class="form-group col-md-4 col-md-offset-1">
                                                       <label for="montant" class="control-label " >Frais d'envoie  : </label>
-                                                      <input id="hfrais" name="hfrais" class="form-control number-separator" readonly> 
-                                                      <input  type="hidden" id="frais" name="frais" class="form-control" readonly> 
+                                                      <input id="hfrais" name="hfrais" class="form-control number-separator" readonly>
+                                                      <input  type="hidden" id="frais" name="frais" class="form-control" readonly>
                                                       <input type="hidden" name="lesfrais" id="lesfrais"   />
                                                     </div>
                                                     <div class="form-group col-md-4 col-md-offset-1">
                                                       <label for="montant" class="control-label " >Montant a Recevoir en dévise <span id="dev"></span> : </label>
-                                                      <input id="hlasomme"   name="hmonaieenvoie" class="form-control number-separator" readonly> 
-                                              
-                                                      <input type="hidden"  id="lasomme"   name="monaieenvoie" class="form-control" readonly> 
+                                                      <input id="hlasomme"   name="hmonaieenvoie" class="form-control number-separator" readonly>
+
+                                                      <input type="hidden"  id="lasomme"   name="monaieenvoie" class="form-control" readonly>
                                                     </div>
                                                     <div class="form-group col-md-4 col-md-offset-1">
                                                       <label for="montant" class="control-label " >Montant a recevoir en monaie locale  <span id="devisereveur"></span> : </label>
                                                       <input id="hmonaierecevoir" name="hmonaierecevoir number-separator" class="form-control" readonly>
-                                                    
+
                                                       <input type="hidden" id="monaierecevoir" name="monaierecevoir" class="form-control" readonly>
                                                       <input type="hidden" id="fraisdepot" name="fraisdepot" class="form-control" >
                                                       <input type="hidden" id="fraisretrait" name="fraisretrait" class="form-control" >
@@ -330,73 +330,73 @@
                                                   </div>
                                                   <div class="form-group col-md-4 col-md-offset-1">
                                                     <label for="piece" class="control-label ">Selectionnez la condition de retrait</label>
-                                                   
-                                                      
+
+
                                                         <select  class="form-control target" name="piece">
-                                                        
-                                                          
-                                                                  
+
+
+
                                                                   <option>--------</option>
                                                                   <option value="1" id="avec" >Avec une pièce</option>
                                                                   <option value="0"  id="sans" >Sans pièce</option>
-                                                                
-                                                                  
-                                                             
+
+
+
                                                         </select>
-                                                     
-                                                    
+
+
                                                   </div>
                                                   <div id="carte" class="form-group col-md-4 col-md-offset-1">
                                                     <label for="numerocarte" class="control-label ">Numéro de la carte : </label>
                                                     <input type="text"  class="form-control" id="numerocarte" name="numerocarte" placeholder="Entrez le Numero de la carte">
                                                 </div>
-                                                  
-                                                  
-                                                 
-                                                    
+
+
+
+
                                                 </div>
                                                 <div class="form-group">
                                                   <div class="col-lg-offset-2 col-lg-9">
                                                     <button id="enregistrer" class="btn btn-primary" type="submit">Enregistrer</button>
                                                     <button id="can" class="btn btn-warning" type="button">Cancel</button>
-                                                  
+
                                                   </div>
                                                 </div>
                                             </form>
                                             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#facture">Facture </button>
-                                           
 
-                                                
-                                     
+
+
+
                                         </div>
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
       <!--Fin de notification d'erreur-->
-     
+
             </div>
             <!-- /col-lg-12 -->
           </div>
-          
+
           <!-- Button trigger modal -->
 
         <!-- /row -->
       </section>
     </section>
     <!--main content end-->
-    
+
   </section>
   <!-- js placed at the end of the document so the pages load faster -->
-  
+
   <script>
-             
+
     document.querySelector("#factureimprimer").addEventListener("click", ()=>{
-       
+
         const invoice = this.document.getElementById("factureenvoie");
         var opt = {
 margin:       0.1,
@@ -408,16 +408,16 @@ jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' },
 pagebreak: {mode: 'avoid-all', before:'#pageX'}
 };
         html2pdf().from(invoice).set(opt).save();
-        
+
 setTimeout(function () {
   window.location.href = "/Caissier/EnvoieArgent";
                   }, 1000);
-        
+
     })
 
 
 
-    
+
 
 
 </script>
@@ -428,12 +428,12 @@ setTimeout(function () {
     resultInput: '#montant',
   })
   //
-  
+
 </script>
 
   <script>
 
-    
+
  const toastTrigger = document.getElementById('liveToastBtn')
 const toastLiveExample = document.getElementById('liveToast')
 if (toastTrigger) {
@@ -444,13 +444,13 @@ if (toastTrigger) {
   })
 }
 
-  
-    $().ready(function() {
-      
-      
-$( "#fermer" ).click(function() { 
 
-  
+    $().ready(function() {
+
+
+$( "#fermer" ).click(function() {
+
+
   $('#facture').modal('show')
 
 })
@@ -545,31 +545,31 @@ $( "#fermer" ).click(function() {
             required: "veuillez recharger la page"
           },
           numerocarte: {
-            required: "Veuillez fournir un numero de carte",  
+            required: "Veuillez fournir un numero de carte",
             minlength: "Votre un numero de carte  superieur a 2 caractere "
           }
         },
         submitHandler: function(form){
-     
+
      $.ajax({
          url: form.action,
          type: form.method,
          data: $(form).serialize(),
          success: function(response) {
           if(response.soldeinsuffissant){
-//Solde Insuffissant 
+//Solde Insuffissant
 
 
 $('#soldeinsuffissant').modal('show')
           }
-          
-              if (response.nomagence) { 
+
+              if (response.nomagence) {
                 var leclient = response.client;
                 var transac = response.transac;
-                    
-                
+
+
                      //$("#ag").html(response.nomagence);
-                      
+
                      $("#envoienomenvoyeur").html(leclient['Nomexpediteur']);
                      $("#envoienomenvoyeur1").html(leclient['Nomexpediteur']);
                      $("#envoietelephoneenvoyeur").html(leclient['Contactexpediteur']);
@@ -577,68 +577,68 @@ $('#soldeinsuffissant').modal('show')
                      $("#envoiepaysbenef").html(response.destinationpays);
                      $("#envoiepaysbenef1").html(response.destinationpays);
                      $("#envoiepaysenvoie").html(response.envoiepays);
-                     $("#envoiepaysenvoie1").html(response.envoiepays); 
+                     $("#envoiepaysenvoie1").html(response.envoiepays);
                      $("#envoienombenef1").html(leclient['Nomreceveur']);
                      $("#envoienombenef").html(leclient['Nomreceveur']);
-                     $("#envoietelephonebenef").html(leclient['Contactreceveur']);  
-                     $("#envoietelephonebenef1").html(leclient['Contactreceveur']);   
+                     $("#envoietelephonebenef").html(leclient['Contactreceveur']);
+                     $("#envoietelephonebenef1").html(leclient['Contactreceveur']);
                      $("#envoiecode").html(transac['Codetransfert']);
                      $("#envoiecode1").html(transac['Codetransfert']);
-                     //Envoie argent 
+                     //Envoie argent
                      var sommeenvoie = new Intl.NumberFormat('gn-GN').format(transac['Sommeenvoie'])
                     //asaa  Niisasa
                     var montantdevise = new Intl.NumberFormat('gn-GN').format(transac['montantdevise'])
-                     
-                     $("#envoiemontanenvoyer").html(montantdevise);       
-                     $("#envoiemontanenvoyer1").html(montantdevise);  
-                     //Gabolo 
+
+                     $("#envoiemontanenvoyer").html(montantdevise);
+                     $("#envoiemontanenvoyer1").html(montantdevise);
+                     //Gabolo
                      var frai = new Intl.NumberFormat('gn-GN').format(transac['Frais'])
-                    
+
                      $("#envoiecomission").html(frai);
                      $("#envoiecomission1").html(frai);
-                     //Frais 
-                     $("#envoiesommetotal").html(sommeenvoie); 
-                     $("#envoiesommetotal1").html(sommeenvoie);  
+                     //Frais
+                     $("#envoiesommetotal").html(sommeenvoie);
+                     $("#envoiesommetotal1").html(sommeenvoie);
                       //envoiemontantbenef1
                      var montantlocale = new Intl.NumberFormat('gn-GN').format(transac['montantlocale'])
-                    
+
                      $("#envoiemontantbenef").html(montantlocale);
-                     $("#envoiemontantbenef1").html(montantlocale);  
-                     //Nom Agence 
-                     
-                     $("#nomagence").html(response.nomagence); 
-                     
-                     $("#nomagence1").html(response.nomagence); 
+                     $("#envoiemontantbenef1").html(montantlocale);
+                     //Nom Agence
+
+                     $("#nomagence").html(response.nomagence);
+
+                     $("#nomagence1").html(response.nomagence);
                      //envoiedate
-                     
+
                     var dateenvoie =  moment(transac['Datetransaction']).format('DD / MM / YYYY ');
-                    
-                    $("#envoiedate").html(dateenvoie); 
-                    
-                    $("#envoiedate1").html(dateenvoie); 
-                    //Envoie de la monaie 
+
+                    $("#envoiedate").html(dateenvoie);
+
+                    $("#envoiedate1").html(dateenvoie);
+                    //Envoie de la monaie
                     //envoietelephonebenef1
-                    $("#envoiedate1").html(dateenvoie); 
+                    $("#envoiedate1").html(dateenvoie);
                     //
 
-                    
 
-                     
+
+
             $('#facture').modal('show')
             $('#validation').modal('show')
-                     
-                    }  
-             
-                       
-             
-             
-                        }            
-           });       
+
+                    }
+
+
+
+
+                        }
+           });
      }
-     
+
       });
-  
-  
+
+
       //code to hide topic selection, disable for demo
       var newsletter = $("#newsletter");
       // newsletter topics are optional, hide at first
@@ -656,17 +656,17 @@ $('#soldeinsuffissant').modal('show')
   <script src="/assets/semantic/lib/bootstrap/js/bootstrap.min.js"></script>
   <script>
     //scripte pour afficher ou non afficher info client
-   
+
  $( ".target" ).change(function() {
- 
+
   if(this.value == "0"){
-    $("#carte").css({ 
+    $("#carte").css({
                       display: 'none'
                     });
 
   }
   if(this.value == "1"){
-    $("#carte").css({ 
+    $("#carte").css({
                       display: 'block'
                     });
   }
@@ -674,8 +674,8 @@ $('#soldeinsuffissant').modal('show')
 
 
 $( "#paysdestination" ).change(function() {
-  
-  var url = "/Caissier/" + this.value; 
+
+  var url = "/Caissier/" + this.value;
 
 
    $.ajax({
@@ -684,9 +684,9 @@ $( "#paysdestination" ).change(function() {
         dataType: "json",
          success: function (response){
            if(response.lesvilles !== ""){
-            
+
       var len =  response.lesvilles.length;
- 
+
       $('#villedestination').html(" ")
  for (var  i = 0; i < len; i++) {
   var t = $('<option  ></option>');
@@ -697,8 +697,8 @@ $( "#paysdestination" ).change(function() {
 
  }
            }
-        
-    
+
+
          }
   });
 });
@@ -706,8 +706,8 @@ $( "#paysdestination" ).change(function() {
 $( "#montantaenvoyer" ).blur(function() {
  var paysid = $('#paysdestination').val();
  var montant = $('#montant').val();
- var url = "/Caissier/monaiesans/" + montant + "/" + paysid; 
-  
+ var url = "/Caissier/monaiesans/" + montant + "/" + paysid;
+
 
    $.ajax({
         type: "GET",
@@ -715,40 +715,40 @@ $( "#montantaenvoyer" ).blur(function() {
         dataType: "json",
          success: function (response){
           if(response.soldeinsuffissant){
-//Solde Insuffissant 
+//Solde Insuffissant
 
 
 $('#soldeinsuffissant').modal('show')
           }
            if(response.lasomme !== "" && response.lasomme ){
-             
+
             var lasomme = new Intl.NumberFormat('gn-GN').format(response.lasomme)
             $('#hlasomme').val(lasomme)
             $('#lasomme').val(response.lasomme)
-            
+
             $('#dev').html(response.ladevise)
             //monaierecevoir
             var monaierecevoir = new Intl.NumberFormat('gn-GN').format(response.monaierecevoir)
-            
+
             $('#hmonaierecevoir').val(monaierecevoir);
-            
-            
+
+
             $('#fraisprincipale').val(response.fraisprincipale);
-            
+
             $('#fraisretrait').val(response.fraisretrait);
-            
+
             $('#fraisdepot').val(response.fraisdepot);
             $('#monaierecevoir').val(response.monaierecevoir);
-            //Frais 
+            //Frais
             var frais = new Intl.NumberFormat('gn-GN').format(response.frais)
-           
+
             $('#hfrais').val(frais);
             $('#frais').val(response.frais);
             //devisereveur
             $('#devisereveur').html(response.devisereveur);
-          
+
             $('#envoiemonaiebenf').html(response.devisereveur);
-            
+
             $('#nj').html(response.devisereveur);
             //totalmonaie1
             $('#totalmonaie').html(response.ladevise);
@@ -758,41 +758,41 @@ $('#soldeinsuffissant').modal('show')
             //lamonaie1
             $('#lamonaie').html(response.ladevise);
             $('#lamonaie1').html(response.ladevise);
-            
+
             //lesfrais
             $('#lesfrais').val(response.frais);
-            
+
 
            }
-          
+
            if (response.erreurpays) {
              //gritter-notice-wrapper
-             $("#erreurpays").css({ 
+             $("#erreurpays").css({
                       display: 'block'
                     });
                     $('#ers').html(response.erreurpays);
                     setTimeout(function () {
-              $("#erreurpays").css({ 
+              $("#erreurpays").css({
                       display: 'none'
                     });
                   }, 5000);
            }
            if (response.erreurtaux) {
             //inexistance du Taux de Convertion
-            
-            
+
+
             $('#erreurtaux').modal('show')
-            
+
            }
            //erreurfrais
            if (response.erreurfrais) {
             //inexistance du Taux de Convertion
-            
-            
+
+
             $('#erreurfrais').modal('show')
-            
+
            }
-    
+
          }
   });
 });
@@ -803,7 +803,7 @@ $('#soldeinsuffissant').modal('show')
             const invoice = this.document.getElementById("lenvoie");
 
                  //si le compte n'est pas engistrer
-          
+
 
             var opt = {
   margin:       0.5,
@@ -817,10 +817,10 @@ html2pdf().from(invoice).set(opt).save();
 setTimeout(function () {
   window.location.href = "/Caissier/EnvoieArgent";
                   }, 1000);
-           
-            
+
+
         })
-    
+
 </script>
   <script class="include" type="text/javascript" src="/assets/semantic/lib/jquery.dcjqaccordion.2.7.js"></script>
   <script src="/assets/semantic/lib/jquery.scrollTo.min.js"></script>
@@ -831,9 +831,9 @@ setTimeout(function () {
   <script type="text/javascript" src="/assets/semantic/lib/gritter/js/jquery.gritter.js"></script>
   <script type="text/javascript" src="/assets/semantic/lib/gritter-conf.js"></script>
   <!--script for this page-->
-  
-  
-  
+
+
+
 </body>
 
 </html>

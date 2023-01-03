@@ -8,7 +8,7 @@ const sql = require("../db.js");
 const Codentreprise = function(lecode) {
     this.code = lecode.code;
   };
-  
+
   Codentreprise.verifier =  ( codeid) => {
     return new Promise((resolve, reject)=>{
       sql.query(`SELECT * FROM codeentreprise WHERE code = ${codeid} `,  (error, employees)=>{
@@ -19,5 +19,5 @@ const Codentreprise = function(lecode) {
       });
   });
   };
-  
+
   module.exports = Codentreprise;

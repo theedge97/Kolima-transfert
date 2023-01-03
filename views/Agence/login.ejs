@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="author" content="Ammar">
   <meta name="keyword" content="">
-  
+
 
   <!-- Favicons -->
   <link href="/assets/semantic/img/favicon.png" rel="icon">
@@ -17,21 +17,20 @@
  <!--external css-->
   <link href="/assets/semantic/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
   <!-- Custom styles for this template -->
-  <link href="/assets/semantic/css/style.css" rel="stylesheet">
   <link href="/assets/semantic/css/style-responsive.css" rel="stylesheet">
   <link href="/assets/semantic/css/bootstrap.css" rel="stylesheet">
   <link href="/assets/semantic/css/bootstrap-grid.min.css" rel="stylesheet">
 
-  
+
   <script src="/assets/semantic/lib/jquery-1.9.1.js"></script>
-  
+
 <script src="/assets/semantic/js/bootstrap.min.js"></script>
 <script src="/assets/semantic/js/bootstrap.bundle.min"></script>
   <link href="/assets/semantic/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
   <!-- Custom styles for this template -->
   <link href="/assets/semantic/css/style.css" rel="stylesheet">
   <link href="/assets/semantic/css/style-responsive.css" rel="stylesheet">
-  
+
   <style>
     #notifi{
 text-align: left;
@@ -43,12 +42,12 @@ border-radius: 5px;
 color: #ffffff;
 background-color: #ffca18;
 border-color: #ffca18;
-position: absolute; 
+position: absolute;
 top: 10%;
 display: none;
     }
     #agencesuspense{
-     
+
 text-align: left;
 font-size: 17px;
 margin-top: 5px;
@@ -57,7 +56,7 @@ padding: 5px;
 border-radius: 5px;
 color: #ffffff;
 background-color: #f30808;
-border-color:  #f30808;   
+border-color:  #f30808;
     }
 #erreur
 {
@@ -70,7 +69,7 @@ border-radius: 5px;
 color: #ffffff;
 background-color: #f30808;
 border-color:  #f30808;
-position: absolute; 
+position: absolute;
 top: 10%;
 display: block;
     }
@@ -92,35 +91,35 @@ display: block;
             <form class="form-login" >
               <select id="changelangue" class="form-control p-3">
                 <option value="Fr" >FR</option>
-                
+
                 <option value="En ">EN</option>
-                
+
                 <option value="Al">ALL</option>
               </select>
             </form>
-             
+
          </div>
       </div>
       <div class="row">
-        
+
         <% if(typeof agencesuspense !== "undefined"){ %>
           <div id="agencesuspense" class="col-lg-offset-3   col-md-offset-4 col-sm-11 col-xs-12 col-md-6 col-lg-5 ">
             <h2><%= agencesuspense %></h2>
           </div>
-          
+
           <% } %>
           <% if(typeof erreurmotpasse !== "undefined"){ %>
             <div id="notifi" class="col-lg-offset-3   col-md-offset-4 col-sm-11 col-xs-12 col-md-6 col-lg-4 ">
               <h2><%= erreurmotpasse %></h2>
             </div>
-            
+
             <% } %>
           <% if(typeof erreurnumero !== "undefined"){ %>
             <div id="erreur" class="col-lg-offset-3   col-md-offset-4 col-sm-11 col-xs-12 col-md-6 col-lg-4 ">
               <h2><%= erreurnumero %></h2>
             </div>
             <% } %>
-            
+
                                             <!--Modification de Solde -->
                                             <div id="modiflangue" class="modal" tabindex="-1">
                                               <div class="modal-dialog">
@@ -132,12 +131,12 @@ display: block;
                                                   <div class="modal-body">
                                                     <h3>Langue Modifier avec sucees....! </h3>
                                                   </div>
-                                                 
+
                                                 </div>
                                               </div>
                                             </div>
                                             <!--Fin Boite MOdale-->
-            
+
           </div>
       <form class="form-login" method="post" id="signupForm" action="/Agence/connection">
         <h2 class="form-login-heading">se connecter maintenant</h2>
@@ -145,11 +144,11 @@ display: block;
           <input type="tel" name="telephone" id="telephone" class="form-control" placeholder="Entrez votre numéro de téléphone" autofocus>
           <br>
           <input type="password" name="motdepasse" id="motdepasse" class="form-control mt-2" placeholder=" Entrez votre Mot de passe"><br>
-         
+
           <button class="btn btn-theme btn-block"  type="submit"><i class="fa fa-lock"></i> SE CONNECTER</button>
           <hr>
-         
-          
+
+
         </div>
         <!-- Modal -->
         <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
@@ -182,8 +181,8 @@ display: block;
   <script type="text/javascript" src="/assets/semantic/lib/jquery.backstretch.min.js"></script>
   <script src="/assets/semantic/lib/jquery.validate.js"></script>
   <script>
- 
-  
+
+
     $().ready(function() {
       // validate the comment form when it is submitted
       jQuery.validator.addMethod("phoneGuinee", function (phone_number, element) {
@@ -211,8 +210,8 @@ display: block;
           }
         }
       });
-  
-  
+
+
       //code to hide topic selection, disable for demo
       var newsletter = $("#newsletter");
       // newsletter topics are optional, hide at first
@@ -232,26 +231,26 @@ display: block;
     });
   </script>
    <script>
-    //Changement de La langue de L utilisateur 
+    //Changement de La langue de L utilisateur
 $( "#changelangue" ).change(function() {
-  var url = "/Agence/changelangue/" + this.value; 
+  var url = "/Agence/changelangue/" + this.value;
 
 $.ajax({
      type: "GET",
      url: url,
      dataType: "json",
       success: function (response){
-        if (response.success) {  
-          
+        if (response.success) {
+
 $('#modiflangue').modal('show')
                setTimeout(function () {
-                    
+
                 window.location.href = "/Agence/connection"
-                   
+
                   }, 2000);
-         
-                 }  
- 
+
+                 }
+
       }
 });
 
@@ -259,21 +258,21 @@ $('#modiflangue').modal('show')
 
 
     '<% if(typeof erreurmotpasse !== "undefined"){ %>'
-    $("#notifi").css({ 
+    $("#notifi").css({
       display: 'block'
     });
     setTimeout(function () {
-    $("#notifi").css({ 
+    $("#notifi").css({
       display: 'none'
     });
     }, 5000)
     '<% } %> '
     '<% if(typeof erreurnumero!== "undefined"){ %>'
-    $("#erreur").css({ 
+    $("#erreur").css({
       display: 'block'
     });
     setTimeout(function () {
-    $("#erreur").css({ 
+    $("#erreur").css({
       display: 'none'
     });
     }, 5000)

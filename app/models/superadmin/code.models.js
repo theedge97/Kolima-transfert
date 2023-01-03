@@ -5,7 +5,7 @@ const sql = require("../db.js");
 
 
 // constructor de la table code activation
- 
+
 const Codentreprise = function(lecode) {
   this.codeactivation = lecode.codeactivation;
 };
@@ -21,5 +21,5 @@ Codentreprise.verifier =  ( codeid) => {
 });
 };
 
-  
+
 module.exports = Codentreprise;

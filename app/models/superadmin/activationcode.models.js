@@ -3,9 +3,9 @@ const sql = require("../db.js");
 const CodeActivation = function(code) {
   this.lecode = code.lecode;
 };
-//Ajout  d un Code Activation 
+//Ajout  d un Code Activation
 CodeActivation.ajoutcode = (newAgence) => {
-    
+
     return new Promise((resolve, reject)=>{
       sql.query("INSERT INTO activationcode SET ?", newAgence,  (error, enregistre)=>{
           if(error){
@@ -15,7 +15,7 @@ CodeActivation.ajoutcode = (newAgence) => {
       });
   });
   };
-  //Verifion si le code d'activation existe 
+  //Verifion si le code d'activation existe
   CodeActivation.VerifionsCode = (lecode) => {
     return new Promise((resolve, reject)=>{
       sql.query(`SELECT * FROM activationcode  WHERE lecode = "${lecode}"  `, (error, employees)=>{
@@ -26,7 +26,7 @@ CodeActivation.ajoutcode = (newAgence) => {
       });
   });
   };
-  //Suppression du Code d activation 
+  //Suppression du Code d activation
 CodeActivation.SuppresionCode = (idcode) => {
     return new Promise((resolve, reject)=>{
       sql.query(`DELETE  FROM activationcode  WHERE idcode = ${idcode}  `, (error, employees)=>{
@@ -38,5 +38,5 @@ CodeActivation.SuppresionCode = (idcode) => {
   });
   };
 
-  
+
   module.exports = CodeActivation;

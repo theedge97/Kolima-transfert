@@ -19,7 +19,7 @@
   <!-- Custom styles for this template -->
   <link href="/assets/semantic/css/style.css" rel="stylesheet">
   <link href="/assets/semantic/css/style-responsive.css" rel="stylesheet">
-  
+
 <style>
     #notifi{
 text-align: left;
@@ -31,7 +31,7 @@ border-radius: 5px;
 color: #ffffff;
 background-color: #ffca18;
 border-color: #ffca18;
-position: absolute; 
+position: absolute;
 top: 10%;
 display: none;
     }
@@ -46,7 +46,7 @@ border-radius: 5px;
 color: #ffffff;
 background-color: #f30808;
 border-color:  #f30808;
-position: absolute; 
+position: absolute;
 top: 10%;
 display: block;
     }
@@ -64,12 +64,12 @@ display: block;
   <div id="login-page">
     <div class="container">
       <div class="row">
-        
+
         <% if(typeof erreurmotpasse !== "undefined"){ %>
           <div id="notifi" class="col-lg-offset-3   col-md-offset-4 col-sm-11 col-xs-12 col-md-6 col-lg-4 ">
             <h2><%= erreurmotpasse %></h2>
           </div>
-          
+
           <% } %>
           <% if(typeof erreurnumero !== "undefined"){ %>
             <div id="erreur" class="col-lg-offset-3   col-md-offset-4 col-sm-11 col-xs-12 col-md-6 col-lg-4 ">
@@ -83,10 +83,10 @@ display: block;
           <input type="tel" name="telephone" id="telephone" class="form-control" placeholder="Entrez votre numéro de téléphone" autofocus>
           <br>
           <input type="password" name="motdepasse" id="motdepasse" class="form-control mt-5" placeholder=" Entrez votre Mot de passe"><br>
-          
+
           <button class="btn btn-theme btn-block" href="index.html" type="submit"><i class="fa fa-lock"></i> SE CONNECTER</button>
           <hr>
-         
+
           <div class="registration">
             Vous n'avez pas encore de compte?<br/>
             <a class="" href="/Superadmin/creationcompte">
@@ -125,8 +125,8 @@ display: block;
   <script type="text/javascript" src="/assets/semantic/lib/jquery.backstretch.min.js"></script>
   <script src="/assets/semantic/lib/jquery.validate.js"></script>
   <script>
- 
-  
+
+
     $().ready(function() {
       // validate the comment form when it is submitted
       jQuery.validator.addMethod("phoneGuinee", function (phone_number, element) {
@@ -155,8 +155,8 @@ display: block;
           }
         }
       });
-  
-  
+
+
       //code to hide topic selection, disable for demo
       var newsletter = $("#newsletter");
       // newsletter topics are optional, hide at first
@@ -178,21 +178,21 @@ display: block;
    <script>
 
     '<% if(typeof erreurmotpasse !== "undefined"){ %>'
-    $("#notifi").css({ 
+    $("#notifi").css({
       display: 'block'
     });
     setTimeout(function () {
-    $("#notifi").css({ 
+    $("#notifi").css({
       display: 'none'
     });
     }, 5000)
     '<% } %> '
     '<% if(typeof erreurnumero!== "undefined"){ %>'
-    $("#erreur").css({ 
+    $("#erreur").css({
       display: 'block'
     });
     setTimeout(function () {
-    $("#erreur").css({ 
+    $("#erreur").css({
       display: 'none'
     });
     }, 5000)

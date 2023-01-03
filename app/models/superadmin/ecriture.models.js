@@ -21,9 +21,9 @@ const Ecriture = function(ecrit) {
   });
   };
 
-  //Ajout d'un ecriture 
+  //Ajout d'un ecriture
   Ecriture.ajoutecrit = (newecrit) => {
-    
+
     return new Promise((resolve, reject)=>{
       sql.query("INSERT INTO ecriture SET ?", newecrit,  (error, enregistre)=>{
           if(error){
@@ -33,7 +33,7 @@ const Ecriture = function(ecrit) {
       });
   });
   };
-  //Verifions l'existance d'un numero d'ecriture 
+  //Verifions l'existance d'un numero d'ecriture
   Ecriture.unereference = (reference ) =>{
     return new Promise((resolve, reject)=>{
       sql.query(`SELECT *,  TIMESTAMPDIFF(DAY,  dateecri, NOW()) as datedif FROM ecriture  WHERE reference =   "${reference}" `,  (error, employees)=>{
@@ -44,7 +44,7 @@ const Ecriture = function(ecrit) {
       });
   });
   };
-  //Modification des ecriture 
+  //Modification des ecriture
   Ecriture.modifierecrit = (date, idec, libecr, reference) => {
     return new Promise((resolve, reject)=>{
       sql.query(`UPDATE ecriture SET libeecri = "${libecr}", dateecri = "${date}", reference = "${reference}"   WHERE idec = ${idec} `,  (error, employees)=>{
@@ -54,6 +54,6 @@ const Ecriture = function(ecrit) {
           return resolve(employees);
       });
   });
-  }; 
-  
+  };
+
   module.exports = Ecriture;

@@ -22,7 +22,7 @@
             display: none;
         }
   </style>
- 
+
 </head>
 <script src="/assets/semantic/lib/jquery.validate.js"></script>
 <script src="/assets/semantic/lib/moment.min.js"></script>
@@ -41,23 +41,23 @@
     <!-- debut du body-->
     <section id="main-content">
       <section class="wrapper">
-      
+
         <div class="row mt-5">
-         
+
             <div class="col-lg-12  ">
-             
+
               <div class="row account-contant">
                 <div class="col-12" id="lespiner">
                   <div style="height: 3rem;"  class="d-flex align-items-center">
                     <strong style="color: #4ECDC4;" class="">Chargement...</strong><br>
                     <div class="spinner-border  ms-1"  style="color: #4ECDC4;" role="status" aria-hidden="true"></div>
                   </div>
-                 </div>           
+                 </div>
                 <div class="col-12">
                     <div class="card card-statistics">
                         <div class="card-body p-0">
                             <div class="row no-gutters">
-                                
+
                                 <div class="col-xl-12 col-md-12 col-12">
                                     <div class="page-account-form">
                                         <div class="form-titel border-bottom p-3">
@@ -73,11 +73,11 @@
                                                   <div class="modal-body">
                                                     <p>Bravo les Informations ont été modifier avec Success.....!!  . </p>
                                                   </div>
-                                                 
+
                                                 </div>
                                               </div>
                                             </div>
-                                            
+
 
                                             <!--Fin Boite Modale -->
                                             <!--Boite modale invalide Code -->
@@ -91,7 +91,7 @@
                                                   <div class="modal-body">
                                                     <p>Code Invalide . </p>
                                                   </div>
-                                                 
+
                                                 </div>
                                               </div>
                                             </div>
@@ -111,7 +111,7 @@
                                                   <div class="modal-body">
                                                     <p>Votre Transaction a été validé. </p>
                                                   </div>
-                                                 
+
                                                 </div>
                                               </div>
                                             </div>
@@ -120,35 +120,35 @@
                                         <div class="p-4">
                                             <form  id="rectifie" method="post" action="/Agence/RectificationTransaction">
                                                 <div class="row ">
-                                                    
+
                                                     <div class="form-group col-md-4 col-md-offset-2">
                                                       <label for="code" class="control-label ">Veuillez entrer le code que vous avez reçus  :</label>
                                                       <input type="text" class="form-control" name="code" id="code" placeholder="Entrez le code  ">
                                                     </div>
-                                               
-                                                  
-                                                  
-                                                 
-                                                    
+
+
+
+
+
                                                 </div>
                                                 <div class="form-group">
                                                   <div class="col-lg-offset-2 col-lg-9">
                                                     <button id="enregistrer" class="btn btn-primary" type="submit">Enregistrer</button>
                                                     <button id="can" class="btn btn-warning" type="button">Cancel</button>
-                                                  
+
                                                   </div>
                                                 </div>
                                             </form>
-                                           
 
-                                                
-                                     
+
+
+
                                         </div>
                                         <hr>
                                         <div class="p-4" id="blockmodifier">
                                             <form id="signu" class="cmxform form-horizontal style-form" id="signupForm" method="post" action="/Agence/RectificationTransactionInfo">
                                                 <div class="row ">
-                                                    
+
                                                     <div class="form-group col-md-4 col-md-offset-2">
                                                       <label for="expediteurnom" class="control-label ">Nom de l'Expediteur :</label>
                                                       <input type="text" class="form-control" name="expediteurnom" id="expediteurnom" placeholder="Entrez le nom de l'Expediteur ">
@@ -165,39 +165,39 @@
                                                 <label for="receveurcontact" class="control-label " >Contact du receveur : </label>
                                                 <input type="tel" class="form-control" id="receveurcontact" name="receveurcontact" placeholder="Entrez le contact du receveur ">
                                             </div>
-                                                    
+
                                                     <div class="form-group col-md-4 col-md-offset-1">
                                                       <label for="villedestination" class="control-label ">Pays destinations</label>
-                                                     
+
                                                        <input id="paysdestination" class="form-control " name="paysdestination" readonly />
-                                                         
-                                                       
-                                                       
+
+
+
                                                        <input type="hidden" id="idclient" class="form-control " name="idclient" />
-                                                         
+
                                                     </div>
                                                     <div class="form-group col-md-4 col-md-offset-1">
                                                       <label for="montant" class="control-label " >Montant a Envoyé : </label>
                                                       <input type="text" class="form-control number-separator"  id="montantaenvoyer"   placeholder="Entrez le montant a envoyé " readonly>
-                                                      
+
                                                       <input type="hidden"  id="montant" name="montant"  class="form-control p-3"  required>
                                                     </div>
                                                     <div class="form-group col-md-4 col-md-offset-1">
                                                       <label for="montant" class="control-label " >Frais d'envoie  : </label>
-                                                      <input id="hfrais" name="hfrais" class="form-control number-separator" readonly> 
-                                                      <input  type="hidden" id="frais" name="frais" class="form-control" readonly> 
+                                                      <input id="hfrais" name="hfrais" class="form-control number-separator" readonly>
+                                                      <input  type="hidden" id="frais" name="frais" class="form-control" readonly>
                                                       <input type="hidden" name="lesfrais" id="lesfrais"   />
                                                     </div>
                                                     <div class="form-group col-md-4 col-md-offset-1">
                                                       <label for="montant" class="control-label " >Montant a Recevoir en dévise <span id="dev"></span> : </label>
-                                                      <input id="hlasomme"   name="hmonaieenvoie" class="form-control number-separator" readonly> 
-                                              
-                                                      <input type="hidden"  id="lasomme"   name="monaieenvoie" class="form-control" readonly> 
+                                                      <input id="hlasomme"   name="hmonaieenvoie" class="form-control number-separator" readonly>
+
+                                                      <input type="hidden"  id="lasomme"   name="monaieenvoie" class="form-control" readonly>
                                                     </div>
                                                     <div class="form-group col-md-4 col-md-offset-1">
                                                       <label for="montant" class="control-label " >Montant a recevoir en monaie locale  <span id="devisereveur"></span> : </label>
                                                       <input id="hmonaierecevoir" name="hmonaierecevoir number-separator" class="form-control" readonly>
-                                                    
+
                                                       <input type="hidden" id="monaierecevoir" name="monaierecevoir" class="form-control" readonly>
                                                       <input type="hidden" id="fraisdepot" name="fraisdepot" class="form-control" >
                                                       <input type="hidden" id="fraisretrait" name="fraisretrait" class="form-control" >
@@ -211,54 +211,54 @@
                                                     <label for="numerocarte" class="control-label ">Numéro de la carte : </label>
                                                     <input type="text"  class="form-control" id="numerocarte" name="numerocarte" placeholder="Entrez le Numero de la carte">
                                                 </div>
-                                                  
-                                                  
-                                                 
-                                                    
+
+
+
+
                                                 </div>
                                                 <div class="form-group">
                                                   <div class="col-lg-offset-2 col-lg-9">
                                                     <button id="enregistrer" class="btn btn-primary" type="submit">Modifier les Informations</button>
                                                     <button id="can" class="btn btn-warning" type="button">Cancel</button>
-                                                  
+
                                                   </div>
                                                 </div>
                                             </form>
-                                          
-                                                
-                                     
+
+
+
                                         </div>
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
       <!--Fin de notification d'erreur-->
-     
+
             </div>
             <!-- /col-lg-12 -->
           </div>
-          
+
           <!-- Button trigger modal -->
 
         <!-- /row -->
       </section>
     </section>
     <!--main content end-->
-    
+
   </section>
   <!-- js placed at the end of the document so the pages load faster -->
-  
-  <script>
-   
 
-     
-     
+  <script>
+
+
+
+
     document.querySelector("#factureimprimer").addEventListener("click", ()=>{
-       
+
         const invoice = this.document.getElementById("factureenvoie");
         var opt = {
 margin:       0.1,
@@ -270,13 +270,13 @@ jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' },
 pagebreak: {mode: 'avoid-all', before:'#pageX'}
 };
         html2pdf().from(invoice).set(opt).save();
-        
-        
+
+
     })
 
 
 
-    
+
 
 
 </script>
@@ -287,17 +287,17 @@ pagebreak: {mode: 'avoid-all', before:'#pageX'}
     resultInput: '#montant',
   })
   //
-  
+
 </script>
 
   <script src="/assets/semantic/lib/bootstrap/js/bootstrap.min.js"></script>
- 
+
 
   <script>
- 
+
     var nomimprimer = "";
     var idtransaction = "";
-      
+
         $().ready(function() {
           // validate the comment form when it is submitted
           jQuery.validator.addMethod("phoneGuinee", function (phone_number, element) {
@@ -311,7 +311,7 @@ pagebreak: {mode: 'avoid-all', before:'#pageX'}
                 required: true,
                 minlength: 5
               } ,
-             
+
             },
             messages: {
               code: {
@@ -320,7 +320,7 @@ pagebreak: {mode: 'avoid-all', before:'#pageX'}
               }
             },
             submitHandler: function(form){
-              $("#lespiner").css({ 
+              $("#lespiner").css({
                       display: 'block'
                     });
          $.ajax({
@@ -328,46 +328,46 @@ pagebreak: {mode: 'avoid-all', before:'#pageX'}
              type: form.method,
              data: $(form).serialize(),
              success: function(response) {
-              $("#lespiner").css({ 
+              $("#lespiner").css({
                       display: 'none'
                     });
-             
-    
-                  if (response.codeerreurs) { 
-                    
-        $("#codeerreurs").css({ 
+
+
+                  if (response.codeerreurs) {
+
+        $("#codeerreurs").css({
                           display: 'block'
                         });
                         setTimeout(function () {
-        $("#codeerreurs").css({ 
+        $("#codeerreurs").css({
           display: 'none'
         });
         }, 3000)
-                        
+
                     }
-                      
-                    if (response.transaction) { 
-                      
-                      $("#blockmodifier").css({ 
+
+                    if (response.transaction) {
+
+                      $("#blockmodifier").css({
           display: 'block'
         });
                     //
                     $("#idtransaction").val(response.transaction['idtransac']);
-                    
+
                     $("#expediteurnom").val(response.transaction['Nomexpediteur']);
                     $("#expediteurcontact").val(response.transaction['Contactexpediteur']);
                     $("#receveurnom").val(response.transaction['Nomreceveur']);
-                    
+
                     $("#idclient").val(response.transaction['idclient']);
 
-                   
+
                     $("#numerocarte").val(response.transaction['Numerocarte']);
                     $("#receveurcontact").val(response.transaction['Contactreceveur']);
                     var mt = new Intl.NumberFormat('gn-GN').format(response.transaction['Sommeenvoie'])
                     var fr = new Intl.NumberFormat('gn-GN').format(response.transaction['Frais']);
                     var  md = new Intl.NumberFormat('gn-GN').format(response.transaction['montantdevise']);
                     var  ml = new Intl.NumberFormat('gn-GN').format(response.transaction['montantlocale']);
-           
+
                     $("#montantaenvoyer").val(mt);
                     //frais
                     $("#hfrais").val(fr);
@@ -375,29 +375,29 @@ pagebreak: {mode: 'avoid-all', before:'#pageX'}
                     $("#hlasomme").val(md);
                     $("#hmonaierecevoir").val(ml);
                     $("#codet").val(response.transaction['Codetransfert']);
-                    //montantenvoie 
+                    //montantenvoie
                     $("#paysdestination").val(response.transaction['pays']);
                     var frais = new Intl.NumberFormat('gn-GN').format(response.frais)
-                   
-                 
-                   
 
-                    
 
-                    
-                   
+
+
+
+
+
+
                   }
-    
-    
-                 
-                 
-                            }            
-               });       
+
+
+
+
+                            }
+               });
          }
-         
+
           });
-      
-      
+
+
           //code to hide topic selection, disable for demo
           var newsletter = $("#newsletter");
           // newsletter topics are optional, hide at first
@@ -410,13 +410,13 @@ pagebreak: {mode: 'avoid-all', before:'#pageX'}
             topicInputs.attr("disabled", !this.checked);
           });
         });
-        
+
      document.querySelector("#imprimer").addEventListener("click", ()=>{
                 const invoice = this.document.getElementById("lenvoie");
-    
+
                      //si le compte n'est pas engistrer
-              
-    
+
+
                 var opt = {
       margin:       0.5,
       filename:     nomimprimer,
@@ -425,34 +425,34 @@ pagebreak: {mode: 'avoid-all', before:'#pageX'}
       jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
     };
     html2pdf().from(invoice).set(opt).save();
-                
+
             })
-    
-    
-         
+
+
+
         </script>
         <script>
 
-    
+
             const toastTrigger = document.getElementById('liveToastBtn')
            const toastLiveExample = document.getElementById('liveToast')
            if (toastTrigger) {
              toastTrigger.addEventListener('click', () => {
                const toast = new bootstrap.Toast(toastLiveExample)
-           
+
                toast.show()
              })
            }
-           
-             
+
+
                $().ready(function() {
-                 
-                 
-           $( "#fermer" ).click(function() { 
-           
-             
+
+
+           $( "#fermer" ).click(function() {
+
+
              $('#facture').modal('show')
-           
+
            })
                  // validate the comment form when it is submitted
                  jQuery.validator.addMethod("phoneGuinee", function (phone_number, element) {
@@ -498,38 +498,38 @@ pagebreak: {mode: 'avoid-all', before:'#pageX'}
                      }
                    },
                    submitHandler: function(form){
-                
+
                 $.ajax({
                     url: form.action,
                     type: form.method,
                     data: $(form).serialize(),
                     success: function(response) {
                      if(response.valide){
-           //Solde Insuffissant 
-           
+           //Solde Insuffissant
+
            $('#valide').modal('show')
            setTimeout(function () {
   // /Agence/Rectification
-  
+
   window.location.href = "/Agence/Rectification";
 
 
     }, 2000)
 
                      }
-                     
-                    
-                        
-                                  
-                        
-                        
-                                   }            
-                      });       
+
+
+
+
+
+
+                                   }
+                      });
                 }
-                
+
                  });
-             
-             
+
+
                  //code to hide topic selection, disable for demo
                  var newsletter = $("#newsletter");
                  // newsletter topics are optional, hide at first
@@ -543,7 +543,7 @@ pagebreak: {mode: 'avoid-all', before:'#pageX'}
                  });
                });
                </script>
-           
+
 
   <script class="include" type="text/javascript" src="/assets/semantic/lib/jquery.dcjqaccordion.2.7.js"></script>
   <script src="/assets/semantic/lib/jquery.scrollTo.min.js"></script>
@@ -554,9 +554,9 @@ pagebreak: {mode: 'avoid-all', before:'#pageX'}
   <script type="text/javascript" src="/assets/semantic/lib/gritter/js/jquery.gritter.js"></script>
   <script type="text/javascript" src="/assets/semantic/lib/gritter-conf.js"></script>
   <!--script for this page-->
-  
-  
-  
+
+
+
 </body>
 
 </html>

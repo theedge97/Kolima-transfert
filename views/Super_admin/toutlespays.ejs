@@ -27,9 +27,9 @@
             <div class="col-md-12">
                 <div class="content-panel">
                   <h4><i class="fa fa-angle-right"></i><font _mstmutation="1">Les Listes des Pays </font>  <button data-bs-toggle="modal" data-bs-target="#ajout"  class="btn btn-success">Ajout d'un Pays </button> </h4><hr>
-                  
-                  
-                  
+
+
+
 <!-- Modal -->
 <div class="modal fade" id="ajout"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -37,31 +37,31 @@
       <div class="modal-header">
         <h5 class="modal-title">Ajout d'un Pays </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-  
+
     </div>
     <form method="post"  action="/Superadmin/PaysAjoutInfo"  id="paysajout" >
-                        
+
       <div class="modal-body">
           <div class="form-group">
-                  <input type="text" name="nompays" placeholder="Entrez  le nom du pays " class="form-control p-3" id="nompays">      
+                  <input type="text" name="nompays" placeholder="Entrez  le nom du pays " class="form-control p-3" id="nompays">
           </div><br>
           <div class="form-group">
-            <input type="text" name="indicatif" placeholder="Entrez  l'indicatif du pays  " class="form-control p-3" id="indicatif">      
+            <input type="text" name="indicatif" placeholder="Entrez  l'indicatif du pays  " class="form-control p-3" id="indicatif">
           </div><br>
           <div class="form-group">
-            <input type="text" name="codeiso" placeholder="Entrez  le code ISO  " class="form-control p-3" id="codeiso">      
+            <input type="text" name="codeiso" placeholder="Entrez  le code ISO  " class="form-control p-3" id="codeiso">
           </div><br>
           <div class="form-group">
-            <% if(typeof monaie !== "undefined"){ %>   
+            <% if(typeof monaie !== "undefined"){ %>
                 <select id="ladevise" required class="form-control p-3 target" name="ladevise" required>
                         <option>Veuillez selectionner la monaie  </option>
-                        <% for(var k= 0 ; k < monaie.length; k++)  {%> 
+                        <% for(var k= 0 ; k < monaie.length; k++)  {%>
                         <option  value="<%= monaie[k].idmonaie %>"   ><%= monaie[k].monaie %></option>
                           <% } %>
-                        
+
                     </select>
-                    <% } %> 
-                  
+                    <% } %>
+
         </div>
 
       </div>
@@ -70,35 +70,35 @@
        <button type="submit" class="btn btn-danger">Ajouter</button>
       </div>
   </form>
-      
+
     </div>
   </div>
-</div> 
-                  
-                  
+</div>
+
+
                   <div class="table-responsive">
                   <table  id="dataTable"  class="table table-striped table-advance table-hover">
-                    
-                    
+
+
                     <thead>
                       <tr>
                         <th><i class="fa fa-bullhorn"></i><font _mstmutation="1"> N *</font></th>
                         <th><i class="fa fa-bullhorn"></i><font _mstmutation="1"> Nom du Pays </font></th>
-                        
+
                         <th><i class="fa fa-bullhorn"></i><font _mstmutation="1"> Indicatifs  </font></th>
-                        
+
                         <th><i class="fa fa-bullhorn"></i><font _mstmutation="1"> Code Iso  </font></th>
-                        
+
                         <th><i class="fa fa-bullhorn"></i><font _mstmutation="1"> Monaie  </font></th>
                         <th><i class="fa fa-bullhorn"></i><font _mstmutation="1"> Modifier  </font></th>
-                      
+
                       </tr>
                     </thead>
                     <tbody>
-                        
+
                             <% if(typeof lespayssel !== "undefined"){ %>
-                                
-                                    <% for(var i= 0 ; i < lespayssel.length; i++)  {%> 
+
+                                    <% for(var i= 0 ; i < lespayssel.length; i++)  {%>
                                         <tr>
                                           <td><%= i+1 %></td>
                                         <td><%= lespayssel[i].pays %></td>
@@ -107,23 +107,23 @@
                                         <td><%= lespayssel[i].monaie %></td>
                                         <td>
                                             <button data-bs-toggle="modal" data-bs-target="#modifier<%= i+1  %>"    class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></button>
-                                      
+
                                           </td>
-                                    </tr> 
+                                    </tr>
 
 
                                                  <!--Boite Modifier-->
 <div class="modal fade" id="modifier<%= i+1 %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
-      
+
         <div class="modal-header">
           <h5 class="modal-title">Modification  des Information du pays <%= lespayssel[i].pays %> </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-    
+
       </div>
       <form method= "post"  action="/Superadmin/PaysModidifierinfo"  id="monaiemodifier" >
-                            
+
         <div class="modal-body">
             <div class="form-group">
               <label>Nom du Pays : </label>
@@ -140,16 +140,16 @@
          </div>
          <div class="form-group">
           <label>Selectionner la Monaie</label>
-          <% if(typeof monaie !== "undefined"){ %>   
+          <% if(typeof monaie !== "undefined"){ %>
               <select id="ladevise" required class="form-control p-3 target" name="moladevise" required>
                       <option>Veuillez selectionner la monaie  </option>
-                      <% for(var j= 0 ; j < monaie.length; j++)  {%> 
+                      <% for(var j= 0 ; j < monaie.length; j++)  {%>
                       <option  value="<%= monaie[j].idmonaie %>" <% if( monaie[j].idmonaie ==  lespayssel[i].devise ){ %>  selected  <% } %>  ><%= monaie[j].monaie %></option>
                         <% } %>
-                      
+
                   </select>
-                  <% } %> 
-                 
+                  <% } %>
+
       </div>
         </div>
         <div class="modal-footer">
@@ -157,17 +157,17 @@
          <button type="submit" class="btn btn-primary">Modifier</button>
         </div>
     </form>
-        
+
       </div>
     </div>
   </div>
-          
-          <!--Boite Modifier  fin--> 
+
+          <!--Boite Modifier  fin-->
                                     <% } %>
-                                    
+
                                 <% } %>
-                        
-     
+
+
                     </tbody>
                   </table>
                   </div>
@@ -180,15 +180,15 @@
       </section>
     </section>
     <!--main content end-->
-    
+
   </section>
   <!-- js placed at the end of the document so the pages load faster -->
   <script src="/assets/semantic/lib/jquery-1.9.1.js"></script>
-  
+
   <script src="/assets/semantic/lib/datatables/jquery.dataTables.min.js"></script>
   <script src="/assets/semantic/lib/datatables/dataTables.bootstrap4.min.js"></script>
   <script src="/assets/semantic/lib/datatables/datatables-demo.js"></script>
-  
+
 
   <script src="/assets/semantic/lib/jquery.validate.js"></script>
    <script src="/assets/semantic/lib/bootstrap/js/bootstrap.min.js"></script>
@@ -202,8 +202,8 @@
    <script type="text/javascript" src="/assets/semantic/lib/gritter-conf.js"></script>
    <script src="/assets/semantic/lib/jquery.validate.js"></script>
    <script>
-  
-   
+
+
      $().ready(function() {
        // validate the comment form when it is submitted
        jQuery.validator.addMethod("phoneGuinee", function (phone_number, element) {
@@ -241,8 +241,8 @@
            }
          }
        });
-   
-   
+
+
        //code to hide topic selection, disable for demo
        var newsletter = $("#newsletter");
        // newsletter topics are optional, hide at first
@@ -256,7 +256,7 @@
        });
      });
      </script>
-  
+
 </body>
 
 </html>

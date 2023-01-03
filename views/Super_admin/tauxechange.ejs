@@ -1,7 +1,7 @@
 <!-- debut de head-->
 <%- include('head'); -%>
 <link href="/assets/semantic/lib/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
- 
+
 <title>Kolima  Transfert || Admin </title>
 <!-- fin de head-->
   <style>
@@ -15,12 +15,12 @@
     }
   </style>
   <script src="/assets/semantic/lib/jquery-1.9.1.js"></script>
-  
+
   <script src="/assets/semantic/lib/jquery.validate.js"></script>
   <script src="/assets/semantic/js/jquery.formatCurrency.js" ></script>
   <script src="/assets/semantic/js/easy-number-separator.js"></script>
-  
-  
+
+
 </head>
 <!-- debut  de menue-->
 <%- include('menue'); -%>
@@ -32,7 +32,7 @@
     <section id="main-content">
       <section class="wrapper">
         <div class="row mt-3">
-           
+
             <div class="col-md-12">
                 <div class="content">
                     <h4><i class="fa fa-angle-right"></i><font _mstmutation="1">Configuration des taux d'echanges </font> </h4>
@@ -44,13 +44,13 @@
 
                         <div class="form-group col-md-4 col-md-offset-1">
                               <label for="ladevise1" class="control-label ">Selectionnez la première devise</label>
-                              <% if(typeof lesmonaies !== "undefined"){ %>   
+                              <% if(typeof lesmonaies !== "undefined"){ %>
                                 <select id="ladevise1" required class="form-control target" name="ladevise1">
                                         <option>Veuillez selectionner la monaie  </option>
-                                        <% for(var i= 0 ; i < lesmonaies.length; i++)  {%> 
+                                        <% for(var i= 0 ; i < lesmonaies.length; i++)  {%>
                                         <option  value="<%= lesmonaies[i].idmonaie %>"><%= lesmonaies[i].monaie %></option>
                                           <% } %>
-                                        
+
                                     </select>
                                     <% } %>
                         </div>
@@ -60,16 +60,16 @@
                         </div>
                           <div class="form-group col-md-4 col-md-offset-1">
                             <label for="ladevise2" class="control-label ">Selectionnez la deuxieme devise </label>
-                            <% if(typeof lesmonaies !== "undefined"){ %>   
+                            <% if(typeof lesmonaies !== "undefined"){ %>
                             <select id="ladevise2" title="Please select at least two fruits" required class="form-control target" name="ladevise2">
                                     <option>Veuillez selectionner la monaie  </option>
-                                    <% for(var i= 0 ; i < lesmonaies.length; i++)  {%> 
+                                    <% for(var i= 0 ; i < lesmonaies.length; i++)  {%>
                                     <option  value="<%= lesmonaies[i].idmonaie %>"><%= lesmonaies[i].monaie %></option>
                                       <% } %>
-                                    
+
                                 </select>
                                 <% } %>
-                            
+
                           </div>
                           <div class="form-group col-md-4 col-md-offset-1">
                             <label for="devise2" class="control-label ">Valeur de la deuxieme  dévise  : </label>
@@ -83,24 +83,24 @@
                                   <button id="enregistrer" class="btn btn-success" type="submit">Ajouter</button>
                                 </div>
                               </div>
-                              
+
                             </div>
-          
+
                           </form>
                         </div>
                       </div>
                     </div>
                 </div>
         </div>
-        
+
         <div class="row  rt-3">
-           
+
             <div class="col-12  col-lg-12">
               <div class="card card-statistics">
                   <div class="card-header">
                       <div class="card-heading">
                           <h4 class="">Liste des  Taux d echange </h4>
-                         
+
                       </div>
                   </div>
                   <div class="card-body">
@@ -111,27 +111,27 @@
                                 <tr>
                                   <th><i class="fa fa-bullhorn"></i> N *</th>
                                   <th><i class="fa fa-money"></i> Devise de  </th>
-                          
+
                                   <th><i class=" fa fa-eye"></i>Valeur </th>
                                   <th><i class=" fa fa-money"></i> Devise de</th>
                                   <th><i class=" fa fa-eye"></i> Valeur  </th>
                                   <th><i class=" fa fa-edit"></i> Modifier  </th>
                                   <th><i class=" fa fa-trash-o"></i> SUPPRIMER </th>
-                                  
-                                
+
+
                                 </tr>
                               </thead>
                               <tbody>
                                 <% if(typeof lestaux !== "undefined"){ %>
-                                
-                                    <% for(var i= 0 ; i < lestaux.length; i++)  {%> 
+
+                                    <% for(var i= 0 ; i < lestaux.length; i++)  {%>
                                         <tr>
                                         <td><%= i+1 %></td>
                                       <td><%= lestaux[i].monaie1 %></td>
                                       <td><%= lestaux[i].V1 %></td>
                                       <td><%= lestaux[i].monaie2 %></td>
                                       <td><%= lestaux[i].V2 %></td>
-                                      <td>      <button  class="btn btn-info btn-xs" data-bs-toggle="modal" data-bs-target="#rechargement<%= lestaux[i].idtaux  %>"><i class="fa fa-edit "></i></button></td>  
+                                      <td>      <button  class="btn btn-info btn-xs" data-bs-toggle="modal" data-bs-target="#rechargement<%= lestaux[i].idtaux  %>"><i class="fa fa-edit "></i></button></td>
                                   <td>      <button  class="btn btn-danger btn-xs" data-bs-toggle="modal" data-bs-target="#suppression<%= lestaux[i].idtaux  %>"><i class="fa fa-trash-o "></i></button></td>
                               </tr>
   <!-- Modal -->
@@ -140,10 +140,10 @@
         <div class="modal-content">
             <div class="modal-header bg-warning">
                 <h5 class="modal-title">Modification  du taux d'échange </h5>
-                
+
             </div>
             <form method="post"  action="/Superadmin/TauxModidifier"  id="motaux<%= lestaux[i].idtaux  %>" >
-                  
+
             <div class="modal-body">
                 <div class="form-group">
                         <label>Modification de la valeurs de la monaie <%= lestaux[i].monaie1 %> </label>
@@ -164,7 +164,7 @@
     </div>
   </div>
 
-  
+
       <!--Boite suppression fin-->
         <!--Boite suppression-->
         <div class="modal fade" id="suppression<%= lestaux[i].idtaux  %>" tabindex="-1" role="dialog" aria-labelledby="defaultModal" aria-hidden="true">
@@ -172,7 +172,7 @@
                 <div class="modal-content">
                     <div class="modal-header bg-danger">
                         <h5 class="modal-title">Suppression d'un Taux d'echange </h5>
-                       
+
                     </div>
                     <div class="modal-body">
                         Voulez-vous supprimer le taux d'echange numero  <%= i+1 %>
@@ -186,8 +186,8 @@
         </div>
         <!--Boite suppression fin-->
       <script>
-  
-   
+
+
         $().ready(function() {
           // validate the comment form when it is submitted
           jQuery.validator.addMethod("phoneGuinee", function (phone_number, element) {
@@ -236,19 +236,19 @@
           </div>
           </div>
           <!--Boite modal-->
-        
+
         <!-- /row -->
       </section>
     </section>
     <!--main content end-->
-    
+
   </section>
   <!-- js placed at the end of the document so the pages load faster -->
-  
+
   <script src="/assets/semantic/lib/datatables/jquery.dataTables.min.js"></script>
   <script src="/assets/semantic/lib/datatables/dataTables.bootstrap4.min.js"></script>
   <script src="/assets/semantic/lib/datatables/datatables-demo.js"></script>
-  
+
 
   <script src="/assets/semantic/lib/bootstrap/js/bootstrap.min.js"></script>
   <script class="include" type="text/javascript" src="/assets/semantic/lib/jquery.dcjqaccordion.2.7.js"></script>
@@ -261,8 +261,8 @@
    <script type="text/javascript" src="/assets/semantic/lib/gritter-conf.js"></script>
    <!--script for this page-->
   <script>
-  
-   
+
+
     $().ready(function() {
       // validate the comment form when it is submitted
       jQuery.validator.addMethod("phoneGuinee", function (phone_number, element) {

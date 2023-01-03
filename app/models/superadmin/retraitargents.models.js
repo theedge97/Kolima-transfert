@@ -12,7 +12,7 @@ const Retraitargenttrans = function(retrait) {
     this.historiquercompensr = retrait.historiquercompensr;
   };
 
-//Selectionner les Retrait d argents 
+//Selectionner les Retrait d argents
 Retraitargenttrans.lesretraits = result => {
     return new Promise((resolve, reject)=>{
       sql.query("SELECT * FROM `retraitargent` INNER JOIN lesmonaie ON lesmonaie.idmonaie = frais.monaieid   ",  (error, employees)=>{
@@ -35,7 +35,7 @@ Retraitargenttrans.lesretraits = result => {
       });
   });
   };
-  //Selectionner toute les transactions de Retrait 
+  //Selectionner toute les transactions de Retrait
   Retraitargenttrans.historiretraitcompenser = (comphistorik , idagenceretrait)  => {
     return new Promise((resolve, reject)=>{
       sql.query( `SELECT  retraitargent.idretrait AS idretrait, retraitargent.commission AS commissionretrait , transaction.montantlocale AS montantlocale , client.Nomexpediteur AS Nomexpediteur, client.Nomreceveur AS Nomreceveur , transaction.Datetransaction AS Datetransaction FROM retraitargent INNER JOIN transaction ON transaction.idtransac = retraitargent.idtransactr INNER JOIN client ON client.idclient = transaction.Clientid WHERE retraitargent.historiquercompensr =  ${comphistorik} AND retraitargent.idagenceretrait =  ${idagenceretrait} AND retraitargent.compensationr = 1`  ,  (error, employees)=>{
@@ -46,9 +46,9 @@ Retraitargenttrans.lesretraits = result => {
       });
   });
   };
-  
 
-  //Compenser la transaction retrait d une agence 
+
+  //Compenser la transaction retrait d une agence
   Retraitargenttrans.compensertransacretrait  = (idretrait, comhist)  => {
     return new Promise((resolve, reject)=>{
       sql.query( `UPDATE  retraitargent SET  compensationr = 1 , historiquercompensr =  ${comhist}  WHERE idretrait = ${idretrait} `  ,  (error, employees)=>{
@@ -57,10 +57,10 @@ Retraitargenttrans.lesretraits = result => {
           }
           return resolve(employees);
       });
-  }); 
+  });
   };
 
-  //Selectionner le Tout les nombre de retraits  d'un agence 
+  //Selectionner le Tout les nombre de retraits  d'un agence
 Retraitargenttrans.nbreretraitunagence = (idagenceretrait)  => {
     return new Promise((resolve, reject)=>{
       sql.query( `SELECT COUNT(idretrait) AS nbre FROM retraitargent WHERE idagenceretrait = ${idagenceretrait} `  ,  (error, employees)=>{
@@ -81,7 +81,7 @@ Retraitargenttrans.nbreretraitunagence = (idagenceretrait)  => {
           return resolve(employees);
       });
   });
-  }; 
+  };
   //Nombre De Retrait Hebdomadaire
   Retraitargenttrans.nbreretraithebdommadaire = (idagenceretrait)  => {
     return new Promise((resolve, reject)=>{
@@ -92,8 +92,8 @@ Retraitargenttrans.nbreretraitunagence = (idagenceretrait)  => {
           return resolve(employees);
       });
   });
-  }; 
-  //Nombre de retrait Mensuel 
+  };
+  //Nombre de retrait Mensuel
   Retraitargenttrans.nbreretraitmensuel = (idagenceretrait)  => {
     return new Promise((resolve, reject)=>{
       sql.query( `SELECT COUNT(idretrait) AS nbre FROM retraitargent INNER JOIN transaction ON transaction.idtransac = retraitargent.idtransactr WHERE idagenceretrait = ${idagenceretrait}  AND  MONTH(transaction.Datevalidation)= MONTH(NOW())      `  ,  (error, employees)=>{
@@ -103,8 +103,8 @@ Retraitargenttrans.nbreretraitunagence = (idagenceretrait)  => {
           return resolve(employees);
       });
   });
-  }; 
-  //Nombre De Retrait Anneul 
+  };
+  //Nombre De Retrait Anneul
   Retraitargenttrans.nbreretraitannuel = (idagenceretrait)  => {
     return new Promise((resolve, reject)=>{
       sql.query( `SELECT COUNT(idretrait) AS nbre FROM retraitargent INNER JOIN transaction ON transaction.idtransac = retraitargent.idtransactr WHERE idagenceretrait = ${idagenceretrait}  AND   YEAR(transaction.Datevalidation) = YEAR(NOW())  `  ,  (error, employees)=>{
@@ -114,7 +114,7 @@ Retraitargenttrans.nbreretraitunagence = (idagenceretrait)  => {
           return resolve(employees);
       });
   });
-  }; 
+  };
 
   //Somme des Commission des Retrait
   Retraitargenttrans.sommetoutcommission = (idagenceretrait)  => {
@@ -127,8 +127,8 @@ Retraitargenttrans.nbreretraitunagence = (idagenceretrait)  => {
       });
   });
   };
-  
-  //Sommes des Commissions des retraits journalier d une Agence 
+
+  //Sommes des Commissions des retraits journalier d une Agence
   Retraitargenttrans.commissionjourtretrait = (idagenceretrait)  => {
     return new Promise((resolve, reject)=>{
       sql.query( `SELECT SUM(commission) AS toutcommssion FROM retraitargent INNER JOIN transaction ON transaction.idtransac = retraitargent.idtransactr WHERE idagenceretrait = ${idagenceretrait}  AND DATE(transaction.Datevalidation)= CURRENT_DATE  `  ,  (error, employees)=>{
@@ -139,19 +139,19 @@ Retraitargenttrans.nbreretraitunagence = (idagenceretrait)  => {
       });
   });
   };
-//Sommes des Commissions des retraits journalier d une Agence 
+//Sommes des Commissions des retraits journalier d une Agence
    Retraitargenttrans.caissecommissionjourtretrait = (idagenceretrait, caisseid)  => {
     return new Promise((resolve, reject)=>{
       sql.query( `SELECT SUM(commission) AS toutcommssion FROM retraitargent INNER JOIN transaction ON transaction.idtransac = retraitargent.idtransactr WHERE idagenceretrait = ${idagenceretrait}  AND DATE(transaction.Datevalidation)= CURRENT_DATE  AND caissierretraitid = ${caisseid} `  ,  (error, employees)=>{
           if(error){
               return reject(error);
-          } 
+          }
           return resolve(employees);
       });
   });
   };
-  //Sommes des 
-  //Sommes des Comission des Retrait hebdomandaire3 d une agence 
+  //Sommes des
+  //Sommes des Comission des Retrait hebdomandaire3 d une agence
   Retraitargenttrans.commissionsemainetretrait = (idagenceretrait)  => {
     return new Promise((resolve, reject)=>{
       sql.query( `SELECT SUM(commission) AS toutcommssion FROM retraitargent INNER JOIN transaction ON transaction.idtransac = retraitargent.idtransactr WHERE idagenceretrait = ${idagenceretrait}  AND  WEEK(transaction.Datevalidation) = WEEK(NOW())  `  ,  (error, employees)=>{
@@ -162,7 +162,7 @@ Retraitargenttrans.nbreretraitunagence = (idagenceretrait)  => {
       });
   });
   };
-  //Sommmes des Commission de Retrait Mensuel 
+  //Sommmes des Commission de Retrait Mensuel
   Retraitargenttrans.commissionmensuelretrait = (idagenceretrait)  => {
     return new Promise((resolve, reject)=>{
       sql.query( `SELECT SUM(commission) AS toutcommssion FROM retraitargent INNER JOIN transaction ON transaction.idtransac = retraitargent.idtransactr WHERE idagenceretrait = ${idagenceretrait}  AND MONTH(transaction.Datevalidation)= MONTH(NOW())  `  ,  (error, employees)=>{
@@ -198,7 +198,7 @@ Retraitargenttrans.nbreretraitunagence = (idagenceretrait)  => {
   };
       //Ajout  d un  Frais
 Retraitargenttrans.ajoutretraitargent = (newFrais) => {
-    
+
         return new Promise((resolve, reject)=>{
           sql.query("INSERT INTO retraitargent SET ?", newFrais,  (error, enregistre)=>{
               if(error){
@@ -207,7 +207,7 @@ Retraitargenttrans.ajoutretraitargent = (newFrais) => {
               return resolve(enregistre);
           });
       });
-      }; 
+      };
  //Suppression d'un frais
  Retraitargenttrans.supprimerretraitargent = (idfrais) => {
         return new Promise((resolve, reject)=>{
@@ -218,8 +218,8 @@ Retraitargenttrans.ajoutretraitargent = (newFrais) => {
               return resolve(employees);
           });
       });
-      }; 
-//Selectionnez un Retrait 
+      };
+//Selectionnez un Retrait
 Retraitargenttrans.unretrait = (somme, devise ) =>{
     return new Promise((resolve, reject)=>{
       sql.query(`SELECT * FROM retraitargent INNER JOIN lesmonaie ON lesmonaie.idmonaie = frais.monaieid   WHERE valeur1 <=   ${somme} AND valeur2 >=  ${somme} AND monaieid =  ${devise}  `,  (error, employees)=>{
@@ -229,7 +229,7 @@ Retraitargenttrans.unretrait = (somme, devise ) =>{
           return resolve(employees);
       });
   });
-  };  
-    
-  
+  };
+
+
   module.exports = Retraitargenttrans;

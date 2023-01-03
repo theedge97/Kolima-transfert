@@ -9,14 +9,14 @@ const { upperCase } = require("lodash");
 
     if (donner1 == "GNF" || donner1 == "GNF" || donner2 == "GNF" || donner2 == "CFA") {
         if (donner1 == "GNF") {
-            //convertion de franc guineen en cfa 
+            //convertion de franc guineen en cfa
             valeur = (y*v1)/v2 ;
             return valeur;
         }
         if (donner1 == "CFA") {
-            //convertion de  cfa en franc guineen  
+            //convertion de  cfa en franc guineen
             valeur = (y*v2)/v1 ;
             return valeur;
         }
-    } 
+    }
 }

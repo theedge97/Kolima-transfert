@@ -46,85 +46,85 @@
                       <div class="row">
                     <div class="form-group col-md-4 col-md-offset-1">
                       <label for="numeroagence" class="control-label ">Numero de l'Agence :</label>
-                    
+
                         <input class=" form-control" placeholder="Entrez le numero de l'agence" id="numeroagence" name="numeroagence" type="text">
-                     
+
                     </div>
-  
+
                     <div class="form-group col-md-4 col-md-offset-1 ">
                       <label for="nomagence" class="control-label ">Nom de l'agence</label>
-                      
+
                         <input class=" form-control" placeholder="Entrez le nom de l'agence" id="nomagence" name="nomagence" type="text">
-                     
+
                     </div>
                     <div class="form-group col-md-4 col-md-offset-1">
                       <label for="telephoneagence" class="control-label ">Telephone Agence</label>
-                     
+
                         <input class="form-control " placeholder="Entrez le telephone de l'agence" id="telephoneagence" name="telephoneagence" type="tel">
-                      
+
                     </div>
                     <div class="form-group col-md-4 col-md-offset-1">
                         <label for="emailagence" class="control-label ">Email de l'Agence</label>
-                       
+
                           <input class="form-control " placeholder="Entrez l'email de l'agence" id="emailagence" name="emailagence" type="email">
-                       
+
                       </div>
                     <div class="form-group  col-md-4 col-md-offset-1">
                       <label for="password" class="control-label ">Selectionnez le Pays</label>
-                     
+
                         <% if(typeof lespays !== "undefined"){ %>
                           <select id="lespays"   class="form-control " name="paysagence">
-                          
-                            
-                                    <% for(var i= 0 ; i < lespays.length; i++)  {%> 
+
+
+                                    <% for(var i= 0 ; i < lespays.length; i++)  {%>
                                     <option class="lepays" value="<%= lespays[i].idpays %>"><%= lespays[i].pays %></option>
                                       <% } %>
-                                    
-                               
+
+
                           </select>
                           <% } %>
-                      
+
                     </div>
                     <div class="form-group col-md-4 col-md-offset-1">
                         <label for="villeagence" class="control-label ">Selectionnez la ville</label>
-                       
+
                             <% if(typeof lesville !== "undefined"){ %>
                                 <select  class="form-control " name="villeagence">
-                                
+
                                   <option>Veuillez Selectionnez une ville</option>
-                                          <% for(var i= 0 ; i < lesville.length; i++)  {%> 
+                                          <% for(var i= 0 ; i < lesville.length; i++)  {%>
                                           <option value="<%= lesville[i].idville %>"><%= lesville[i].ville %></option>
                                             <% } %>
-                                          
-                                     
+
+
                                 </select>
                                 <% } %>
-                      
+
                       </div>
                     <div class="form-group col-md-4 col-md-offset-1">
                       <label for="zoneagence" class="control-label ">Zone</label>
-                    
+
                         <input class="form-control " placeholder="Entrez la zone ou se trouve l'agence" id="zoneagence" name="zoneagence" type="text">
-                      
+
                     </div>
                     <div class="form-group col-md-4 col-md-offset-1 ">
                       <label for="motdepasseagence" class="control-label ">Mot de passe</label>
-                    
+
                       <input class="form-control " placeholder="Entrez le mot de passe" id="motdepasseagence" name="motdepasseagence" type="password">
-                      
+
                     </div>
-                  
-  
-                 
-  
+
+
+
+
                    </div>
                    <hr>
                    <div class="row">
-                    
+
                     <div class="form-group col-md-4 col-md-offset-1">
                       <div class="col-lg-offset-2 col-lg-9">
                         <button class="btn btn-success" type="submit">Enregistrer</button>
-                        
+
                       </div>
                     </div>
                    </div>
@@ -139,15 +139,15 @@
       </section>
     </section>
     <!--main content end-->
-    
+
   </section>
   <!-- js placed at the end of the document so the pages load faster -->
   <script src="/assets/semantic/lib/jquery-1.9.1.js"></script>
-  
+
   <script src="/assets/semantic/lib/jquery.validate.js"></script>
   <script>
- 
-  
+
+
     $().ready(function() {
       // validate the comment form when it is submitted
       jQuery.validator.addMethod("phoneGuinee", function (phone_number, element) {
@@ -213,34 +213,34 @@
           },
         },
         submitHandler: function(form){
-     
+
 $.ajax({
     url: form.action,
     type: form.method,
     data: $(form).serialize(),
     success: function(response) {
-     
-         if (response.newagence) {  
-                 $("#agencealert").css({ 
+
+         if (response.newagence) {
+                 $("#agencealert").css({
                       display: 'block'
                     });
                     setTimeout(function () {
-                    
+
                   window.location.href = "/Superadmin/AjoutAgence"
                   }, 5000);
-         
-                 }  
-                  
-        
-        
-                   }            
-      });       
+
+                 }
+
+
+
+                   }
+      });
 }
 
 
       });
-  
-  
+
+
       //code to hide topic selection, disable for demo
       var newsletter = $("#newsletter");
       // newsletter topics are optional, hide at first
@@ -252,15 +252,15 @@ $.ajax({
         topics[this.checked ? "removeClass" : "addClass"]("gray");
         topicInputs.attr("disabled", !this.checked);
       });
-  // Recuperer la liste d'unne ville correspondant a un pays 
-  
- 
+  // Recuperer la liste d'unne ville correspondant a un pays
+
+
 
 
     });
     </script>
   <script>
-    
+
   $(document).ready(function(){
     var pays = document.querySelectorAll("#lepays");
 
@@ -281,10 +281,10 @@ $(this).on('click', function(e){
   $($("#lespays").children()).each(function() {
 
     $(this).click(function() {
-           
+
            alert('yjj idoo')
                });
-         
+
 
 
 })
@@ -299,11 +299,11 @@ $(this).on('click', function(e){
    <script type="text/javascript" src="/assets/semantic/lib/gritter/js/jquery.gritter.js"></script>
    <script type="text/javascript" src="/assets/semantic/lib/gritter-conf.js"></script>
    <!--script for this page-->
-   
-   
-   
-  
-  
+
+
+
+
+
 </body>
 
 </html>

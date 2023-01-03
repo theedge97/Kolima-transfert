@@ -10,7 +10,7 @@ const Lespays = function(unpays) {
     this.devise = unpays.devise;
   };
 //Selectionner les Pays
- 
+
   Lespays.selectpays = ( ) => {
     return new Promise((resolve, reject)=>{
       sql.query(` SELECT * FROM pays `,  (error, payss)=>{
@@ -21,7 +21,7 @@ const Lespays = function(unpays) {
       });
   });
   };
-  //Selectionnner tout les Pays et leur monaies 
+  //Selectionnner tout les Pays et leur monaies
   Lespays.toutpays = ( ) => {
     return new Promise((resolve, reject)=>{
       sql.query(` SELECT * FROM pays INNER JOIN lesmonaie ON lesmonaie.idmonaie = pays.devise`,  (error, payss)=>{
@@ -33,8 +33,8 @@ const Lespays = function(unpays) {
   });
   };
 
-  
-  //Selectionner un pays 
+
+  //Selectionner un pays
    Lespays.unpays = (idpays ) =>{
     return new Promise((resolve, reject)=>{
       sql.query(`SELECT * FROM pays  WHERE idpays =   ${idpays} `,  (error, employees)=>{
@@ -45,7 +45,7 @@ const Lespays = function(unpays) {
       });
   });
   };
-  //selectionner la devise d'une monaie 
+  //selectionner la devise d'une monaie
   Lespays.unemonaie = (idpays ) =>{
     return new Promise((resolve, reject)=>{
       sql.query(`SELECT * FROM pays  INNER JOIN lesmonaie ON lesmonaie.idmonaie = pays.devise  WHERE idpays =   ${idpays} `,  (error, employees)=>{
@@ -55,11 +55,11 @@ const Lespays = function(unpays) {
           return resolve(employees);
       });
   });
-  }; 
-  
-  //Ajouter une Ville 
+  };
+
+  //Ajouter une Ville
   Lespays.ajoutpays = (newPays) => {
-    
+
     return new Promise((resolve, reject)=>{
       sql.query("INSERT INTO pays SET ?", newPays,  (error, enregistre)=>{
           if(error){
@@ -80,5 +80,5 @@ const Lespays = function(unpays) {
       });
   });
   };
-  
+
   module.exports = Lespays;

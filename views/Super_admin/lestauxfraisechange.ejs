@@ -19,7 +19,7 @@
       color: rgb(219, 10, 10);
     }
   </style>
-  
+
   <script src="/assets/semantic/lib/jquery-1.9.1.js"></script>
   <script src="/assets/semantic/lib/jquery.validate.js"></script>
 </head>
@@ -43,15 +43,15 @@
                         <div class="row">
                         <div class="form-group col-md-4 col-md-offset-1">
                               <label for="ladevise" class="control-label ">Selectionnez la Monaie </label>
-                              <% if(typeof lesmonaies !== "undefined"){ %>   
+                              <% if(typeof lesmonaies !== "undefined"){ %>
                                 <select id="ladevise" required class="form-control target" name="ladevise" required>
                                         <option>Veuillez selectionner la monaie  </option>
-                                        <% for(var i= 0 ; i < lesmonaies.length; i++)  {%> 
+                                        <% for(var i= 0 ; i < lesmonaies.length; i++)  {%>
                                         <option  value="<%= lesmonaies[i].idmonaie %>"><%= lesmonaies[i].monaie %></option>
                                           <% } %>
-                                        
+
                                     </select>
-                                    <% } %>   
+                                    <% } %>
                         </div>
                         <div class="form-group col-md-4 col-md-offset-1">
                             <label for="montant1" class="control-label ">Entrez le Taux en Pourcentage (%): </label>
@@ -74,65 +74,65 @@
                 <div class="content-panel">
                   <h4><i class="fa fa-angle-right"></i><font _mstmutation="1">Liste des Taux de Frais  d'envoie en fonction de la Monaie </font> </h4>
                   <hr>
-       
+
                   <div class="table-responsive">
                   <table  id="dataTable"  class="table table-striped table-advance table-hover">
-                    
-                    
+
+
                     <thead>
                       <tr>
                         <th><i class="fa fa-bullhorn"></i><font _mstmutation="1"> N *</font></th>
                         <th><i class="fa fa-money"></i><font _mstmutation="1"> Devise   </font></th>
-                
+
                         <th><i class=" fa fa-eye"></i><font _mstmutation="1"> Le taux en Pourcentage  </font></th>
                         <th><i class=" fa fa-edit"></i><font _mstmutation="1"> Modifier   </font></th>
                         <th><i class=" fa fa-trash-o"></i><font _mstmutation="1"> Supprimer  </font></th>
-                        
-                      
+
+
                       </tr>
                     </thead>
                     <tbody>
-                        
+
                             <% if(typeof lesfraistaux !== "undefined"){ %>
-                                
-                                    <% for(var i= 0 ; i < lesfraistaux.length; i++)  {%> 
+
+                                    <% for(var i= 0 ; i < lesfraistaux.length; i++)  {%>
                                         <tr>
                                           <td><%= i+1 %></td>
                                         <td><%= lesfraistaux[i].monaie %></td>
                                         <td><%= lesfraistaux[i].letaux %> <span>%</span></td>
                                     <td>      <button data-bs-toggle="modal" data-bs-target="#modifier<%= i+1 %>" class="btn btn-primary btn-xs"><i class="fa fa-edit "></i></button></td>
                                     <td>      <button data-bs-toggle="modal" data-bs-target="#suppression<%= i+1 %>" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button></td>
-                             
+
                                 </tr>
-                                 
+
                                 <!-- Modal -->
   <div class="modal fade" id="modifier<%= i+1 %>" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-warning">
                 <h5 class="modal-title">Modification le frais de taux d'envoie   <%= lesfraistaux[i].monaie %></h5>
-                
+
             </div>
             <form method="post"  action="/Superadmin/TauxFraisEnvoieModidifier"  id="mot" >
-                  
+
             <div class="modal-body">
                 <div class="form-group">
                         <label>Selectionner la Monaie</label>
-                        <% if(typeof monaie !== "undefined"){ %>   
+                        <% if(typeof monaie !== "undefined"){ %>
                             <select id="ladevise" required class="form-control p-3 target" name="moladevise" required>
                                     <option>Veuillez selectionner la monaie  </option>
-                                    <% for(var j= 0 ; j < monaie.length; j++)  {%> 
+                                    <% for(var j= 0 ; j < monaie.length; j++)  {%>
                                     <option  value="<%= monaie[j].idmonaie %>" <% if( monaie[j].idmonaie ==  lesfraistaux[i].lamonaieid ){ %>  selected  <% } %>  ><%= monaie[j].monaie %></option>
                                       <% } %>
-                                    
+
                                 </select>
-                                <% } %> 
+                                <% } %>
                     </div>
                 <div class="form-group">
                   <label>Modification de la valeur du taux de Frais d'envoie  </label>
                   <input type="number" name="motauxfrais" value="<%= lesfraistaux[i].letaux %>" class="form-control p-3" id="motauxfrais">
                   <input type="hidden" name="idtaux" value="<%= lesfraistaux[i].idtauenvw %>" class="form-control p-3" id="motauxfrais">
-    
+
                 </div>
             </div>
             <div class="modal-footer">
@@ -150,7 +150,7 @@
                 <div class="modal-content">
                     <div class="modal-header bg-danger">
                         <h5 class="modal-title">Suppression du pourcentage de Taux d'envoie de la Monaie   <%= lesfraistaux[i].monaie %></h5>
-                       
+
                     </div>
                     <div class="modal-body">
                         Voulez-vous supprimer le pourcentage  d'envoie de la monaie  <%= lesfraistaux[i].monaie %>
@@ -163,12 +163,12 @@
             </div>
         </div>
         <!--Boite suppression fin-->
-      
+
                                     <% } %>
-                                    
+
                                 <% } %>
-                        
-     
+
+
                     </tbody>
                   </table>
                   </div>
@@ -181,14 +181,14 @@
       </section>
     </section>
     <!--main content end-->
-    
+
   </section>
   <!-- js placed at the end of the document so the pages load faster -->
-  
+
   <script src="/assets/semantic/lib/datatables/jquery.dataTables.min.js"></script>
   <script src="/assets/semantic/lib/datatables/dataTables.bootstrap4.min.js"></script>
   <script src="/assets/semantic/lib/datatables/datatables-demo.js"></script>
- 
+
    <script src="/assets/semantic/lib/bootstrap/js/bootstrap.min.js"></script>
    <script class="include" type="text/javascript" src="/assets/semantic/lib/jquery.dcjqaccordion.2.7.js"></script>
    <script src="/assets/semantic/lib/jquery.scrollTo.min.js"></script>
@@ -200,8 +200,8 @@
    <script type="text/javascript" src="/assets/semantic/lib/gritter-conf.js"></script>
    <!--script for this page-->
    <script>
-  
-   
+
+
      $().ready(function() {
        // validate the comment form when it is submitted
        jQuery.validator.addMethod("phoneGuinee", function (phone_number, element) {
@@ -236,7 +236,7 @@
            },
            frais: {
             required: "Veuillez entrez le frais "
-          
+
            }
          }
        });

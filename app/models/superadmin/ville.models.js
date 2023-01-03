@@ -11,7 +11,7 @@ const Lesville = function(uneville) {
     //
   };
 //Selectionner les Ville
- 
+
   Lesville.selectville = ( ) => {
     return new Promise((resolve, reject)=>{
       sql.query(` SELECT * FROM ville `,  (error, villes)=>{
@@ -34,7 +34,7 @@ const Lesville = function(uneville) {
   });
   };
 
-  //Selctionner une ville 
+  //Selctionner une ville
   Lesville.uneville  = ( idville) => {
     return new Promise((resolve, reject)=>{
       sql.query(` SELECT * FROM ville  WHERE idville =   ${idville} `,  (error, employees)=>{
@@ -45,8 +45,8 @@ const Lesville = function(uneville) {
       });
   });
   };
-  
-   
+
+
   //Selectionner le nombre de distributeur
  /*
 
@@ -61,6 +61,6 @@ const Lesville = function(uneville) {
   });
   };
  */
-  
-  
+
+
   module.exports = Lesville;

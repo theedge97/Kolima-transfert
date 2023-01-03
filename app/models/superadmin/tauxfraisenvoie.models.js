@@ -1,18 +1,18 @@
 
 const sql = require("../db.js");
 
-//Les Taux de Frais d envoie 
+//Les Taux de Frais d envoie
 const Tauxfraisenvoie = function(taux) {
     this.letaux = taux.letaux;
     this.lamonaieid = taux.lamonaieid;
-    
-  };
-  
 
-//Select  
- 
+  };
+
+
+//Select
+
 Tauxfraisenvoie.ajoutfraistaux = (newClient) => {
-    
+
     return new Promise((resolve, reject)=>{
       sql.query("INSERT INTO tauxfraisenvoie SET ?", newClient,  (error, enregistre)=>{
           if(error){
@@ -22,10 +22,10 @@ Tauxfraisenvoie.ajoutfraistaux = (newClient) => {
       });
   });
   };
-  //Modificattion des Informations du Client lors d úne Transaction 
-  
+  //Modificattion des Informations du Client lors d úne Transaction
+
   Tauxfraisenvoie.ModifierTauxFraisEnvoie = (	letaux, lamonaieid, 	idtauenvw) => {
-    
+
     return new Promise((resolve, reject)=>{
       sql.query(`UPDATE tauxfraisenvoie SET  	letaux= ${letaux}, lamonaieid = ${lamonaieid} WHERE 	idtauenvw = ${idtauenvw}  `,  (error, enregistre)=>{
           if(error){
@@ -35,7 +35,7 @@ Tauxfraisenvoie.ajoutfraistaux = (newClient) => {
       });
   });
   };
-  //Recuperation des Information de L envoyeur 
+  //Recuperation des Information de L envoyeur
   Tauxfraisenvoie.recupererInfo =  ( telephoneenvoyeur) => {
     return new Promise((resolve, reject)=>{
       sql.query(`SELECT * FROM tauxfraisenvoie `,  (error, employees)=>{
@@ -46,7 +46,7 @@ Tauxfraisenvoie.ajoutfraistaux = (newClient) => {
       });
   });
   };
-  //Selectioner les Taux de Frais d envoie 
+  //Selectioner les Taux de Frais d envoie
   Tauxfraisenvoie.SelectFraisEnvoie = ( ) => {
     return new Promise((resolve, reject)=>{
       sql.query(`SELECT * FROM tauxfraisenvoie INNER JOIN lesmonaie ON lesmonaie.idmonaie = tauxfraisenvoie.lamonaieid `, (error, employees)=>{
@@ -57,7 +57,7 @@ Tauxfraisenvoie.ajoutfraistaux = (newClient) => {
       });
   });
   };
-  //Selectionnner les Monaies qui ne sont pas Encore enregistrer 
+  //Selectionnner les Monaies qui ne sont pas Encore enregistrer
   Tauxfraisenvoie.SelectMonaiesnoenregistrer = ( ) => {
     return new Promise((resolve, reject)=>{
       sql.query(`SELECT * FROM tauxfraisenvoie RIGHT OUTER JOIN lesmonaie ON lesmonaie.idmonaie = tauxfraisenvoie.lamonaieid WHERE tauxfraisenvoie.lamonaieid is null`, (error, employees)=>{
@@ -68,7 +68,7 @@ Tauxfraisenvoie.ajoutfraistaux = (newClient) => {
       });
   });
   };
-  //Suppression du Taux D envoie 
+  //Suppression du Taux D envoie
   Tauxfraisenvoie.supprimerpourcentagetaux = (idtauenvw) => {
     return new Promise((resolve, reject)=>{
       sql.query(`DELETE FROM tauxfraisenvoie WHERE idtauenvw = ${idtauenvw} `,  (error, employees)=>{
@@ -78,8 +78,8 @@ Tauxfraisenvoie.ajoutfraistaux = (newClient) => {
           return resolve(employees);
       });
   });
-  }; 
-  //Selectionner le Taux D envoie  d une Monaie 
+  };
+  //Selectionner le Taux D envoie  d une Monaie
   Tauxfraisenvoie.SelectTaux = (lamonaieid) => {
     return new Promise((resolve, reject)=>{
       sql.query(`SELECT letaux FROM tauxfraisenvoie WHERE  lamonaieid = ${lamonaieid}`, (error, employees)=>{

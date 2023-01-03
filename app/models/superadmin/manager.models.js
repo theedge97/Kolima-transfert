@@ -15,7 +15,7 @@ const Manager = function(manage) {
     //
   };
 //Selectionner les entreprises
- 
+
   Manager.listemanager = ( entrepriseid) => {
     return new Promise((resolve, reject)=>{
       sql.query(` SELECT * FROM manager WHERE id_entreprise = ${entrepriseid} `,  (error, employees)=>{
@@ -37,5 +37,5 @@ const Manager = function(manage) {
       });
   });
   };
-  
+
   module.exports = Manager;
