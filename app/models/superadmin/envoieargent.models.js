@@ -1,16 +1,16 @@
-//Envoie d argents 
+//Envoie d argents
 const sql = require("../db.js");
 
-// Envoie du 
+// Envoie du
 const Envoieargenttrans = function(envoie) {
     this.transactionid = envoie.transactionid;
     this.idagencenvoie = envoie.idagencenvoie;
     this.caissierenvoieid = envoie.caissierenvoieid;
     this.commission = envoie.commission;
     this.compensation = envoie.compensation;
-    this.compenshistorique = envoie.compenshistorique;   
+    this.compenshistorique = envoie.compenshistorique;
   };
-//Selectionner les Envoies d argents 
+//Selectionner les Envoies d argents
 Envoieargenttrans.lesenvoies = result => {
     return new Promise((resolve, reject)=>{
       sql.query("SELECT * FROM `envoieargent` INNER JOIN lesmonaie ON lesmonaie.idmonaie = frais.monaieid   ",  (error, employees)=>{
@@ -22,7 +22,7 @@ Envoieargenttrans.lesenvoies = result => {
   });
   };
   //Tout les Comissions de Depots
-  
+
 Envoieargenttrans.toutlescommissiondepot = (idagence)  => {
     return new Promise((resolve, reject)=>{
       sql.query(`SELECT SUM(commission) AS tout FROM envoieargent WHERE idagencenvoie   =  ${idagence} `,  (error, employees)=>{
@@ -34,7 +34,7 @@ Envoieargenttrans.toutlescommissiondepot = (idagence)  => {
   });
   };
 
-  //Selection de tout les Commission  Journalier  d une Agence 
+  //Selection de tout les Commission  Journalier  d une Agence
   Envoieargenttrans.journalierlescommissiondepot = (idagence)  => {
     return new Promise((resolve, reject)=>{
       sql.query(`SELECT SUM(commission) AS tout FROM envoieargent INNER JOIN transaction ON transaction.idtransac = envoieargent.transactionid WHERE idagencenvoie =   ${idagence} AND DATE(transaction.Datevalidation)= CURRENT_DATE   `,  (error, employees)=>{
@@ -45,7 +45,7 @@ Envoieargenttrans.toutlescommissiondepot = (idagence)  => {
       });
   });
   };
-  //Selection tout les commission de Depot d une caisse 
+  //Selection tout les commission de Depot d une caisse
   Envoieargenttrans.caissejournalierlescommissiondepot = (idagence, idcaisse)  => {
     return new Promise((resolve, reject)=>{
       sql.query(`SELECT SUM(commission) AS tout FROM envoieargent INNER JOIN transaction ON transaction.idtransac = envoieargent.transactionid WHERE idagencenvoie =   ${idagence} AND DATE(transaction.Datevalidation)= CURRENT_DATE AND envoieargent.caissierenvoieid =  ${idcaisse} `,  (error, employees)=>{
@@ -67,7 +67,7 @@ Envoieargenttrans.toutlescommissiondepot = (idagence)  => {
       });
   });
   };
-  //Tout les commission depot entre deux date 
+  //Tout les commission depot entre deux date
   Envoieargenttrans.toutlescommissiondepot = ( debut, fin)  => {
     return new Promise((resolve, reject)=>{
       sql.query(`SELECT SUM(commission) AS tout FROM envoieargent INNER JOIN transaction ON transaction.idtransac = envoieargent.transactionid WHERE  DATE(transaction.Datevalidation) BETWEEN '${debut}' AND '${fin}' `,  (error, employees)=>{
@@ -80,7 +80,7 @@ Envoieargenttrans.toutlescommissiondepot = (idagence)  => {
   };
 
  //Nombre de de depots Journaliers
-  
+
 Envoieargenttrans.nbredepotjour = (idagence)  => {
     return new Promise((resolve, reject)=>{
       sql.query(`SELECT COUNT(idenvoie) AS nbre FROM envoieargent INNER JOIN transaction ON transaction.idtransac = envoieargent.transactionid WHERE idagencenvoie = ${idagence} AND DATE(transaction.Datevalidation)= CURRENT_DATE   `,  (error, employees)=>{
@@ -104,7 +104,7 @@ Envoieargenttrans.nbredepotsemaine = (idagence)  => {
   });
   };
   //Nombre De Depot Mensuel
-  
+
 Envoieargenttrans.nbredepotmensuel = (idagence)  => {
     return new Promise((resolve, reject)=>{
       sql.query(`SELECT COUNT(idenvoie) AS nbre FROM envoieargent INNER JOIN transaction ON transaction.idtransac = envoieargent.transactionid WHERE idagencenvoie = ${idagence} AND   MONTH(transaction.Datevalidation)= MONTH(NOW())   `,  (error, employees)=>{
@@ -160,7 +160,7 @@ Envoieargenttrans.annuelcommissiondepot = (idagence)  => {
       });
   });
   };
-//Selectionner tout les depots  d un Agence  
+//Selectionner tout les depots  d un Agence
 Envoieargenttrans.toutdepotdunagence = (idagence)  => {
     return new Promise((resolve, reject)=>{
       sql.query(`SELECT COUNT(idenvoie) AS nbre  FROM envoieargent WHERE idagencenvoie =  ${idagence} `,  (error, employees)=>{
@@ -171,9 +171,9 @@ Envoieargenttrans.toutdepotdunagence = (idagence)  => {
       });
   });
   };
-      //Ajout  d un  Envoie d argent 
+      //Ajout  d un  Envoie d argent
 Envoieargenttrans.ajoutenvoieargent = (newFrais) => {
-    
+
         return new Promise((resolve, reject)=>{
           sql.query("INSERT INTO envoieargent SET ?", newFrais,  (error, enregistre)=>{
               if(error){
@@ -182,7 +182,7 @@ Envoieargenttrans.ajoutenvoieargent = (newFrais) => {
               return resolve(enregistre);
           });
       });
-      }; 
+      };
  //Suppression d'un Envoie  d argent
 Envoieargenttrans.supprimerenvoieargent = (idfrais) => {
         return new Promise((resolve, reject)=>{
@@ -193,8 +193,8 @@ Envoieargenttrans.supprimerenvoieargent = (idfrais) => {
               return resolve(employees);
           });
       });
-      }; 
-//Selectionnez un Envoie d argent 
+      };
+//Selectionnez un Envoie d argent
 Envoieargenttrans.unenvoie = (somme, devise ) =>{
     return new Promise((resolve, reject)=>{
       sql.query(`SELECT * FROM envoieargent INNER JOIN lesmonaie ON lesmonaie.idmonaie = frais.monaieid   WHERE valeur1 <=   ${somme} AND valeur2 >=  ${somme} AND monaieid =  ${devise}  `,  (error, employees)=>{
@@ -206,7 +206,7 @@ Envoieargenttrans.unenvoie = (somme, devise ) =>{
   });
   };
   //Selectionner toute les transactions qui sont pas encore compenser
- 
+
 Envoieargenttrans.lestransactiondepotnoncompenser =  (agenceidenvoie ) =>{
     return new Promise((resolve, reject)=>{
       sql.query(`SELECT envoieargent.idenvoie  AS idenvoie, envoieargent.commission AS commissiondepot , transaction.Sommeenvoie, client.Nomexpediteur AS Nomexpediteur, client.Nomreceveur AS Nomreceveur , transaction.Datetransaction AS Datetransaction FROM envoieargent INNER JOIN transaction ON transaction.idtransac = envoieargent.transactionid INNER JOIN client ON client.idclient = transaction.Clientid  WHERE  envoieargent.idagencenvoie = ${agenceidenvoie} AND envoieargent.compensation = 0   `,  (error, employees)=>{
@@ -217,7 +217,7 @@ Envoieargenttrans.lestransactiondepotnoncompenser =  (agenceidenvoie ) =>{
       });
   });
   };
-//Compenser toute les transactions depot 
+//Compenser toute les transactions depot
 Envoieargenttrans.compenserlatransacdepot =  (idenvoie, comhist ) =>{
     return new Promise((resolve, reject)=>{
       sql.query(`UPDATE  envoieargent SET  compensation = 1 , compenshistorique = ${comhist}   WHERE idenvoie = ${idenvoie}  `,  (error, employees)=>{
@@ -229,7 +229,7 @@ Envoieargenttrans.compenserlatransacdepot =  (idenvoie, comhist ) =>{
   });
   };
   //Selectionner toute les Transactions compenser en fonction de l historique
-  
+
 Envoieargenttrans.historiquecompeseragence =  (historikcompid ,agenceidenvoie ) =>{
     return new Promise((resolve, reject)=>{
       sql.query(`SELECT envoieargent.idenvoie  AS idenvoie, envoieargent.commission AS commissiondepot , transaction.Sommeenvoie, client.Nomexpediteur AS Nomexpediteur, client.Nomreceveur AS Nomreceveur , transaction.Datetransaction AS Datetransaction FROM envoieargent INNER JOIN transaction ON transaction.idtransac = envoieargent.transactionid INNER JOIN client ON client.idclient = transaction.Clientid  WHERE   envoieargent.compenshistorique = ${historikcompid}  AND  envoieargent.idagencenvoie = ${agenceidenvoie} AND envoieargent.compensation = 1   `,  (error, employees)=>{
@@ -240,5 +240,5 @@ Envoieargenttrans.historiquecompeseragence =  (historikcompid ,agenceidenvoie ) 
       });
   });
   };
-  
+
   module.exports = Envoieargenttrans;

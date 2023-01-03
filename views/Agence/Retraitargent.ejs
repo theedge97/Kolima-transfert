@@ -15,7 +15,7 @@
     {
         display: none;
     }
- 
+
 </style>
   <!-- fin de head-->
 </head>
@@ -34,33 +34,33 @@
     <section id="main-content">
       <section class="wrapper">
         <div class="row mt">
-         
+
             <div class="col-lg-12">
               <h4><i class="fa fa-angle-right"></i>Retrait d'Argent</h4>
               <div class="form-panel">
                 <div class="form">
                   <form id="signupForm" class="cmxform form-horizontal style-form" id="signupForm" method="post" action="/Agence/retrait">
-  
-                  
-                 
+
+
+
                 <div class="form-group col-md-4 col-md-offset-2">
                   <label for="code" class="control-label ">Veuillez entrer le code que vous avez reçus  :</label>
                   <input type="text" class="form-control" name="code" id="code" placeholder="Entrez le code  ">
               </div>
-             
-                
-                  
-                  
-  
-                 
-  
+
+
+
+
+
+
+
                     <div class="form-group">
                       <div class="col-lg-offset-2 col-lg-9">
                         <button id="enregistrer" class="btn btn-theme" type="submit">Envoyer</button>
                         <button id="can" class="btn btn-theme04" type="button">Fermer </button>
                       </div>
                     </div>
-  
+
                   </form>
                 </div>
               </div>
@@ -75,7 +75,7 @@
                     <div class="modal-body">
                       <h4 id="texte"></h4>
                     </div>
-                    
+
                   </div>
                 </div>
               </div>
@@ -89,12 +89,12 @@
                     <div class="modal-body">
                       <h4 id="te"></h4>
                     </div>
-                    
+
                   </div>
                 </div>
               </div>
-            
-       <!--Boite modalw confirmation -->       
+
+       <!--Boite modalw confirmation -->
 
 <div class="modal  "  id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl" role="document">
@@ -142,9 +142,9 @@
                   <h4>Somme à envoyer   :  <span id="sommeexpediteur"> 5000000 fg </span></h4>
                 </div>
               </div>
-              
+
             </div>
-            
+
           </div>
           <div class="row">
             <div class="col-md-12 ">
@@ -168,10 +168,10 @@
                   <h4>Numéro de carte d'identité :   <span id="cartebeneficaire">Néant</span></h4>
                 </div>
                 <div class="col-md-6">
-                  <h4>Somme à rcevoir :  <span id="paysbeneficaire">50000 fg 
+                  <h4>Somme à rcevoir :  <span id="paysbeneficaire">50000 fg
                </div>
             </div>
-            
+
           </div>
           <div class="row">
             <div class="col-md-12 ">
@@ -186,14 +186,14 @@
                 <h4>Montant à recevoir :   <span id="montantbeneficiaire"></span> </h4>
               </div>
             </div>
-            
+
           </div>
         </div>
       </div>
       <div class="modal-footer">
         <form method="post" action="/Agence/code">
         <button type="button" class="btn btn-default" data-dismiss="modal"><a  href="/Agence/RetraitArgent">Fermer</a></button>
-        
+
           <input type="hidden" name="idtransaction" id="idtransaction"  />
           <button type="button submit" id="imprimer" class="btn btn-success">Validé </button>
         </form>
@@ -209,15 +209,15 @@
       </section>
     </section>
     <!--main content end-->
-    
+
   </section>
   <!-- js placed at the end of the document so the pages load faster -->
 
   <script>
- 
+
 var nomimprimer = "";
 var idtransaction = "";
-  
+
     $().ready(function() {
       // validate the comment form when it is submitted
       jQuery.validator.addMethod("phoneGuinee", function (phone_number, element) {
@@ -231,7 +231,7 @@ var idtransaction = "";
             required: true,
             minlength: 5
           } ,
-         
+
         },
         messages: {
           code: {
@@ -240,44 +240,44 @@ var idtransaction = "";
           }
         },
         submitHandler: function(form){
-     
+
      $.ajax({
          url: form.action,
          type: form.method,
          data: $(form).serialize(),
          success: function(response) {
-         
 
-              if (response.codeerreurs) { 
+
+              if (response.codeerreurs) {
                 $("#texte").html(response.codeerreurs);
-                
-    $("#erreurcode").css({ 
+
+    $("#erreurcode").css({
                       display: 'block'
                     });
                     setTimeout(function () {
-    $("#erreurcode").css({ 
+    $("#erreurcode").css({
       display: 'none'
     });
     }, 3000)
-                    
-                }  
-                if (response.invalidecode) { 
-                $("#te").html(response.invalidecode);
-                
-    $("#invalidecode").css({ 
-                      display: 'block'
-                    });
-                    setTimeout(function () {
-    $("#invalidecode").css({ 
-      display: 'none'
-    });
-    }, 3000)
-                    
+
                 }
-                  
-                if (response.transaction) { 
-                 
-    $("#myModal").css({ 
+                if (response.invalidecode) {
+                $("#te").html(response.invalidecode);
+
+    $("#invalidecode").css({
+                      display: 'block'
+                    });
+                    setTimeout(function () {
+    $("#invalidecode").css({
+      display: 'none'
+    });
+    }, 3000)
+
+                }
+
+                if (response.transaction) {
+
+    $("#myModal").css({
                       display: 'block'
                     });
                 var date = response.transaction['Datetransaction'] ;
@@ -286,10 +286,10 @@ var idtransaction = "";
                 $("#ladate").html(ladate);
                 $("#heur").html(heur);
                 $("#ag").html(response.nomagence);
-                nomimprimer = response.nomagence + ladate + heur + ".pdf"; 
+                nomimprimer = response.nomagence + ladate + heur + ".pdf";
                 //
                 $("#idtransaction").val(response.transaction['idtransac']);
-                
+
                 $("#nomexpediteur").html(response.transaction['Nomexpediteur']);
                 $("#telephoneexpediteur").html(response.transaction['Contactexpediteur']);
                 $("#nombeneficaire").html(response.transaction['Nomreceveur']);
@@ -298,22 +298,22 @@ var idtransaction = "";
                 $("#montantbeneficiaire").html(response.transaction['Sommeenvoie']);
                 //montantenvoie
                 $("#montantenvoie").html(response.sommes);
-                //devise 
+                //devise
                 $("#devise").html(response.devise);
-                
-               
+
+
               }
 
 
-             
-             
-                        }            
-           });       
+
+
+                        }
+           });
      }
-     
+
       });
-  
-  
+
+
       //code to hide topic selection, disable for demo
       var newsletter = $("#newsletter");
       // newsletter topics are optional, hide at first
@@ -326,12 +326,12 @@ var idtransaction = "";
         topicInputs.attr("disabled", !this.checked);
       });
     });
-    
+
  document.querySelector("#imprimer").addEventListener("click", ()=>{
             const invoice = this.document.getElementById("lenvoie");
 
                  //si le compte n'est pas engistrer
-          
+
 
             var opt = {
   margin:       0.5,
@@ -341,33 +341,33 @@ var idtransaction = "";
   jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
 };
 html2pdf().from(invoice).set(opt).save();
-            
+
         })
 
 
-     
+
     </script>
 
   <script src="/assets/semantic/lib/bootstrap/js/bootstrap.min.js"></script>
   <script>
     //scripte pour afficher ou non afficher info client
-   
+
  $( ".target" ).change(function() {
- 
+
   if(this.value == "0"){
-    $("#carte").css({ 
+    $("#carte").css({
                       display: 'none'
                     });
 
   }
   if(this.value == "1"){
-    $("#carte").css({ 
+    $("#carte").css({
                       display: 'block'
                     });
   }
 });
   </script>
-   
+
   <script class="include" type="text/javascript" src="/assets/semantic/lib/jquery.dcjqaccordion.2.7.js"></script>
   <script src="/assets/semantic/lib/jquery.scrollTo.min.js"></script>
   <script src="/assets/semantic/lib/jquery.nicescroll.js" type="text/javascript"></script>
@@ -377,9 +377,9 @@ html2pdf().from(invoice).set(opt).save();
   <script type="text/javascript" src="/assets/semantic/lib/gritter/js/jquery.gritter.js"></script>
   <script type="text/javascript" src="/assets/semantic/lib/gritter-conf.js"></script>
   <!--script for this page-->
-  
-  
-  
+
+
+
 </body>
 
 </html>

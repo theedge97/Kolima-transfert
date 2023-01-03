@@ -13,20 +13,20 @@ const Solderecharche = function(solde) {
     //
   };
 
-  //Rechargement d un Agence 
+  //Rechargement d un Agence
 Solderecharche.rechargeagence = (newRecharge) => {
-    
+
     return new Promise((resolve, reject)=>{
       sql.query("INSERT INTO solderecharche SET ?", newRecharge,  (error, enregistre)=>{
           if(error){
               return reject(error);
           }
-          
+
           return resolve(enregistre);
       });
   });
   };
-//Selection les historiques de rechargements 
+//Selection les historiques de rechargements
   Solderecharche.historiquerecharge  = ( agenceid) => {
     return new Promise((resolve, reject)=>{
       sql.query(` SELECT * FROM solderecharche INNER JOIN agence ON agence.idagence = solderecharche.agenceid  WHERE agenceid =   ${agenceid} `,  (error, employees)=>{
@@ -38,8 +38,8 @@ Solderecharche.rechargeagence = (newRecharge) => {
   });
   };
 
-  
-   
-  
-  
+
+
+
+
   module.exports = Solderecharche;

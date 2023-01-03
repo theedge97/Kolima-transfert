@@ -4,7 +4,7 @@
 
 <title>Administrateur || Kolima  Transfert</title>
 <link href="/assets/semantic/lib/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
- 
+
 
   <!-- fin de head-->
   <style>
@@ -13,7 +13,7 @@
       display: none;
     }
   </style>
- 
+
 </head>
 <script src="/assets/semantic/lib/jquery.validate.js"></script>
 <script src="/assets/semantic/lib/moment.min.js"></script>
@@ -25,7 +25,7 @@
 
 <!-- debut  de menue-->
 <%- include('menue'); -%>
- 
+
 
 <!--fin de menue end-->
     <!-- **********************************************************************************************************************************************************
@@ -38,7 +38,7 @@
             <div class="col-md-12">
                 <div class="content-panel">
                   <h4><i class="fa fa-angle-right"></i><font _mstmutation="1">Liste des Monaies</font> <button data-bs-toggle="modal" data-bs-target="#ajout"  class="btn btn-success">Ajout d'une Monaie</button> </h4>
-                 
+
                  <!-- Button trigger modal -->
 
 
@@ -49,14 +49,14 @@
       <div class="modal-header">
         <h5 class="modal-title">Ajout d'une Monaie</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-  
+
     </div>
     <form method="post"  action="/Superadmin/MonaieAjout"  id="monaieajout" >
-                        
+
       <div class="modal-body">
           <div class="form-group">
                   <input type="text" name="lamonaie" placeholder="Entrez  le nom de la monaie" class="form-control p-3" id="modifiermonaie">
-              
+
           </div>
       </div>
       <div class="modal-footer">
@@ -64,37 +64,37 @@
        <button type="submit" class="btn btn-danger">Ajouter</button>
       </div>
   </form>
-      
+
     </div>
   </div>
 </div> <hr>
-            
-      <!--Boite Modifier  fin--> 
+
+      <!--Boite Modifier  fin-->
                   <div class="table-responsive">
                   <table  id="dataTable"  class="table table-striped table-advance table-hover">
-                    
-                    
+
+
                     <thead>
                       <tr>
                         <th><i class="fa fa-bullhorn"></i><font _mstmutation="1"> N *</font></th>
                         <th><i class="fa fa-bullhorn"></i><font _mstmutation="1"> Nom de la monaie </font></th>
-                
+
                         <th><i class=" fa fa-edit"></i><font _mstmutation="1"> Modifier </font></th>
                         <th><i class=" fa fa-edit"></i><font _mstmutation="1"> supprimer</font></th>
-                      
+
                       </tr>
                     </thead>
                     <tbody>
-                        
+
                             <% if(typeof lesmonaie !== "undefined"){ %>
-                                
-                                    <% for(var i= 0 ; i < lesmonaie.length; i++)  {%> 
+
+                                    <% for(var i= 0 ; i < lesmonaie.length; i++)  {%>
                                         <tr>
                                           <td><%= i+1 %></td>
                                         <td><%= lesmonaie[i].monaie %></td>
                                         <td>
                                       <button data-bs-toggle="modal" data-bs-target="#modifier<%= lesmonaie[i].idmonaie  %>"    class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></button>
-                                
+
                                     </td>
                                     <td>      <button data-bs-toggle="modal" data-bs-target="#suppression<%= lesmonaie[i].idmonaie  %>"  class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button></td>
                                 </tr>
@@ -106,14 +106,14 @@
 <div class="modal fade" id="modifier<%= lesmonaie[i].idmonaie %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-    
+
       <div class="modal-header">
         <h5 class="modal-title">Modification  du nom de la monaie  <%= lesmonaie[i].monaie %> </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-  
+
     </div>
     <form method= "post"  action="/Superadmin/MonaieModidifier"  id="monaiemodifier" >
-                          
+
       <div class="modal-body">
           <div class="form-group">
                   <input type="text" name="modifiermonaie" placeholder="Modifier le nom de la monaie" class="form-control p-3" id="modifiermonaie">
@@ -125,12 +125,12 @@
        <button type="submit" class="btn btn-danger">Modifier</button>
       </div>
   </form>
-      
+
     </div>
   </div>
 </div>
-        
-        <!--Boite Modifier  fin--> 
+
+        <!--Boite Modifier  fin-->
                                     <!--Boite suppression-->
          <div class="modal fade" id="suppression<%= lesmonaie[i].idmonaie %>" tabindex="-1" role="dialog" aria-labelledby="defaultModal" aria-hidden="true">
           <div class="modal-dialog" role="document">
@@ -138,7 +138,7 @@
                   <div class="modal-header">
                       <h5 class="modal-title">Suppression d'une Monaie </h5>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-  
+
                   </div>
                   <div class="modal-body">
                       Voulez-vous supprimer  la monaie <%= lesmonaie[i].monaie %>...?
@@ -152,10 +152,10 @@
       </div>
       <!--Boite suppression fin-->
                                     <% } %>
-                                    
+
                                 <% } %>
-                        
-     
+
+
                     </tbody>
                   </table>
                   </div>
@@ -168,14 +168,14 @@
       </section>
     </section>
     <!--main content end-->
-    
+
   </section>
   <!-- js placed at the end of the document so the pages load faster -->
-    
+
   <script src="/assets/semantic/lib/datatables/jquery.dataTables.min.js"></script>
   <script src="/assets/semantic/lib/datatables/dataTables.bootstrap4.min.js"></script>
   <script src="/assets/semantic/lib/datatables/datatables-demo.js"></script>
-  
+
 
   <script src="/assets/semantic/lib/bootstrap/js/bootstrap.min.js"></script>
   <script class="include" type="text/javascript" src="/assets/semantic/lib/jquery.dcjqaccordion.2.7.js"></script>
@@ -190,8 +190,8 @@
   <!--script for this page-->
    <script src="/assets/semantic/lib/jquery.validate.js"></script>
    <script>
-  
-   
+
+
      $().ready(function() {
        // validate the comment form when it is submitted
        jQuery.validator.addMethod("phoneGuinee", function (phone_number, element) {
@@ -211,8 +211,8 @@
            }
          }
        });
-   
-   
+
+
        //code to hide topic selection, disable for demo
        var newsletter = $("#newsletter");
        // newsletter topics are optional, hide at first
@@ -226,7 +226,7 @@
        });
      });
      </script>
-  
+
 </body>
 
 </html>

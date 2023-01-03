@@ -27,7 +27,7 @@
             <div class="col-md-12">
                 <div class="content-panel">
                   <h4><i class="fa fa-angle-right"></i><font _mstmutation="1">Liste des Transferts  Mobile des  Pays   </font> <button data-bs-toggle="modal" data-bs-target="#ajout"  class="btn btn-success">Ajout d'une Monaie</button> </h4>
-                 
+
                  <!-- Button trigger modal -->
 
 
@@ -38,67 +38,67 @@
       <div class="modal-header">
         <h5 class="modal-title">Ajout d'une Transfert Mobile Money</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-  
+
     </div>
     <form method="post"  action="/Superadmin/TransfertMonaieAjout"  id="monaieajout" >
-                        
+
       <div class="modal-body">
           <div class="form-group">
             <label>Entrez le nom de la monnaie</label>
-                  <input type="text" name="nomonnaie" placeholder="Entrez  le nom de la monaie" class="form-control p-3" id="nomonnaie"> 
+                  <input type="text" name="nomonnaie" placeholder="Entrez  le nom de la monaie" class="form-control p-3" id="nomonnaie">
           </div>
           <br>
           <div class="form-group">
-            <% if(typeof lespays !== "undefined"){ %>   
+            <% if(typeof lespays !== "undefined"){ %>
                 <select id="paysid" required class="form-control p-3 target" name="paysid" required>
                         <option>Veuillez selectionner le Pays   </option>
-                        <% for(var k= 0 ; k < lespays.length; k++)  {%> 
+                        <% for(var k= 0 ; k < lespays.length; k++)  {%>
                         <option  value="<%= lespays[k].idpays %>"   ><%= lespays[k].pays %></option>
-                          <% } %>                   
+                          <% } %>
                     </select>
                     <% } %>
           </div>
-          
+
       </div>
       <div class="modal-footer">
        <button type="button" class="btn btn-secondary" data-dismiss="modal">Non</button>
        <button type="submit" class="btn btn-danger">Ajouter</button>
       </div>
   </form>
-      
+
     </div>
   </div>
 </div> <hr>
-            
-      <!--Boite Modifier  fin--> 
+
+      <!--Boite Modifier  fin-->
                   <div class="table-responsive">
                   <table  id="dataTable"  class="table table-striped table-advance table-hover">
-                    
-                    
+
+
                     <thead>
                       <tr>
                         <th><i class="fa fa-bullhorn"></i><font _mstmutation="1"> N *</font></th>
                         <th><i class="fa fa-bullhorn"></i><font _mstmutation="1"> Nom de la monaie </font></th>
                         <th><i class=" fa fa-edit"></i><font _mstmutation="1"> Monaie du Pays   </font></th>
-                        
+
                         <th><i class=" fa fa-edit"></i><font _mstmutation="1"> Pays  </font></th>
                         <th><i class=" fa fa-edit"></i><font _mstmutation="1"> supprimer</font></th>
-                      
+
                       </tr>
                     </thead>
                     <tbody>
-                        
+
                             <% if(typeof listetransferttout !== "undefined"){ %>
-                                
-                                    <% for(var i= 0 ; i < listetransferttout.length; i++)  {%> 
+
+                                    <% for(var i= 0 ; i < listetransferttout.length; i++)  {%>
                                         <tr>
                                           <td><%= i+1 %></td>
                                         <td><%= listetransferttout[i].nomtransfert %></td>
                                         <td><%= listetransferttout[i].pays %></td>
-                                        
+
                                         <td>
                                       <button data-bs-toggle="modal" data-bs-target="#modifier<%= listetransferttout[i].idlistetransf  %>"    class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></button>
-                                
+
                                     </td>
                                     <td>      <button data-bs-toggle="modal" data-bs-target="#suppression<%= listetransferttout[i].idlistetransf  %>"  class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button></td>
                                 </tr>
@@ -110,14 +110,14 @@
 <div class="modal fade" id="modifier<%= listetransferttout[i].idlistetransf %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-    
+
       <div class="modal-header">
         <h5 class="modal-title">Modification  du nom de la monaie  <%= listetransferttout[i].nomtransfert %> </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-  
+
     </div>
     <form method= "post"  action="/Superadmin/ModifierListedesTransfertPays"  id="monaiemodifier" >
-                          
+
       <div class="modal-body">
           <div class="form-group">
                   <input type="text" name="modifiernommonaie" value="<%= listetransferttout[i].nomtransfert %>" class="form-control p-3" id="modifiermonaie">
@@ -125,27 +125,27 @@
           </div>
           <div class="from-group">
             <label>Modification du  Pays </label>
-            <% if(typeof lespays !== "undefined"){ %>   
+            <% if(typeof lespays !== "undefined"){ %>
                 <select id="paysid"  class="form-control p-3 target" name="paysid" required>
-                        <% for(var j= 0 ; j < lespays.length; j++)  {%> 
+                        <% for(var j= 0 ; j < lespays.length; j++)  {%>
                         <option <% if( listetransferttout[i].idpays ==  lespays[j].idpays ){ %>  selected  <% } %>   value="<%= lespays[j].idpays %>"   ><%= lespays[j].pays %></option>
-                          <% } %>                   
+                          <% } %>
                     </select>
                     <% } %>
           </div>
-          
+
       </div>
       <div class="modal-footer">
        <button type="button" class="btn btn-secondary" data-dismiss="modal">Non</button>
        <button type="submit" class="btn btn-danger">Modifier</button>
       </div>
   </form>
-      
+
     </div>
   </div>
 </div>
-        
-        <!--Boite Modifier  fin--> 
+
+        <!--Boite Modifier  fin-->
                                     <!--Boite suppression-->
          <div class="modal fade" id="suppression<%= listetransferttout[i].idlistetransf %>" tabindex="-1" role="dialog" aria-labelledby="defaultModal" aria-hidden="true">
           <div class="modal-dialog" role="document">
@@ -153,7 +153,7 @@
                   <div class="modal-header">
                       <h5 class="modal-title">Suppression d'une Monaie </h5>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-  
+
                   </div>
                   <div class="modal-body">
                       Voulez-vous supprimer  la monaie <%= listetransferttout[i].nomtransfert %> du pays <%= listetransferttout[i].pays %> ...?
@@ -167,10 +167,10 @@
       </div>
       <!--Boite suppression fin-->
                                     <% } %>
-                                    
+
                                 <% } %>
-                        
-     
+
+
                     </tbody>
                   </table>
                   </div>
@@ -183,14 +183,14 @@
       </section>
     </section>
     <!--main content end-->
-    
+
   </section>
   <!-- js placed at the end of the document so the pages load faster -->
-    
+
   <script src="/assets/semantic/lib/datatables/jquery.dataTables.min.js"></script>
   <script src="/assets/semantic/lib/datatables/dataTables.bootstrap4.min.js"></script>
   <script src="/assets/semantic/lib/datatables/datatables-demo.js"></script>
-  
+
 
   <script src="/assets/semantic/lib/bootstrap/js/bootstrap.min.js"></script>
   <script class="include" type="text/javascript" src="/assets/semantic/lib/jquery.dcjqaccordion.2.7.js"></script>
@@ -237,7 +237,7 @@
        });
      });
      </script>
-  
+
 </body>
 
 </html>

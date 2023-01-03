@@ -19,7 +19,7 @@
       color: rgb(219, 10, 10);
     }
   </style>
-  
+
   <script src="/assets/semantic/lib/jquery-1.9.1.js"></script>
   <script src="/assets/semantic/lib/jquery.validate.js"></script>
 </head>
@@ -45,7 +45,7 @@
                             <label for="super_agence" class="control-label ">Gain d'envoie d'argent Agence Principale % : </label>
                             <input type="number" class="form-control" id="super_agence" name="super_agence" value="<%= lesgain.super_agence %>">
                         </div>
-                  
+
                           <div class="form-group col-md-4 col-md-offset-1">
                             <label for="agencedepot" class="control-label ">Gain d'envoie d'argent Agence Depot % : </label>
                             <input type="number" class="form-control" id="agencedepot" name="agencedepot" value="<%= lesgain.agencedepot %>">
@@ -69,19 +69,19 @@
                     </div>
                 </div>
                 </div>
-        
+
         <!-- /row -->
       </section>
     </section>
     <!--main content end-->
-    
+
   </section>
   <!-- js placed at the end of the document so the pages load faster -->
-  
+
   <script src="/assets/semantic/lib/datatables/jquery.dataTables.min.js"></script>
   <script src="/assets/semantic/lib/datatables/dataTables.bootstrap4.min.js"></script>
   <script src="/assets/semantic/lib/datatables/datatables-demo.js"></script>
- 
+
    <script src="/assets/semantic/lib/bootstrap/js/bootstrap.min.js"></script>
    <script class="include" type="text/javascript" src="/assets/semantic/lib/jquery.dcjqaccordion.2.7.js"></script>
    <script src="/assets/semantic/lib/jquery.scrollTo.min.js"></script>
@@ -93,8 +93,8 @@
    <script type="text/javascript" src="/assets/semantic/lib/gritter-conf.js"></script>
    <!--script for this page-->
    <script>
-  
-   
+
+
      $().ready(function() {
        // validate the comment form when it is submitted
        jQuery.validator.addMethod("phoneGuinee", function (phone_number, element) {
@@ -129,7 +129,7 @@
            },
            frais: {
             required: "Veuillez entrez le frais "
-          
+
            }
          }
        });
@@ -145,10 +145,10 @@
          topicInputs.attr("disabled", !this.checked);
        });
      });
-     
+
 $( "#super_agence" ).change(function() {
-  
-  var url = "/Gain/superagence/" + this.value; 
+
+  var url = "/Gain/superagence/" + this.value;
 
 
 $.ajax({
@@ -156,21 +156,21 @@ $.ajax({
      url: url,
      dataType: "json",
       success: function (response){
-        if (response.success) {  
+        if (response.success) {
                setTimeout(function () {
-                    
+
                   window.location.href = "/Superadmin/Gainfrais"
                   }, 2000);
-         
-                 }  
- 
+
+                 }
+
       }
 });
 
 });
 //Agence depot
 $( "#agencedepot" ).change(function() {
-    var url = "/Gain/agencedepot/" + this.value; 
+    var url = "/Gain/agencedepot/" + this.value;
 
 
 $.ajax({
@@ -178,34 +178,34 @@ $.ajax({
      url: url,
      dataType: "json",
       success: function (response){
-        if (response.success) {  
+        if (response.success) {
                setTimeout(function () {
-                    
+
                   window.location.href = "/Superadmin/Gainfrais"
                   }, 2000);
-         
-                 }  
- 
+
+                 }
+
       }
 });
 });
 //agenceretrait
 $( "#agenceretrait" ).change(function() {
-    var url = "/Gain/agenceretrait/" + this.value; 
+    var url = "/Gain/agenceretrait/" + this.value;
 
     $.ajax({
      type: "GET",
      url: url,
      dataType: "json",
       success: function (response){
-        if (response.success) {  
+        if (response.success) {
                setTimeout(function () {
-                    
+
                   window.location.href = "/Superadmin/Gainfrais"
                   }, 2000);
-         
-                 }  
- 
+
+                 }
+
       }
 });
 });

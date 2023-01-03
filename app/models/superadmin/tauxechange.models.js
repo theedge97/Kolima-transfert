@@ -10,9 +10,9 @@ const Taux = function(echanges) {
     this.X2 = echanges.X2;
     this.V1 = echanges.V1;
     this.V2 = echanges.V2;
-   
+
   };
-//Selectionner les taux d'echanges 
+//Selectionner les taux d'echanges
 Taux.lestaux = result => {
     return new Promise((resolve, reject)=>{
       sql.query("SELECT idtaux,  m.monaie AS monaie1 , V1 , n.monaie AS monaie2 ,  V2 FROM `tauxechanges` INNER JOIN lesmonaie AS m  ON m.idmonaie = tauxechanges.X1 INNER JOIN lesmonaie AS n  ON n.idmonaie = tauxechanges.X2  ",  (error, employees)=>{
@@ -23,9 +23,9 @@ Taux.lestaux = result => {
       });
   });
   };
-      //Ajout  d un taux d'echanges 
+      //Ajout  d un taux d'echanges
 Taux.ajouttaux = (newTaux) => {
-    
+
         return new Promise((resolve, reject)=>{
           sql.query("INSERT INTO tauxechanges SET ?", newTaux,  (error, enregistre)=>{
               if(error){
@@ -34,8 +34,8 @@ Taux.ajouttaux = (newTaux) => {
               return resolve(enregistre);
           });
       });
-      }; 
-    //Suppression d'un taux 
+      };
+    //Suppression d'un taux
     Taux.supprimertaux = (idtaux) => {
         return new Promise((resolve, reject)=>{
           sql.query(`DELETE FROM tauxechanges WHERE idtaux = ${idtaux} `,  (error, employees)=>{
@@ -45,7 +45,7 @@ Taux.ajouttaux = (newTaux) => {
               return resolve(employees);
           });
       });
-      }; 
+      };
       //Modification du nom de la monaie
       Taux.modifiertaux = (V1, V2, idtaux) => {
         return new Promise((resolve, reject)=>{
@@ -56,8 +56,8 @@ Taux.ajouttaux = (newTaux) => {
               return resolve(employees);
           });
       });
-      }; 
-   //Selectionner un taux d'echanges 
+      };
+   //Selectionner un taux d'echanges
    Taux.untaux = (monaie1, monaie2) => {
     return new Promise((resolve, reject)=>{
       sql.query(`SELECT idtaux,  m.monaie AS monaie1 , V1 , n.monaie AS monaie2 ,  V2 FROM tauxechanges INNER JOIN lesmonaie AS m  ON m.idmonaie = tauxechanges.X1 INNER JOIN lesmonaie AS n  ON n.idmonaie = tauxechanges.X2   WHERE m.monaie =  "${monaie1}" AND  n.monaie = "${monaie2}" `,  (error, employees)=>{
@@ -79,5 +79,5 @@ Taux.ajouttaux = (newTaux) => {
       });
   });
   };
-  
+
   module.exports = Taux;

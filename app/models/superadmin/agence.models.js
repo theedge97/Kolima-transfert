@@ -20,7 +20,7 @@ const Agence = function(agence) {
 
 //insertion d'une Agence
   Agence.inscription = (newAgence) => {
-    
+
     return new Promise((resolve, reject)=>{
       sql.query("INSERT INTO agence SET ?", newAgence,  (error, enregistre)=>{
           if(error){
@@ -43,7 +43,7 @@ Agence.lesagences = result => {
       });
   });
   };
-  //Recuperer un Agence en fonction de son id 
+  //Recuperer un Agence en fonction de son id
   Agence.recupereunagence = (agenceid) => {
     return new Promise((resolve, reject)=>{
       sql.query(`SELECT * FROM agence INNER JOIN pays on pays.idpays = agence.paysid INNER JOIN ville ON ville.idville = agence.villeid INNER JOIN lesmonaie ON lesmonaie.idmonaie = pays.devise   WHERE agence.idagence = ${agenceid} `,  (error, employees)=>{
@@ -77,7 +77,7 @@ Agence.lesagences = result => {
       });
   });
   };
-  //Suppression d'une agence 
+  //Suppression d'une agence
   Agence.supprimeragence = (agenceid) => {
     return new Promise((resolve, reject)=>{
       sql.query(`DELETE FROM   agence  WHERE agence.idagence = ${agenceid} `,  (error, employees)=>{
@@ -87,12 +87,12 @@ Agence.lesagences = result => {
           return resolve(employees);
       });
   });
-  }; 
-//Connection d'une agence 
+  };
+//Connection d'une agence
 //selectionner les elements d'une agence
 Agence.Trouveragence = (telephone) => {
-   
-    
+
+
   return new Promise((resolve, reject)=>{
     sql.query(`SELECT * FROM agence INNER JOIN pays on pays.idpays = agence.paysid INNER JOIN ville ON ville.idville = agence.villeid INNER JOIN lesmonaie ON lesmonaie.idmonaie = pays.devise  WHERE telephoneagence = "${telephone}"  `, (error, employees)=>{
         if(error){
@@ -102,7 +102,7 @@ Agence.Trouveragence = (telephone) => {
     });
 });
 };
-//Diminution du Solde lorsque il ya un Depot 
+//Diminution du Solde lorsque il ya un Depot
 Agence.diminutionsolde = (agenceid, somme) => {
   return new Promise((resolve, reject)=>{
     sql.query(`UPDATE  agence SET  solde = solde -  ${somme}  WHERE agence.idagence = ${agenceid} `,  (error, employees)=>{
@@ -113,7 +113,7 @@ Agence.diminutionsolde = (agenceid, somme) => {
     });
 });
 };
-//Augmentation du Solde lorsque il ya un Retrait 
+//Augmentation du Solde lorsque il ya un Retrait
 Agence.augmentationsolde = (agenceid, somme) => {
   return new Promise((resolve, reject)=>{
     sql.query(`UPDATE  agence SET  solde = solde +  ${somme}  WHERE agence.idagence = ${agenceid} `,  (error, employees)=>{
@@ -124,5 +124,5 @@ Agence.augmentationsolde = (agenceid, somme) => {
     });
 });
 };
-  
+
   module.exports = Agence;

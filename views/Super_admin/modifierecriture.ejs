@@ -35,7 +35,7 @@
        left: 45%;
        display: none;
    }
-  
+
 </style>
 </head>
 <!-- debut  de menue-->
@@ -47,15 +47,15 @@
     <!-- debut du body-->
     <section id="main-content">
       <section class="wrapper">
-       
+
         <div class="row">
             <div class="d-block d-sm-flex flex-nowrap align-items-center">
                 <div class="page-title text-primary mb-2 mb-sm-0">
                     <h1 class="text-dark">Modification des Ecritures  </h1>
                 </div>
-               
-            </div> 
-            
+
+            </div>
+
         </div>
         <div class="row">
           <button class="btn btn-primary" id="spinerload" type="button" disabled>
@@ -64,61 +64,61 @@
           </button>
             <div class="align-items-center row">
                 <div id="erreurdeoperation" class="text-center bg-warning text-white offset-md-3 col-lg-4  py-3">
-                <h3>Veuillez bien renseigner les informations</h3>  
+                <h3>Veuillez bien renseigner les informations</h3>
                 </div>
-              </div> 
+              </div>
               <div class="align-items-center row">
                 <div id="erreurcompte" class="text-center bg-warning text-white offset-md-3 col-lg-4  py-3">
-                <h3>Veuillez bien renseigner le numero de  Compte</h3>  
+                <h3>Veuillez bien renseigner le numero de  Compte</h3>
                 </div>
-              </div> 
+              </div>
               <div class="align-items-center row">
                 <div id="erreurbalance" class="text-center bg-warning text-white offset-md-3 col-lg-4  py-3">
-                <h3>La somme des crédits ne correspond pas a la somme des débits </h3>  
+                <h3>La somme des crédits ne correspond pas a la somme des débits </h3>
                 </div>
               </div>
               <div class="align-items-center row">
                 <div id="dateinvalide" class="text-center bg-danger text-white offset-md-3 col-lg-4  py-3">
-                <h3>Vous ne pouvez plus faire de modification  </h3>  
+                <h3>Vous ne pouvez plus faire de modification  </h3>
                 </div>
-              </div> 
+              </div>
               <div class="align-items-center row">
                 <div id="sucessoperation" class="text-center bg-primary text-white offset-md-3 col-lg-4  py-3">
-                <h3>Modification Effectuer avec sucess  </h3>  
+                <h3>Modification Effectuer avec sucess  </h3>
                 </div>
-              </div> 
+              </div>
         </div>
         <div class="row">
             <form method="post" id="operation" action="/Superadmin/EcrituresmodifierInfo" class="cmxform form-verticale style-form">
                 <div class="row">
-             
-                
+
+
                  <div class=" col-lg-3">
                      <label class="text-dark">Numéro d'écriture   </label>
                      <input class=" form-control p-1"  id="numecrit" name="numecrit" type="text">
-                   
+
                  </div>
                  <div class=" col-lg-2">
-                     <button  class="btn btn-primary form-control m-3">Rechercher </button>    
+                     <button  class="btn btn-primary form-control m-3">Rechercher </button>
                  </div>
                 </div>
-     
-                
+
+
              </form>
         </div>
         <div id="moecrit" class="row" >
-         
-          
+
+
             <div class="col-xxl-12 mt-5 col-lg-12">
                 <form method="post" id="modifier" action="/Superadmin/ModificationInfoEcriture" class="cmxform form-verticale style-form">
                     <div class="row">
                       <label for="numeroeciture" class="control-label text-dark   col-lg-2">libellé  d'ecriture  :</label>
-                         
+
                      <div class=" col-lg-4">
-                       
+
                          <input class=" form-control p-1"  id="libelecrit" name="libelecrit" type="text">
                          <datalist id="cat">
-                            <% for(var i= 0 ; i < lescomptes.length; i++)  {%> 
+                            <% for(var i= 0 ; i < lescomptes.length; i++)  {%>
                                 <option  value="<%= lescomptes[i].numcpte %>"><%= lescomptes[i].numcpte %> : <%= lescomptes[i].intcompte %></option>
                                   <% } %>
                           </datalist>
@@ -126,72 +126,72 @@
                      </div>
                      <div class="row">
                       <label for="datecritre" class="control-label text-dark col-lg-2">Date :</label>
-                         
+
                      <div class=" col-lg-4">
-                        
+
                          <input class=" form-control p-1"  id="datecriture" name="datecriture" type="date">
                          <input class=" form-control p-1"  id="ecritureid" name="ecritureid" type="hidden">
                          <input class=" form-control p-1"  id="datedif" name="datedif" type="hidden">
-                       
+
                      </div>
                      </div>
                      <div class="row">
                       <label for="refpiece" class="control-label text-dark  col-lg-2">Référence Piéce   :</label>
-                        
+
                      <div class=" col-lg-4">
-                        
+
                         <input class=" form-control p-1"  id="refpiece" name="refpiece" type="text">
-                      
+
                     </div>
                     </div>
-                   
+
                      <div class="row" id="ligne1" >
                       <hr class="text-primary mb-2 mt-3 pt-1">
                          <label for="numeroagence" class="control-label text-dark  col-lg-offset-2 col-lg-4">Compte  :</label>
                          <label for="numeroagence" class="control-label text-dark  col-lg-offset-2 col-lg-4">Débit  :</label>
                          <label for="numeroagence" class="control-label text-dark  col-lg-offset-2 col-lg-4">Crédit :</label>
-                       
-                     <hr class="text-primary pt-1 mt-3"> 
+
+                     <hr class="text-primary pt-1 mt-3">
 
                      </div>
                      <div   id="ligne2" class="row text-center mb-5 mt-5">
                       <button type="button" id="uneligne" class="  col-lg-4 btn btn-success">Ajouter une Ligne </button>
-                     </div>  
-                 
+                     </div>
+
                     <div  class="row text-center mb-5 mt-5">
                         <button  type="reset" class=" offset-lg-6 col-lg-2 btn btn-primary">Effacer</button>
                         <button type="submit" class="  col-lg-4 btn btn-success">Modifier</button>
                        </div>
 
-                      
+
                  </form>
             </div>
-          
-          
+
+
         </div>
         <div class="row">
-            
+
             <div class="col-xxl-12 mt-5 col-lg-12">
-                   
+
             </div>
         </div>
 
-       
+
     </section>
     </section>
     <!--main content end-->
-    
+
   </section>
   <!-- js placed at the end of the document so the pages load faster -->
   <script src="/assets/semantic/lib/jquery/jquery.min.js"></script>
   <script src="/assets/semantic/lib/jquery.validate.js"></script>
   <script>
-    //Fonction pour ajouter une ligne 
+    //Fonction pour ajouter une ligne
          function ajouterligne(numcpte,debit, credit,idmvt) {
-     //Creer la ligne                 
+     //Creer la ligne
      var row = document.createElement('div')
      row.setAttribute("class", "row");
-     //Creation de la premiere div 
+     //Creation de la premiere div
      var div1 = document.createElement('div')
      div1.setAttribute("class", "col-lg-4");
      var input1 = document.createElement('input')
@@ -203,7 +203,7 @@
      input1.value = numcpte;
      div1.appendChild(input1);
      row.appendChild(div1);
-     
+
      //Deuxieme div
      var div2 = document.createElement('div')
      div2.setAttribute("class", "col-lg-4");
@@ -229,22 +229,22 @@
      input31.setAttribute("name", "idmvt");
      input31.value = idmvt;
      input3.value = credit;
-   
+
      div3.appendChild(input3);
      div3.appendChild(input31);
      row.appendChild(div3);
-   
+
      var ligne1 = document.querySelector("#ligne1");
      $(ligne1).after(row);
-   
-   
+
+
                  }
-                 //Ajouter une ligne d'ecriture 
+                 //Ajouter une ligne d'ecriture
                  function ajoutligne() {
-     //Creer la ligne                 
+     //Creer la ligne
      var row = document.createElement('div')
      row.setAttribute("class", "row");
-     //Creation de la premiere div 
+     //Creation de la premiere div
      var div1 = document.createElement('div')
      div1.setAttribute("class", "col-lg-4");
      var input1 = document.createElement('input')
@@ -253,10 +253,10 @@
      input1.setAttribute("name", "monumcpte");
      input1.setAttribute("placeholder", "selectionner le Compte")
      input1.setAttribute("list", "cat");
-   
+
      div1.appendChild(input1);
      row.appendChild(div1);
-     
+
      //Deuxieme div
      var div2 = document.createElement('div')
      div2.setAttribute("class", "col-lg-4");
@@ -265,7 +265,7 @@
      input2.setAttribute("type", "text");
      input2.setAttribute("name", "modebit");
      input2.setAttribute("placeholder", "Entrez la somme")
-    
+
      div2.appendChild(input2);
      row.appendChild(div2);
       //Troissieme div
@@ -276,22 +276,22 @@
      input3.setAttribute("type", "text");
      input3.setAttribute("name", "mocredit");
      input3.setAttribute("placeholder", "Entrez la somme")
-   
+
      div3.appendChild(input3);
      row.appendChild(div3);
-   
+
      var ligne1 = document.querySelector("#ligne2");
      $(ligne1).before(row);
-   
-   
+
+
                  }
                   $('#uneligne').on('click', function(e){
-                 
+
                  ajoutligne()
     })
-     
+
        $().ready(function() {
-           
+
          // validate the comment form when it is submitted
          jQuery.validator.addMethod("phoneGuinee", function (phone_number, element) {
            phone_number = phone_number.replace(/\s+/g, "");
@@ -302,92 +302,92 @@
            rules: {
                numecrit: {
                required: true
-            } 
+            }
            },
            messages: {
                numecrit: {
                required: "Veuillez renseigner un numéro d'ecriture   ",
-           
+
             }
            },
            submitHandler: function(form){
-             $("#spinerload").css({ 
+             $("#spinerload").css({
                          display: 'block'
-                       });   
-        
+                       });
+
    $.ajax({
        url: form.action,
        type: form.method,
        data: $(form).serialize(),
        success: function(response) {
-        
-            if (response.erreureference) {  
-             $("#spinerload").css({ 
+
+            if (response.erreureference) {
+             $("#spinerload").css({
                          display: 'none'
                        });
-   
-                    $("#erreurdeoperation").css({ 
+
+                    $("#erreurdeoperation").css({
                          display: 'block'
                        });
                        setTimeout(function () {
-                           $("#erreurdeoperation").css({ 
+                           $("#erreurdeoperation").css({
                          display: 'none'
                        });
                        }, 3000);
-            
-                    }  
-                    if (response.dateinvalide) { 
-   
-                     $("#spinerload").css({ 
+
+                    }
+                    if (response.dateinvalide) {
+
+                     $("#spinerload").css({
                          display: 'none'
                        });
-              
-              $("#dateinvalide").css({ 
+
+              $("#dateinvalide").css({
                    display: 'block'
                  });
                  setTimeout(function () {
-                     $("#dateinvalide").css({ 
+                     $("#dateinvalide").css({
                    display: 'none'
                  });
                  }, 3000);
-      
-              } 
-                         
-                    if (response.lesmvt) {  
-                       
-                       $("#moecrit").css({ 
+
+              }
+
+                    if (response.lesmvt) {
+
+                       $("#moecrit").css({
                          display: 'block'
                        });
-                       $("#spinerload").css({ 
+                       $("#spinerload").css({
                          display: 'none'
                        });
-                       var  table = response.lesmvt; 
-                      $("#libelecrit").val(response.unereference.libeecri) 
+                       var  table = response.lesmvt;
+                      $("#libelecrit").val(response.unereference.libeecri)
                       //refpiece
-                      $("#refpiece").val(response.unereference.reference) 
+                      $("#refpiece").val(response.unereference.reference)
                       $("#ecritureid").val(response.unereference.idec)
                       var unedate =  moment(response.unereference.datecr).format('YYYY-MM-DD');
-   
-                      $("#datecriture").val(unedate) 
+
+                      $("#datecriture").val(unedate)
                       $("#datedif").val(response.unereference.datedif);
-                    
+
                        for (var i = 0; i < table.length; i++) {
                            var element = table[i];
                            ajouterligne(table[i].numcpte, table[i].debit, table[i].credit, table[i].idmvt);
-   
+
                        }
-     
-                    }       
-           
-           
-                      }            
-         });       
-   }
-   
-   
+
+                    }
+
+
+                      }
          });
-     
-     //Modification des operations 
+   }
+
+
+         });
+
+     //Modification des operations
      $("#modifier").validate({
            rules: {
                refpiece: {
@@ -415,7 +415,7 @@
            },
            datecriture:{
                required: "Veuillez Renseigner une date d'ecriture "
-           }, 
+           },
            libelecrit : {
                required: "Veuillez Renseigner le Libeller d'Ecriture "
            }
@@ -431,89 +431,89 @@
            }
            },
            submitHandler: function(form){
-             $("#spinerload").css({ 
+             $("#spinerload").css({
                          display: 'block'
-                       });  
+                       });
    $.ajax({
        url: form.action,
        type: form.method,
        data: $(form).serialize(),
        success: function(response) {
-        
-          
-                    if (response.dateinvalide) {  
-                     $("#spinerload").css({ 
+
+
+                    if (response.dateinvalide) {
+                     $("#spinerload").css({
                          display: 'none'
-                       }); 
-              
-              $("#dateinvalide").css({ 
+                       });
+
+              $("#dateinvalide").css({
                    display: 'block'
                  });
                  setTimeout(function () {
-                     $("#dateinvalide").css({ 
+                     $("#dateinvalide").css({
                    display: 'none'
                  });
                  }, 3000);
-      
-              } 
-              
-              if (response.erreurcompte) {  
-               $("#spinerload").css({ 
+
+              }
+
+              if (response.erreurcompte) {
+               $("#spinerload").css({
                          display: 'none'
-                       }); 
-              
-              $("#erreurcompte").css({ 
+                       });
+
+              $("#erreurcompte").css({
                    display: 'block'
                  });
                  setTimeout(function () {
-                     $("#erreurcompte").css({ 
+                     $("#erreurcompte").css({
                    display: 'none'
                  });
                // window.location.href = "/AgentAmbassade/Modifierecriture";
                  }, 3000);
-      
+
               }
               //Operation sucessoperation
-              if (response.sucessoperation) {  
-               $("#spinerload").css({ 
+              if (response.sucessoperation) {
+               $("#spinerload").css({
                          display: 'none'
-                       }); 
-              
-              $("#sucessoperation").css({ 
+                       });
+
+              $("#sucessoperation").css({
                    display: 'block'
                  });
                  setTimeout(function () {
-                     $("#sucessoperation").css({ 
+                     $("#sucessoperation").css({
                    display: 'none'
                  });
                window.location.href = "/Superadmin/ModifieEcriture";
                  }, 3000);
-      
+
               }
-   
-              if (response.erreurbalance) {  
-               $("#spinerload").css({ 
+
+              if (response.erreurbalance) {
+               $("#spinerload").css({
                          display: 'none'
-                       }); 
-              $("#erreurbalance").css({ 
+                       });
+              $("#erreurbalance").css({
                    display: 'block'
                  });
                  setTimeout(function () {
-                     $("#erreurbalance").css({ 
+                     $("#erreurbalance").css({
                    display: 'none'
                  });
                  }, 3000);
-      
+
               }
-                         
-                      
-           
-           
-                      }            
-         });       
+
+
+
+
+                      }
+         });
    }
-   
-   
+
+
          });
          //code to hide topic selection, disable for demo
          var newsletter = $("#newsletter");
@@ -526,14 +526,14 @@
            topics[this.checked ? "removeClass" : "addClass"]("gray");
            topicInputs.attr("disabled", !this.checked);
          });
-     // Recuperer la liste d'unne ville correspondant a un pays 
-     
-    
-   
-   
+     // Recuperer la liste d'unne ville correspondant a un pays
+
+
+
+
        });
        </script>
-            
+
   <script src="/assets/semantic/lib/bootstrap/js/bootstrap.min.js"></script>
   <script class="include" type="text/javascript" src="/assets/semantic/lib/jquery.dcjqaccordion.2.7.js"></script>
   <script src="/assets/semantic/lib/jquery.scrollTo.min.js"></script>
@@ -543,7 +543,7 @@
   <script src="/assets/semantic/lib/common-scripts.js"></script>
   <script type="text/javascript" src="/assets/semantic/lib/gritter/js/jquery.gritter.js"></script>
   <script type="text/javascript" src="/assets/semantic/lib/gritter-conf.js"></script>
-  
+
 </body>
 
 </html>

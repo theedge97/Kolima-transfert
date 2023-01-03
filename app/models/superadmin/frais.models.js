@@ -11,9 +11,9 @@ const Frais = function(lesfrais) {
     this.valeur1 = lesfrais.valeur1;
     this.valeur2 = lesfrais.valeur2;
     this.frais = lesfrais.frais;
-   
+
   };
-//Selectionner les frais 
+//Selectionner les frais
 Frais.lesfrais = result => {
     return new Promise((resolve, reject)=>{
       sql.query("SELECT * FROM `frais` INNER JOIN lesmonaie ON lesmonaie.idmonaie = frais.monaieid   ",  (error, employees)=>{
@@ -26,7 +26,7 @@ Frais.lesfrais = result => {
   };
       //Ajout  d un  Frais
 Frais.ajoutfrais = (newFrais) => {
-    
+
         return new Promise((resolve, reject)=>{
           sql.query("INSERT INTO frais SET ?", newFrais,  (error, enregistre)=>{
               if(error){
@@ -35,7 +35,7 @@ Frais.ajoutfrais = (newFrais) => {
               return resolve(enregistre);
           });
       });
-      }; 
+      };
  //Suppression d'un frais
 Frais.supprimerfrais = (idfrais) => {
         return new Promise((resolve, reject)=>{
@@ -46,7 +46,7 @@ Frais.supprimerfrais = (idfrais) => {
               return resolve(employees);
           });
       });
-      }; 
+      };
 //Selectionnez un frais
 Frais.unfrais = (somme, devise ) =>{
     return new Promise((resolve, reject)=>{
@@ -58,6 +58,6 @@ Frais.unfrais = (somme, devise ) =>{
       });
   });
   };
-    
-  
+
+
   module.exports = Frais;

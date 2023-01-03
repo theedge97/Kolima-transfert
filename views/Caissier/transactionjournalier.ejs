@@ -2,7 +2,7 @@
 <%- include('head'); -%>
 <title>Agence || Kolima  Transfert</title>
 <link href="/assets/semantic/lib/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
- 
+
 
   <!-- fin de head-->
   <style>
@@ -12,7 +12,7 @@
     }
   </style>
 
- 
+
 </head>
 <script src="/assets/semantic/lib/jquery.validate.js"></script>
 <script src="/assets/semantic/lib/moment.min.js"></script>
@@ -31,18 +31,18 @@
     <!-- debut du body-->
     <section id="main-content">
       <section class="wrapper">
-      
+
         <div class="row mt-5">
-         
+
             <div class="col-lg-12  ">
-             
+
               <div class="row account-contant">
-                            
+
                 <div class="col-12">
                     <div class="card card-statistics">
                         <div class="card-body p-0">
                             <div class="row no-gutters">
-                                
+
                                 <div class="col-xl-12 col-md-12 col-12">
                                     <div class="page-account-form">
                                         <div class="form-titel border-bottom p-3">
@@ -58,11 +58,11 @@
                                                   <div class="modal-body">
                                                     <p>Bravo les Informations ont été modifier avec Success.....!!  . </p>
                                                   </div>
-                                                 
+
                                                 </div>
                                               </div>
                                             </div>
-                                            
+
 
                                             <!--Fin Boite Modale -->
                                             <!--Boite modale invalide Code -->
@@ -76,7 +76,7 @@
                                                   <div class="modal-body">
                                                     <p>Code Invalide . </p>
                                                   </div>
-                                                 
+
                                                 </div>
                                               </div>
                                             </div>
@@ -96,30 +96,30 @@
                                                   <div class="modal-body">
                                                     <p>Votre Transaction a été validé. </p>
                                                   </div>
-                                                 
+
                                                 </div>
                                               </div>
                                             </div>
                                             <!--Fin Boite Modale-->
                                           </div>
-                                      
+
                                         <div class="p-4" >
-                                                
-                                     
+
+
         <div class="row mt">
             <div class="col-md-12">
                 <div class="">
                   <h4><i class="fa fa-angle-right"></i>Liste des Rapports de Toute les Transactions Réalisées </h4>
                   <hr>
-       
+
                   <div id="deuxdaterapport"  class="table-responsive">
                   <table  id="dataTable"  class="table table-striped table-advance table-hover">
-                    
-                    
+
+
                     <thead>
                       <tr>
                         <th> N °</th>
-                        <th> Nom De l'Expediteur  </th> 
+                        <th> Nom De l'Expediteur  </th>
                         <th>Contact de l' Expediteur  </th>
                         <th> Pays de Reception  </th>
                         <th> Nom de Receveur   </th>
@@ -134,17 +134,17 @@
                         <th>Commission de Retrait</th>
                         <th>Date  de Retrait </th>
 
-                       
-                        
-                      
+
+
+
                       </tr>
                     </thead>
                     <tbody>
-                        
+
                         <% if(typeof lestransactions !== "undefined"){ %>
-                                
-                            <% for(var i= 0 ; i < lestransactions.length; i++)  { %> 
-                             
+
+                            <% for(var i= 0 ; i < lestransactions.length; i++)  { %>
+
                            <tr>
                              <td><%= i+1 %></td>
                              <td><%= lestransactions[i].Nomexpediteur %> </td>
@@ -153,41 +153,41 @@
                              <td><%= lestransactions[i].Nomreceveur %> </td>
                              <td><%= lestransactions[i].Contactreceveur %></td>
                              <td> <%= lestransactions[i].Numerocarte %>    </td>
-                             <td><% if( lestransactions[i].idagencenvoie == agenceid) {  %><span class="text-success">Dépot  </span> 
+                             <td><% if( lestransactions[i].idagencenvoie == agenceid) {  %><span class="text-success">Dépot  </span>
                                 <% }  if( lestransactions[i].idagencenvoie != agenceid) { %> <span class="text-warning">Retrait</span>   <% } %></td>
-          
+
                              <td> <% if( lestransactions[i].idagencenvoie == agenceid) {  %><span id="somme<%= i+1 %>"></span>
                                 <% }  if( lestransactions[i].idagencenvoie != agenceid) { %> <span class="text-warning">Néan</span>   <% } %> </td>
                              <td>
-                                <% if( lestransactions[i].idagencenvoie == agenceid) {  %><span id="frais<%= i+1 %>"></span> 
+                                <% if( lestransactions[i].idagencenvoie == agenceid) {  %><span id="frais<%= i+1 %>"></span>
                                 <% }  if( lestransactions[i].idagencenvoie != agenceid) { %> <span class="text-warning">Néan</span>   <% } %>
                             </td>
                              <td>  <% if( lestransactions[i].idagencenvoie == agenceid) {  %> <span id="fraisdepot<%= i+1 %>"></span>
                                 <% }  if( lestransactions[i].idagencenvoie != agenceid) { %> <span class="text-warning">Néan</span>  <% } %> </td>
                              <td> <span id="datere<%= i+1 %>"></span></td>
                              <td>
-                                <% if( lestransactions[i].idagencenvoie == agenceid) {  %> <span class="text-warning">Néan</span> 
+                                <% if( lestransactions[i].idagencenvoie == agenceid) {  %> <span class="text-warning">Néan</span>
                                 <% }  if( lestransactions[i].idagencenvoie != agenceid) { %>  <span id="montantrettrait<%= i+1 %>"></span> <% } %>
                             </td>
                             <td>
-                                <% if( lestransactions[i].idagencenvoie == agenceid) {  %> <span class="text-warning">Néan</span> 
+                                <% if( lestransactions[i].idagencenvoie == agenceid) {  %> <span class="text-warning">Néan</span>
                                 <% }  if( lestransactions[i].idagencenvoie != agenceid) { %> <span id="comissionretrait<%= i+1 %>"></span>  <% } %>
                             </td>
                             <td> <span id="dateretrait<%= i+1 %>"></span></td>
                             </tr>
-                       
+
 
                             <script>
                                 var ss = "<%= lestransactions[i].Datetransaction %>";
                                  var datere =  moment(ss).format('DD/MM/YYYY ');
-                                 
+
                                 var dtr = "<%= lestransactions[i].Datevalidation %>";
                                 var datretrai =  moment(dtr).format('DD/MM/YYYY ');
 
-                                 
-                                 
+
+
                                  $("#dateretrait<%= i+1 %>").html(datretrai);
-                                                  $("#datere<%= i+1 %>").html(datere); 
+                                                  $("#datere<%= i+1 %>").html(datere);
                                                   var sommedepot = "<%= lestransactions[i].Sommeenvoie %>";
                                                   var sd = new Intl.NumberFormat('gn-GN').format(sommedepot);
                                                   var fr = "<%= lestransactions[i].Frais %>";
@@ -201,17 +201,17 @@
                                                   $("#fraisdepot<%= i+1 %>").html(fraisdp);
                                                   $("#frais<%= i+1 %>").html(frais);
                                                   $("#somme<%= i+1 %>").html(sd);
-                                                  
-                                                  
+
+
                                                   $("#montantrettrait<%= i+1 %>").html(montantretait);
-                                                  
+
                                                   $("#comissionretrait<%= i+1 %>").html(fraisretrait);
                               </script>
                             <% } %>
                             <% } %>
-                        
- 
-     
+
+
+
                     </tbody>
                   </table>
                   </div>
@@ -220,7 +220,7 @@
               </div>
               <div class="col-lg-12">
                 <button id="rapportimprimert" class="btn btn-primary">Imprimer </button>
-                                               
+
               </div>
             <!-- /col-lg-12 -->
           </div>
@@ -228,32 +228,32 @@
 
 
         <div class="p-4 bg-theme" >
-                                                
-                                     
+
+
             <div class="row  mt">
                 <div class="col-md-12 ">
 
                     <div class="table-responsive m-t-40" style="clear: both;">
                         <table  id="dataTable "  class="table tablet table-striped table-advance table-hover table-striped table-bordered dataTable">
-                          
-                          
+
+
                           <thead>
                             <tr>
                               <th> Total Montant Envoyé</th>
-                              <th> Total  Des Commission de  Depots  </th> 
+                              <th> Total  Des Commission de  Depots  </th>
                               <th>Total Montant Retiré</th>
                               <th>Total des Commission des Montant Retiré</th>
-                            
+
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
                                 <td id="totalmontantdepot"></td>
-                                
+
                                 <td id="totalcomidepot"></td>
-                                
+
                                 <td id="totalmontantretrait"></td>
-                                
+
                                 <td id="totalcomretrait"></td>
                             </tr>
                             </tbody>
@@ -267,45 +267,45 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
       <!--Fin de notification d'erreur-->
-     
+
             </div>
             <!-- /col-lg-12 -->
           </div>
-          
+
           <!-- Button trigger modal -->
 
         <!-- /row -->
       </section>
     </section>
     <!--main content end-->
-    
+
   </section>
   <!-- js placed at the end of the document so the pages load faster -->
-  
-  <script>
-   
 
-     
-     
+  <script>
+
+
+
+
     document.querySelector("#rapportimprimert").addEventListener("click", ()=>{
        var td = document.getElementsByTagName('td');
        var th = document.getElementsByTagName('th');
-       $("td").css({ 
-                         
+       $("td").css({
+
         padding: 0
                         });
-                        $("th").css({ 
-                          
+                        $("th").css({
+
                           padding: 0
                                           });
-                
+
 
         const invoice = this.document.getElementById("deuxdaterapport");
         var opt = {
@@ -318,26 +318,26 @@ jsPDF:        { unit: 'in', format: 'a4', orientation: 'landscape' },
 pagebreak: {mode: 'avoid-all', before:'#pageX'}
 };
         html2pdf().from(invoice).set(opt).save();
-        
-        
+
+
         setTimeout(function () {
-            $("td").css({ 
-                         
+            $("td").css({
+
                 padding: '15px'
                                          });
-                                         $("th").css({ 
-                                           
-                                          
+                                         $("th").css({
+
+
                 padding: '15px'
                                                            });
-                              
+
                            }, 3000);
-                           
+
     })
 
 
 
-    
+
 
 
 </script>
@@ -348,7 +348,7 @@ pagebreak: {mode: 'avoid-all', before:'#pageX'}
     resultInput: '#montant',
   })
   //
-  
+
 </script>
 <script src="/assets/semantic/lib/datatables/jquery.dataTables.min.js"></script>
 <script src="/assets/semantic/lib/datatables/dataTables.bootstrap4.min.js"></script>
@@ -356,25 +356,25 @@ pagebreak: {mode: 'avoid-all', before:'#pageX'}
 
 
   <script src="/assets/semantic/lib/bootstrap/js/bootstrap.min.js"></script>
- 
+
 
   <script>
 //Tout les Commission de Retrait
- 
+
 
  //Tout les Commission de Depot
- 
+
  var toutcommissionretrait = "<%= toutcommissionretrait.toutcommssion %>";
  var comiretraittt = new Intl.NumberFormat('gn-GN').format(toutcommissionretrait);
  $("#totalcomretrait").html(comiretraittt);
- //Tout les Commission de Retrait 
- 
+ //Tout les Commission de Retrait
+
  var toutcommissiondedepot = "<%= toutcommissiondedepot.tout %>";
  var comidepottt = new Intl.NumberFormat('gn-GN').format(toutcommissiondedepot);
  $("#totalcomidepot").html(comidepottt);
 
  //Somme de Tout les Argent Retirer
- 
+
  var toutsommeretrait = "<%= toutretraitagencetotal.toutretrait %>";
  var ttsmretrait = new Intl.NumberFormat('gn-GN').format(toutsommeretrait);
  $("#totalmontantretrait").html(ttsmretrait);
@@ -382,10 +382,10 @@ pagebreak: {mode: 'avoid-all', before:'#pageX'}
 
 var toutdepotagencetotal = "<%= toutdepotagencetotal.toutdepot  %>";
  var ttdepot = new Intl.NumberFormat('gn-GN').format(toutdepotagencetotal);
- $("#totalmontantdepot").html(ttdepot); 
+ $("#totalmontantdepot").html(ttdepot);
 var nomimprimer = "";
     var idtransaction = "";
-      
+
         $().ready(function() {
           // validate the comment form when it is submitted
           jQuery.validator.addMethod("phoneGuinee", function (phone_number, element) {
@@ -399,7 +399,7 @@ var nomimprimer = "";
                 required: true,
                 minlength: 5
               } ,
-             
+
             },
             messages: {
               code: {
@@ -408,49 +408,49 @@ var nomimprimer = "";
               }
             },
             submitHandler: function(form){
-         
+
          $.ajax({
              url: form.action,
              type: form.method,
              data: $(form).serialize(),
              success: function(response) {
-             
-    
-                  if (response.codeerreurs) { 
-                    
-        $("#codeerreurs").css({ 
+
+
+                  if (response.codeerreurs) {
+
+        $("#codeerreurs").css({
                           display: 'block'
                         });
                         setTimeout(function () {
-        $("#codeerreurs").css({ 
+        $("#codeerreurs").css({
           display: 'none'
         });
         }, 3000)
-                        
+
                     }
-                      
-                    if (response.transaction) { 
-                      
-                      $("#blockmodifier").css({ 
+
+                    if (response.transaction) {
+
+                      $("#blockmodifier").css({
           display: 'block'
         });
                     //
                     $("#idtransaction").val(response.transaction['idtransac']);
-                    
+
                     $("#expediteurnom").val(response.transaction['Nomexpediteur']);
                     $("#expediteurcontact").val(response.transaction['Contactexpediteur']);
                     $("#receveurnom").val(response.transaction['Nomreceveur']);
-                    
+
                     $("#idclient").val(response.transaction['idclient']);
 
-                   
+
                     $("#numerocarte").val(response.transaction['Numerocarte']);
                     $("#receveurcontact").val(response.transaction['Contactreceveur']);
                     var mt = new Intl.NumberFormat('gn-GN').format(response.transaction['Sommeenvoie'])
                     var fr = new Intl.NumberFormat('gn-GN').format(response.transaction['Frais']);
                     var  md = new Intl.NumberFormat('gn-GN').format(response.transaction['montantdevise']);
                     var  ml = new Intl.NumberFormat('gn-GN').format(response.transaction['montantlocale']);
-           
+
                     $("#montantaenvoyer").val(mt);
                     //frais
                     $("#hfrais").val(fr);
@@ -458,29 +458,29 @@ var nomimprimer = "";
                     $("#hlasomme").val(md);
                     $("#hmonaierecevoir").val(ml);
                     $("#codet").val(response.transaction['Codetransfert']);
-                    //montantenvoie 
+                    //montantenvoie
                     $("#paysdestination").val(response.transaction['pays']);
                     var frais = new Intl.NumberFormat('gn-GN').format(response.frais)
-                   
-                 
-                   
 
-                    
 
-                    
-                   
+
+
+
+
+
+
                   }
-    
-    
-                 
-                 
-                            }            
-               });       
+
+
+
+
+                            }
+               });
          }
-         
+
           });
-      
-      
+
+
           //code to hide topic selection, disable for demo
           var newsletter = $("#newsletter");
           // newsletter topics are optional, hide at first
@@ -493,13 +493,13 @@ var nomimprimer = "";
             topicInputs.attr("disabled", !this.checked);
           });
         });
-        
+
      document.querySelector("#imprimer").addEventListener("click", ()=>{
                 const invoice = this.document.getElementById("lenvoie");
-    
+
                      //si le compte n'est pas engistrer
-              
-    
+
+
                 var opt = {
       margin:       0.5,
       filename:     nomimprimer,
@@ -508,13 +508,13 @@ var nomimprimer = "";
       jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
     };
     html2pdf().from(invoice).set(opt).save();
-                
+
             })
-    
-    
-         
+
+
+
         </script>
-           
+
 
   <script class="include" type="text/javascript" src="/assets/semantic/lib/jquery.dcjqaccordion.2.7.js"></script>
   <script src="/assets/semantic/lib/jquery.scrollTo.min.js"></script>
@@ -525,9 +525,9 @@ var nomimprimer = "";
   <script type="text/javascript" src="/assets/semantic/lib/gritter/js/jquery.gritter.js"></script>
   <script type="text/javascript" src="/assets/semantic/lib/gritter-conf.js"></script>
   <!--script for this page-->
-  
-  
-  
+
+
+
 </body>
 
 </html>

@@ -9,7 +9,8 @@ const Compensationns = function(comp ) {
     this.agenceidcomp = comp.agenceidcomp;
     this.datecompensation = comp.datecompensation;
     this.repportsolde = comp.repportsolde;
-   
+    this.derniersolde = comp.derniersolde;
+
   };
 //Selectionner les Agences qui ont compenser
 Compensationns.lesagencecompenser = result => {
@@ -33,8 +34,8 @@ Compensationns.lesagencecompenser = result => {
             return resolve(enregistre.insertId);
         });
     });
-      }; 
- //Selectionner l historique des Compensations d une Agence donner 
+      };
+ //Selectionner l historique des Compensations d une Agence donner
  Compensationns.historiqueagencecompenser = (agenceidcomp ) =>{
     return new Promise((resolve, reject)=>{
       sql.query(`SELECT * FROM historiquecompensation    WHERE agenceidcomp =   ${agenceidcomp}  `,  (error, employees)=>{
@@ -67,7 +68,8 @@ Compensationns.lesagencecompenser = result => {
       });
   });
   };
-  //Selectionner le repport a nouveau de la dernier compensation 
+
+  //Selectionner le repport a nouveau de la dernier compensation
   Compensationns.repportanouveau = ( idcompense  ) =>{
     return new Promise((resolve, reject)=>{
       sql.query(`SELECT repportsolde FROM historiquecompensation    WHERE idcompense =${idcompense}  `,  (error, employees)=>{

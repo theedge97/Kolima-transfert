@@ -9,7 +9,7 @@ const Superadmin = function(admin) {
   };
 
   Superadmin.inscription = (newAdmin) => {
-    
+
     return new Promise((resolve, reject)=>{
       sql.query("INSERT INTO admin SET ?", newAdmin,  (error, enregistre)=>{
           if(error){
@@ -19,11 +19,11 @@ const Superadmin = function(admin) {
       });
   });
   };
- 
+
   //selectionner les elements d'un compte
 Superadmin.Trouvercompte = (telephone) => {
-   
-    
+
+
     return new Promise((resolve, reject)=>{
       sql.query(`SELECT * FROM admin WHERE telephone = "${telephone}"  `, (error, employees)=>{
           if(error){
@@ -33,7 +33,7 @@ Superadmin.Trouvercompte = (telephone) => {
       });
   });
   };
-//Modifier les Mot de passe de L administrateur 
+//Modifier les Mot de passe de L administrateur
 Superadmin.majmodepassecompte = (telephone , motdepasse) => {
     return new Promise((resolve, reject)=>{
       sql.query(`UPDATE  admin SET  motdepasse = "${motdepasse}"    WHERE telephone = "${telephone}"  `, (error, employees)=>{
@@ -44,7 +44,7 @@ Superadmin.majmodepassecompte = (telephone , motdepasse) => {
       });
   });
   };
-  
+
 //Mettre a jour les Informations du Compte
 Superadmin.majinfocompte = (nom, telephone, email , idcompte) => {
     return new Promise((resolve, reject)=>{

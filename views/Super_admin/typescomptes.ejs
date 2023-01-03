@@ -29,33 +29,33 @@
             <div class="col-md-12">
                 <div class="content-panel">
                   <h4><i class="fa fa-angle-right"></i><font _mstmutation="1">Les Types de Compte </font></h4><hr>
-                  
+
                   <div class="table-responsive">
                   <table  id="dataTable"  class="table table-striped table-advance table-hover">
-                    
-                    
+
+
                     <thead>
                       <tr>
                         <th><i class="fa fa-bullhorn"></i><font _mstmutation="1"> N *</font></th>
                         <th><i class="fa fa-bullhorn"></i><font _mstmutation="1"> Type de Comptes</font></th>
-                      
+
                       </tr>
                     </thead>
                     <tbody>
-                        
+
                             <% if(typeof typedecompte !== "undefined"){ %>
-                                
-                                    <% for(var i= 0 ; i < typedecompte.length; i++)  {%> 
+
+                                    <% for(var i= 0 ; i < typedecompte.length; i++)  {%>
                                         <tr>
                                           <td><%= i+1 %></td>
                                         <td><%= typedecompte[i].libcpte %></td>
-                                    
-                                        </tr> 
+
+                                        </tr>
                                     <% } %>
-                                    
+
                                 <% } %>
-                        
-     
+
+
                     </tbody>
                   </table>
                   </div>
@@ -68,15 +68,15 @@
       </section>
     </section>
     <!--main content end-->
-    
+
   </section>
   <!-- js placed at the end of the document so the pages load faster -->
   <script src="/assets/semantic/lib/jquery-1.9.1.js"></script>
-  
+
   <script src="/assets/semantic/lib/datatables/jquery.dataTables.min.js"></script>
   <script src="/assets/semantic/lib/datatables/dataTables.bootstrap4.min.js"></script>
   <script src="/assets/semantic/lib/datatables/datatables-demo.js"></script>
-  
+
 
   <script src="/assets/semantic/lib/jquery.validate.js"></script>
    <script src="/assets/semantic/lib/bootstrap/js/bootstrap.min.js"></script>
@@ -91,9 +91,9 @@
    <!--script for this page-->
    <script src="/assets/semantic/lib/sparkline-chart.js"></script>
    <script src="/assets/semantic/lib/zabuto_calendar.js"></script>
-   
-  
-  
+
+
+
 </body>
 
 </html>

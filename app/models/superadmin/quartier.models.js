@@ -20,6 +20,6 @@ const Quartier = function(lequartier) {
       });
   });
   };
-  
-  
+
+
   module.exports = Quartier;

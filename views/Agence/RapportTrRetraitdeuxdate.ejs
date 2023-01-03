@@ -4,7 +4,7 @@
 
 <title>Agence || Kolima  Transfert</title>
 <link href="/assets/semantic/lib/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
- 
+
 
   <!-- fin de head-->
   <style>
@@ -24,7 +24,7 @@
             display: none;
         }
   </style>
- 
+
 </head>
 <script src="/assets/semantic/lib/jquery.validate.js"></script>
 <script src="/assets/semantic/lib/moment.min.js"></script>
@@ -43,23 +43,23 @@
     <!-- debut du body-->
     <section id="main-content">
       <section class="wrapper">
-      
+
         <div class="row mt-5">
-         
+
             <div class="col-lg-12  ">
-             
+
               <div class="row account-contant">
                 <div class="col-12" id="lespiner">
                   <div style="height: 3rem;"  class="d-flex align-items-center">
                     <strong style="color: #4ECDC4;" class="">Chargement...</strong><br>
                     <div class="spinner-border  ms-1"  style="color: #4ECDC4;" role="status" aria-hidden="true"></div>
                   </div>
-                 </div>        
+                 </div>
                 <div class="col-12">
                     <div class="card card-statistics">
                         <div class="card-body p-0">
                             <div class="row no-gutters">
-                                
+
                                 <div class="col-xl-12 col-md-12 col-12">
                                     <div class="page-account-form">
                                         <div class="form-titel border-bottom p-3">
@@ -75,11 +75,11 @@
                                                   <div class="modal-body">
                                                     <p>Bravo les Informations ont été modifier avec Success.....!!  . </p>
                                                   </div>
-                                                 
+
                                                 </div>
                                               </div>
                                             </div>
-                                            
+
 
                                             <!--Fin Boite Modale -->
                                             <!--Boite modale invalide Code -->
@@ -93,7 +93,7 @@
                                                   <div class="modal-body">
                                                     <p>Code Invalide . </p>
                                                   </div>
-                                                 
+
                                                 </div>
                                               </div>
                                             </div>
@@ -113,7 +113,7 @@
                                                   <div class="modal-body">
                                                     <p>Votre Transaction a été validé. </p>
                                                   </div>
-                                                 
+
                                                 </div>
                                               </div>
                                             </div>
@@ -122,7 +122,7 @@
                                         <div class="p-4">
                                             <form  id="rectifie" method="post" action="/Agence/RapportTransactionRetraitDeuxDatesrech">
                                                 <div class="row ">
-                                                    
+
                                                     <div class="form-group col-md-4 col-md-offset-2">
                                                       <label for="datedebut" class="control-label ">Date de Début  :</label>
                                                       <input type="date" class="form-control" name="datedebut" id="datedebut" placeholder="  ">
@@ -131,44 +131,44 @@
                                                         <label for="datefin" class="control-label ">Date de Fin  :</label>
                                                         <input type="date" class="form-control" name="datefin" id="datefin" placeholder="  ">
                                                       </div>
-                                               
-                                    
-                                                  
-                                                  
-                                                 
-                                                    
+
+
+
+
+
+
                                                 </div><hr>
                                                 <div class="form-group">
                                                   <div class="col-lg-offset-2 col-lg-9">
                                                     <button id="enregistrer" class="btn btn-primary" type="submit">Rechercher</button>
 
-                                                  
+
                                                   </div>
                                                 </div>
                                             </form>
-                                           
 
-                                                
-                                     
+
+
+
                                         </div>
                                         <hr>
                                         <div class="p-4" >
-                                                
-                                     
+
+
         <div id="recherchertrouver" class="row mt">
             <div class="col-md-12 ">
                 <div class="">
                   <h4><i class="fa fa-angle-right"></i><font _mstmutation="1">Liste des Rapports des Transactions  de Retrait  Entre  <span id="debut"></span> et <span id="fin"></span>  </font> </h4>
                   <hr>
-       
+
                   <div id="deuxdaterapport" class="table-responsive m-t-40" style="clear: both;">
                   <table  id="dataTable "  class="table tablet table-striped table-advance table-hover table-striped table-bordered dataTable">
-                    
-                    
+
+
                     <thead>
                       <tr>
                         <th> N°</th>
-                        <th> Nom De l'Expediteur  </th> 
+                        <th> Nom De l'Expediteur  </th>
                         <th>Contact de l' Expediteur  </th>
                         <th> Pays de Reception  </th>
                         <th> Nom de Receveur   </th>
@@ -179,27 +179,27 @@
                         <th>Commission Agence </th>
                         <th>Date D'Envoie </th>
                         <th>Date de Validation</th>
-                        
-                      
+
+
                       </tr>
                     </thead>
                     <tbody>
-                          
-                           
-                        
- 
-     
+
+
+
+
+
                     </tbody>
                   </table>
                   </div>
                 </div>
                 <!-- /content-panel -->
               </div>
-              
+
 
               <div class="col-lg-12">
                 <button id="rapportimprimert" class="btn btn-primary">Imprimer </button>
-                                               
+
               </div>
             <!-- /col-lg-12 -->
           </div>
@@ -210,45 +210,45 @@
 
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
       <!--Fin de notification d'erreur-->
-     
+
             </div>
             <!-- /col-lg-12 -->
           </div>
-          
+
           <!-- Button trigger modal -->
 
         <!-- /row -->
       </section>
     </section>
     <!--main content end-->
-    
+
   </section>
   <!-- js placed at the end of the document so the pages load faster -->
-  
-  <script>
-   
 
-     
-     
+  <script>
+
+
+
+
     document.querySelector("#rapportimprimert").addEventListener("click", ()=>{
        var td = document.getElementsByTagName('td');
        var th = document.getElementsByTagName('th');
-       $("td").css({ 
-                         
+       $("td").css({
+
         padding: 0
                         });
-                        $("th").css({ 
-                          
+                        $("th").css({
+
                           padding: 0
                                           });
-                
+
 
         const invoice = this.document.getElementById("deuxdaterapport");
         var opt = {
@@ -261,26 +261,26 @@ jsPDF:        { unit: 'in', format: 'a4', orientation: 'landscape' },
 pagebreak: {mode: 'avoid-all', before:'#pageX'}
 };
         html2pdf().from(invoice).set(opt).save();
-        
-        
+
+
         setTimeout(function () {
-            $("td").css({ 
-                         
+            $("td").css({
+
                 padding: '15px'
                                          });
-                                         $("th").css({ 
-                                           
-                                          
+                                         $("th").css({
+
+
                 padding: '15px'
                                                            });
-                              
+
                            }, 3000);
-                           
+
     })
 
 
 
-    
+
 
 
 </script>
@@ -291,7 +291,7 @@ pagebreak: {mode: 'avoid-all', before:'#pageX'}
     resultInput: '#montant',
   })
   //
-  
+
 </script>
 <script src="/assets/semantic/lib/datatables/jquery.dataTables.min.js"></script>
 <script src="/assets/semantic/lib/datatables/dataTables.bootstrap4.min.js"></script>
@@ -299,13 +299,13 @@ pagebreak: {mode: 'avoid-all', before:'#pageX'}
 
 
   <script src="/assets/semantic/lib/bootstrap/js/bootstrap.min.js"></script>
- 
+
 
   <script>
- 
+
     var nomimprimer = "";
     var idtransaction = "";
-      
+
         $().ready(function() {
           // validate the comment form when it is submitted
           jQuery.validator.addMethod("phoneGuinee", function (phone_number, element) {
@@ -321,7 +321,7 @@ pagebreak: {mode: 'avoid-all', before:'#pageX'}
               datedebut: {
                 required: true,
               } ,
-             
+
             },
             messages: {
               datefin: {
@@ -332,7 +332,7 @@ pagebreak: {mode: 'avoid-all', before:'#pageX'}
               }
             },
             submitHandler: function(form){
-              $("#lespiner").css({ 
+              $("#lespiner").css({
                       display: 'block'
                     });
          $.ajax({
@@ -340,34 +340,34 @@ pagebreak: {mode: 'avoid-all', before:'#pageX'}
              type: form.method,
              data: $(form).serialize(),
              success: function(response) {
-              $("#lespiner").css({ 
+              $("#lespiner").css({
                       display: 'none'
                     });
-    
-                  if (response.codeerreurs) { 
-                    
-        $("#codeerreurs").css({ 
+
+                  if (response.codeerreurs) {
+
+        $("#codeerreurs").css({
                           display: 'block'
                         });
                         setTimeout(function () {
-        $("#codeerreurs").css({ 
+        $("#codeerreurs").css({
           display: 'none'
         });
         }, 3000)
-                        
+
                     }
-                      
-                    if (response.transactdatedeux) { 
-                      
-                      $("#recherchertrouver").css({ 
+
+                    if (response.transactdatedeux) {
+
+                      $("#recherchertrouver").css({
                           display: 'block'
                         });
                      var table = response.transactdatedeux;
-                        var tableau = document.querySelector(".tablet");                    
+                        var tableau = document.querySelector(".tablet");
                     for (var i = 0; i < table.length; i++) {
                         var element = table[i];
- 
-                        
+
+
   var ligne = tableau.insertRow(-1);//on a ajouté une ligne
   var colonne0 = ligne.insertCell(0);//on ajoute la seconde cellule
   colonne0.innerHTML += i+1;
@@ -376,94 +376,94 @@ pagebreak: {mode: 'avoid-all', before:'#pageX'}
 
   var colonne2 = ligne.insertCell(2);//on ajoute la seconde cellule
   //convertir
-  
+
   colonne2.innerHTML += element.Contactexpediteur;
 
   var colonne3 = ligne.insertCell(3);//on ajoute la seconde cellule
-  //Convertir 
-  
+  //Convertir
+
  colonne3.innerHTML += element.Contactexpediteur;
 
  var colonne4 = ligne.insertCell(4);//on ajoute la seconde cellule
-  //Convertir 
-  
+  //Convertir
+
  colonne4.innerHTML += element.Nomreceveur;
 
- 
+
  var colonne5 = ligne.insertCell(5);//on ajoute la seconde cellule
-  //Convertir 
-  
+  //Convertir
+
  colonne5.innerHTML += element.Contactreceveur;
 
- 
+
  var colonne6 = ligne.insertCell(6);//on ajoute la seconde cellule
-  //Convertir 
-  
+  //Convertir
+
  colonne6.innerHTML += element.Numerocarte;
  var colonne7 = ligne.insertCell(7);//on ajoute la seconde cellule
-  //Convertir 
-  
+  //Convertir
+
   var montantlocale = new Intl.NumberFormat('gn-GN').format(element.montantlocale);
  colonne7.innerHTML += montantlocale;
- 
+
 
  var colonne8 = ligne.insertCell(8);//on ajoute la seconde cellule
-  //Convertir 
-  
+  //Convertir
+
   var Frais = new Intl.NumberFormat('gn-GN').format(element.Frais);
- 
+
  colonne8.innerHTML += Frais;
 
- 
+
  var colonne9 = ligne.insertCell(9);//on ajoute la seconde cellule
-  //Convertir 
+  //Convertir
  var Fraisdepot = new Intl.NumberFormat('gn-GN').format(element.Fraisdepot);
- 
-  
+
+
  colonne9.innerHTML += Fraisdepot;
 
- 
+
  var colonne10 = ligne.insertCell(10);//on ajoute la seconde cellule
-  //Convertir 
-  
+  //Convertir
+
   var ss =  element.Datetransaction;
   var datere =  moment(ss).format('DD/MM/YYYY ');
  colonne10.innerHTML += datere;
 
- 
+
  var colonne11 = ligne.insertCell(11);//on ajoute la seconde cellule
-  //Convertir 
+  //Convertir
   var dv =  element.Datevalidation;
   var datevalida =  moment(dv).format('DD/MM/YYYY ');
- 
- colonne11.innerHTML += datevalida;
-  
 
-  
- 
+ colonne11.innerHTML += datevalida;
+
+
+
+
                     }
                     var debut = document.getElementById("debut");
-                    
+
                     var fin = document.getElementById("fin");
-              
+
   var d =  moment(response.debut).format('DD/MM/YYYY');
-  
+
   var f =  moment(response.fin).format('DD/MM/YYYY');
                     debut.innerHTML += d
                     fin.innerHTML += f
-                   
+
                   }
-    
-    
-                 
-                 
-                            }            
-               });       
+
+
+
+
+                            }
+               });
          }
-         
+
           });
-      
-      
+
+
           //code to hide topic selection, disable for demo
           var newsletter = $("#newsletter");
           // newsletter topics are optional, hide at first
@@ -476,12 +476,12 @@ pagebreak: {mode: 'avoid-all', before:'#pageX'}
             topicInputs.attr("disabled", !this.checked);
           });
         });
-        
-    
-    
-         
+
+
+
+
         </script>
-           
+
 
   <script class="include" type="text/javascript" src="/assets/semantic/lib/jquery.dcjqaccordion.2.7.js"></script>
   <script src="/assets/semantic/lib/jquery.scrollTo.min.js"></script>
@@ -492,9 +492,9 @@ pagebreak: {mode: 'avoid-all', before:'#pageX'}
   <script type="text/javascript" src="/assets/semantic/lib/gritter/js/jquery.gritter.js"></script>
   <script type="text/javascript" src="/assets/semantic/lib/gritter-conf.js"></script>
   <!--script for this page-->
-  
-  
-  
+
+
+
 </body>
 
 </html>

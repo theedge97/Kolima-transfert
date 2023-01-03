@@ -20,7 +20,7 @@
   <!-- Custom styles for this template -->
   <link href="/assets/semantic/css/style.css" rel="stylesheet">
   <link href="/assets/semantic/css/style-responsive.css" rel="stylesheet">
-  
+
   <!-- =======================================================
     Template Name: Dashio
     Template URL: https://templatemag.com/dashio-bootstrap-admin-template/
@@ -38,7 +38,7 @@ border-radius: 5px;
 color: #ffffff;
 background-color: #ffca18;
 border-color: #ffca18;
-position: absolute; 
+position: absolute;
 top: 10%;
 display: none;
     }
@@ -53,7 +53,7 @@ border-radius: 5px;
 color: #ffffff;
 background-color: #f30808;
 border-color:  #f30808;
-position: absolute; 
+position: absolute;
 top: 10%;
 display: block;
     }
@@ -71,24 +71,24 @@ display: block;
   <div id="login-page">
     <div class="container">
       <div class="row">
-        
+
         <% if(typeof codeerreur !== "undefined"){ %>
           <div id="notifi" class="col-lg-offset-3   col-md-offset-4 col-sm-11 col-xs-12 col-md-6 col-lg-4 ">
             <h2><%= codeerreur %></h2>
           </div>
-          
+
           <% } %>
           <% if(typeof erreur !== "undefined"){ %>
             <div id="erreur" class="col-lg-offset-3   col-md-offset-4 col-sm-11 col-xs-12 col-md-6 col-lg-4 ">
               <ul>
-                <% for(var i= 0 ; i < erreur.length; i++)  {%> 
+                <% for(var i= 0 ; i < erreur.length; i++)  {%>
                 <li><%= erreur[i].msg %></li>
                   <% } %>
                 </ul>
             </div>
             <% } %>
           </div>
-          
+
         </div>
       </div>
       <form class="form-login" id="signupForm" method="post" action="/Superadmin/creationcompte">
@@ -108,7 +108,7 @@ display: block;
           <br>
           <button class="btn btn-theme btn-block" href="index.html" type="submit"><i class="fa fa-lock"></i> SE CONNECTER</button>
           <hr>
-         
+
           <div class="registration">
             Vous avez déjà un compte?<br/>
             <a class="" href="/Superadmin/creationcompte">
@@ -122,11 +122,11 @@ display: block;
   <!-- js placed at the end of the document so the pages load faster -->
   <script src="/assets/semantic/lib/jquery/jquery.min.js"></script>
   <script src="/assets/semantic/lib/bootstrap/js/bootstrap.min.js"></script>
-  
+
   <script src="/assets/semantic/lib/jquery.validate.js"></script>
   <script>
- 
-  
+
+
     $().ready(function() {
       // validate the comment form when it is submitted
       jQuery.validator.addMethod("phoneGuinee", function (phone_number, element) {
@@ -186,8 +186,8 @@ display: block;
           }
         }
       });
-  
-  
+
+
       //code to hide topic selection, disable for demo
       var newsletter = $("#newsletter");
       // newsletter topics are optional, hide at first
@@ -212,21 +212,21 @@ display: block;
   <script>
 
     '<% if(typeof codeerreur !== "undefined"){ %>'
-    $("#notifi").css({ 
+    $("#notifi").css({
       display: 'block'
     });
     setTimeout(function () {
-    $("#notifi").css({ 
+    $("#notifi").css({
       display: 'none'
     });
     }, 5000)
     '<% } %> '
     '<% if(typeof erreur!== "undefined"){ %>'
-    $("#erreur").css({ 
+    $("#erreur").css({
       display: 'block'
     });
     setTimeout(function () {
-    $("#erreur").css({ 
+    $("#erreur").css({
       display: 'none'
     });
     }, 5000)

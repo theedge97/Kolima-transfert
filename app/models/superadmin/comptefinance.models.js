@@ -1,6 +1,6 @@
 
 const sql = require("../db.js");
-// constructor 
+// constructor
 const CompteFinance = function(cpte) {
   this.numcpte = cpte.numcpte;
   this.intcompte = cpte.intcompte;
@@ -18,9 +18,9 @@ CompteFinance.Selectcomptefinance = ( ) => {
       });
   });
   };
-//Ajout d un Compte Finance 
+//Ajout d un Compte Finance
   CompteFinance.ajoutcptfinance = (newCompte) => {
-    
+
     return new Promise((resolve, reject)=>{
       sql.query("INSERT INTO compte SET ?", newCompte,  (error, enregistre)=>{
           if(error){
@@ -30,8 +30,8 @@ CompteFinance.Selectcomptefinance = ( ) => {
       });
   });
   };
-  //Supprier un Compte Finance 
-   //Suppression d'un Ambassade 
+  //Supprier un Compte Finance
+   //Suppression d'un Ambassade
  CompteFinance.supprimercompte = (idcpte) => {
     return new Promise((resolve, reject)=>{
       sql.query(`DELETE FROM compte  WHERE idcpte = ${idcpte} `,  (error, employees)=>{
@@ -63,5 +63,5 @@ CompteFinance.Selectcomptefinance = ( ) => {
               return resolve(employees);
           });
       });
-      }; 
+      };
 module.exports = CompteFinance;

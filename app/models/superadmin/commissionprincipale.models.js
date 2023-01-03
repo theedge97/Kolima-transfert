@@ -2,11 +2,11 @@
 //commissionprincipale
 const sql = require("../db.js");
 
-// Envoie du 
+// Envoie du
 const Comissionprincipale = function(com) {
     this.idtransactioncom = com.idtransactioncom;
     this.comission = com.comission;
-   
+
   };
 //Selectionner les Commission
 Comissionprincipale.lescommission = result => {
@@ -30,10 +30,10 @@ Comissionprincipale.lescommission = result => {
       });
   });
   };
-  
-      //Ajout  d un  Envoie d argent 
+
+      //Ajout  d un  Envoie d argent
 Comissionprincipale.ajoutcomi = (newFrais) => {
-    
+
         return new Promise((resolve, reject)=>{
           sql.query("INSERT INTO commissionprincipale SET ?", newFrais,  (error, enregistre)=>{
               if(error){
@@ -42,7 +42,7 @@ Comissionprincipale.ajoutcomi = (newFrais) => {
               return resolve(enregistre);
           });
       });
-      }; 
+      };
  //Suppression d'un Envoie  d argent
  Comissionprincipale.supprimerenvoieargent = (idfrais) => {
         return new Promise((resolve, reject)=>{
@@ -53,8 +53,8 @@ Comissionprincipale.ajoutcomi = (newFrais) => {
               return resolve(employees);
           });
       });
-      }; 
-//Selectionnez un Envoie d argent 
+      };
+//Selectionnez un Envoie d argent
 Comissionprincipale.unenvoie = (somme, devise ) =>{
     return new Promise((resolve, reject)=>{
       sql.query(`SELECT * FROM commissionprincipale INNER JOIN lesmonaie ON lesmonaie.idmonaie = frais.monaieid   WHERE valeur1 <=   ${somme} AND valeur2 >=  ${somme} AND monaieid =  ${devise}  `,  (error, employees)=>{
@@ -65,6 +65,6 @@ Comissionprincipale.unenvoie = (somme, devise ) =>{
       });
   });
   };
-    
-  
+
+
   module.exports = Comissionprincipale;

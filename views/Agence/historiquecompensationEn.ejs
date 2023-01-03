@@ -10,7 +10,7 @@
       display: none;
     }
   </style>
- 
+
 </head>
 <script src="/assets/semantic/lib/jquery.validate.js"></script>
 <script src="/assets/semantic/lib/moment.min.js"></script>
@@ -29,32 +29,32 @@
     <!-- debut du body-->
     <section id="main-content">
       <section class="wrapper">
-      
+
         <div class="row mt-5">
-         
+
             <div class="col-lg-12  ">
-             
+
               <div class="row account-contant">
-                            
+
                 <div class="col-12">
                     <div class="card card-statistics">
                         <div class="card-body p-0">
                             <div class="row no-gutters">
-                                
+
                                 <div class="col-xl-12 col-md-12 col-12">
                                     <div class="page-account-form">
                                         <div class="form-titel border-bottom p-3">
                                             <h5 class="mb-0  textcoleur py-2">Compensation History . </h5>
                                             <!--Boite Modale d erreur Taux -->
-                                           
-                                            
+
+
 
                                             <!--Fin Boite Modale-->
                                           </div>
-                                      
+
                                         <div class="p-4" >
-                                                
-                                     
+
+
         <div class="row mt">
             <div class="col-md-12">
                 <div class="">
@@ -65,17 +65,17 @@
                     <thead>
                       <tr>
                         <th> N °</th>
-                        <th> Date of  Compensation   </th> 
+                        <th> Date of  Compensation   </th>
                         <th>Report Again   </th>
                         <th>See details</th>
                       </tr>
                     </thead>
                     <tbody>
-                        
-                        
+
+
                         <% if(typeof compensehistorik !== "undefined"){ %>
-                                
-                            <% for(var i= 0 ; i < compensehistorik.length; i++)  { %> 
+
+                            <% for(var i= 0 ; i < compensehistorik.length; i++)  { %>
                            <tr>
                              <td><%= i+1 %></td>
                              <td ><span id="datenn<%= i+1 %>"></span> </td>
@@ -84,19 +84,19 @@
                             </tr>
                             <script>
                                  var dt = "<%= compensehistorik[i].datecompensation %>";
-                                 var datere =  moment(dt).format('DD/MM/YYYY ');             
-                                  $("#datenn<%= i+1 %>").html(datere);                                               
+                                 var datere =  moment(dt).format('DD/MM/YYYY ');
+                                  $("#datenn<%= i+1 %>").html(datere);
                             </script>
                             <% } %>
                             <% } %>
-     
+
                     </tbody>
                   </table>
                   </div>
                 </div>
                 <!-- /content-panel -->
               </div>
-             
+
             <!-- /col-lg-12 -->
           </div>
         <!-- /row -->
@@ -104,35 +104,35 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
       <!--Fin de notification d'erreur-->
-     
+
             </div>
             <!-- /col-lg-12 -->
           </div>
-          
+
           <!-- Button trigger modal -->
 
         <!-- /row -->
       </section>
     </section>
     <!--main content end-->
-    
+
   </section>
   <!-- js placed at the end of the document so the pages load faster -->
-  
+
 <script src="/assets/semantic/lib/datatables/jquery.dataTables.min.js"></script>
 <script src="/assets/semantic/lib/datatables/dataTables.bootstrap4.min.js"></script>
 <script src="/assets/semantic/lib/datatables/datatables-demo.js"></script>
 
 
   <script src="/assets/semantic/lib/bootstrap/js/bootstrap.min.js"></script>
- 
+
 
   <script class="include" type="text/javascript" src="/assets/semantic/lib/jquery.dcjqaccordion.2.7.js"></script>
   <script src="/assets/semantic/lib/jquery.scrollTo.min.js"></script>
@@ -143,9 +143,9 @@
   <script type="text/javascript" src="/assets/semantic/lib/gritter/js/jquery.gritter.js"></script>
   <script type="text/javascript" src="/assets/semantic/lib/gritter-conf.js"></script>
   <!--script for this page-->
-  
-  
-  
+
+
+
 </body>
 
 </html>

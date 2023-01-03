@@ -31,7 +31,7 @@ const Gain = function(legain) {
           return resolve(employees);
       });
   });
-  }; 
+  };
   Gain.modifieragencedepot = ( valeur) => {
     return new Promise((resolve, reject)=>{
       sql.query(`UPDATE gain SET agencedepot = ${valeur} `,  (error, employees)=>{
@@ -52,6 +52,6 @@ const Gain = function(legain) {
       });
   });
   };
-  
-  
+
+
   module.exports = Gain;

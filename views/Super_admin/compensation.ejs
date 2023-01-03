@@ -25,18 +25,18 @@
     <!-- debut du body-->
     <section id="main-content">
       <section class="wrapper">
-      
+
         <div class="row mt-5">
-         
+
             <div class="col-lg-12  ">
-             
+
               <div class="row account-contant">
-                            
+
                 <div class="col-12">
                     <div class="card card-statistics">
                         <div class="card-body p-0">
                             <div class="row no-gutters">
-                                
+
                                 <div class="col-xl-12 col-md-12 col-12">
                                     <div class="page-account-form">
                                         <div class="form-titel border-bottom p-3">
@@ -52,13 +52,13 @@
                                                   <div class="modal-body">
                                                     <p>Bravo les Informations ont été modifier avec Success.....!!  . </p>
                                                   </div>
-                                                 
+
                                                 </div>
                                               </div>
                                             </div>
-                                            
+
                                             <!--Confirmation de Validation de Code -->
-                                            
+
                                             <div id="validertransaction" class="modal" tabindex="-1">
                                               <div class="modal-dialog">
                                                 <div class="modal-content">
@@ -69,13 +69,13 @@
                                                   <div class="modal-body">
                                                     <p>La  transaction a été  Validé  . </p>
                                                   </div>
-                                                 
+
                                                 </div>
                                               </div>
                                             </div>
 
                                           <!--Fin Boite Modale -->
-                                            
+
 
                                             <!--Fin Boite Modale -->
                                             <!--Boite modale invalide Code -->
@@ -89,7 +89,7 @@
                                                   <div class="modal-body">
                                                     <p>Code Invalide . </p>
                                                   </div>
-                                                 
+
                                                 </div>
                                               </div>
                                             </div>
@@ -109,7 +109,7 @@
                                                   <div class="modal-body">
                                                     <p>Votre Transaction a été validé. </p>
                                                   </div>
-                                                 
+
                                                 </div>
                                               </div>
                                             </div>
@@ -118,58 +118,58 @@
                                         <div class="p-4">
                                             <form  id="rectifie" method="post" action="/Superadmin/CompensationRecherche">
                                                 <div class="row ">
-                                                    
+
                                                     <div class="form-group col-md-4 col-md-offset-2">
                                                         <label for="agenceid" class="control-label ">Selectionnez l' Agence à compenser</label>
-                       
+
                                                         <select  class="form-control " name="agenceid">
                                                         <% if(typeof  lesagences !== "undefined"){ %>
-                                                                     <% for(var i= 0 ; i <  lesagences.length; i++)  {%> 
+                                                                     <% for(var i= 0 ; i <  lesagences.length; i++)  {%>
                                                                       <option value="<%=  lesagences[i].idagence %>"> <%=  lesagences[i].numeroAgence %>---<%=  lesagences[i].nomagence %></option>
                                                                         <% } %>
                                                             <% } %>
                                                         </select>
                                                     </div>
-                                                  
-                                               
-                                    
-                                                  
-                                                  
-                                                 
-                                                    
+
+
+
+
+
+
+
                                                 </div><hr>
                                                 <div class="form-group">
                                                   <div class="col-lg-offset-2 col-lg-9">
                                                     <button id="enregistrer" class="btn btn-primary" type="submit">Rechercher les Transaction a compenser</button>
 
-                                                  
+
                                                   </div>
                                                 </div>
                                             </form>
-                                           
 
-                                                
-                                     
+
+
+
                                         </div>
                                         <hr>
                                         <div class="p-4" >
-                                                
-                                     
+
+
         <div class="row " id="imprimercompense">
             <div class="col-md-12 ">
-              
+
                   <h4>Liste des Transactions a compenser     de L'Agence <span id="agencenom"></span> </h4>
                   <hr>
-       
+
                   <div id="deuxdaterapport" class="table-responsive m-t-40" style="clear: both;">
                   <table  id="dataTable "  class="table tablet table-striped table-advance table-hover table-striped table-bordered dataTable">
-                    
-                    
+
+
                     <thead>
                       <tr>
                         <th> N °</th>
                         <th>Période Concerné</th>
-                        <th> Nom de l'Expediteur  </th> 
+                        <th> Nom de l'Expediteur  </th>
                         <th>Nom du Receveur</th>
                         <th>Montant   </th>
                         <th>Commission </th>
@@ -179,23 +179,23 @@
                       <tr class="text-center" id="listedepots">
                         <td colspan="7">Liste des Depots </td>
                       </tr>
-                     
-                     
+
+
                     </tbody>
                   </table>
                   </div>
-                
+
                 <!-- /content-panel -->
               </div>
-              
 
-              
+
+
             <!-- /col-lg-12 -->
           </div>
         <!-- /row -->
 
 
-                        
+
         <div class="row  mt-1 bg-theme">
             <div class="col-md-12 ">
 
@@ -204,7 +204,7 @@
                       <thead>
                         <tr>
                           <th>Total de Montant Envoyé</th>
-                          <th>Total  Des Commissions de  Dépots  </th> 
+                          <th>Total  Des Commissions de  Dépots  </th>
                           <th>Total Montant Retiré</th>
                           <th>Total des Comissions des Montants Retiré</th>
                           <th>Repport à Nouveau</th>
@@ -215,11 +215,11 @@
                       <tbody>
                         <tr>
                             <td id="totamontantdepot"></td>
-                            
+
                             <td id="totalcomidepot"></td>
-                            
+
                             <td id="totalmontantretrait"></td>
-                            
+
                             <td id="totalcomretrait"></td>
                             <td id="totalreport"></td>
                             <td id="total"></td>
@@ -228,9 +228,9 @@
                         </tbody>
                         </table>
                 </div>
-  
+
             </div>
-            
+
         </div>
         <div class="row">
             <div class="col-lg-12">
@@ -239,7 +239,7 @@
                 <button id="rapport" class="btn btn-primary">Compensations  </button>
 
                 </form>
-                                               
+
               </div>
         </div>
         <!--Fin-->
@@ -249,41 +249,41 @@
 
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
       <!--Fin de notification d'erreur-->
-     
+
             </div>
             <!-- /col-lg-12 -->
           </div>
-          
+
           <!-- Button trigger modal -->
 
         <!-- /row -->
       </section>
     </section>
     <!--main content end-->
-    
+
   </section>
   <!-- js placed at the end of the document so the pages load faster -->
-  
+
   <script>
-    
+
     $().ready(function() {
         // validate the comment form when it is submitted
         jQuery.validator.addMethod("phoneGuinee", function (phone_number, element) {
         phone_number = phone_number.replace(/\s+/g, "");
         return this.optional(element) || phone_number.length >= 9 && phone_number.match(/^6[1,2,5,6]{1}[0-9]{7}$/);
     }, "Veuillez Entrez le bon format de Numero");
- 
+
         $("#compasationform").validate({
 
 submitHandler: function(form){
-     $("#lespiner").css({ 
+     $("#lespiner").css({
                       display: 'block'
                     });
 $.ajax({
@@ -291,14 +291,14 @@ $.ajax({
     type: form.method,
     data: $(form).serialize(),
     success: function(response) {
-     
-         if (response.success) {   
-            $("#validertransaction").css({ 
+
+         if (response.success) {
+            $("#validertransaction").css({
                       display: 'block'
                     });
-                    
+
 setTimeout(function () {
-    $("#validertransaction").css({ 
+    $("#validertransaction").css({
                       display: 'none'
                     });
                   }, 3000);
@@ -313,27 +313,27 @@ jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' },
 pagebreak: {mode: 'avoid-all', before:'#pageX'}
 };
        html2pdf().from(invoice).set(opt).save();
-       
+
 setTimeout(function () {
  window.location.href = "/Superadmin/Compensation";
                  }, 5000);
-     
 
 
 
 
-                 }  
-         
-         
-        
-                   }            
-      });       
+
+                 }
+
+
+
+                   }
+      });
 }
 });
 
 
-    
-        
+
+
         //code to hide topic selection, disable for demo
         var newsletter = $("#newsletter");
         // newsletter topics are optional, hide at first
@@ -347,29 +347,29 @@ setTimeout(function () {
         });
     });
 
-             
-   
+
+
 
 
 
 </script>
   <script>
-   
 
-     
-     
+
+
+
     document.querySelector("#rapportimprimert").addEventListener("click", ()=>{
        var td = document.getElementsByTagName('td');
        var th = document.getElementsByTagName('th');
-       $("td").css({ 
-                         
+       $("td").css({
+
         padding: 0
                         });
-                        $("th").css({ 
-                          
+                        $("th").css({
+
                           padding: 0
                                           });
-                
+
 
         const invoice = this.document.getElementById("deuxdaterapport");
         var opt = {
@@ -382,26 +382,26 @@ jsPDF:        { unit: 'in', format: 'a4', orientation: 'landscape' },
 pagebreak: {mode: 'avoid-all', before:'#pageX'}
 };
         html2pdf().from(invoice).set(opt).save();
-        
-        
+
+
         setTimeout(function () {
-            $("td").css({ 
-                         
+            $("td").css({
+
                 padding: '15px'
                                          });
-                                         $("th").css({ 
-                                           
-                                          
+                                         $("th").css({
+
+
                 padding: '15px'
                                                            });
-                              
+
                            }, 3000);
-                           
+
     })
 
 
 
-    
+
 
 
 </script>
@@ -412,7 +412,7 @@ pagebreak: {mode: 'avoid-all', before:'#pageX'}
     resultInput: '#montant',
   })
   //
-  
+
 </script>
 <script src="/assets/semantic/lib/datatables/jquery.dataTables.min.js"></script>
 <script src="/assets/semantic/lib/datatables/dataTables.bootstrap4.min.js"></script>
@@ -420,13 +420,13 @@ pagebreak: {mode: 'avoid-all', before:'#pageX'}
 
 
   <script src="/assets/semantic/lib/bootstrap/js/bootstrap.min.js"></script>
- 
+
 
   <script>
- 
+
     var nomimprimer = "";
     var idtransaction = "";
-      
+
         $().ready(function() {
           // validate the comment form when it is submitted
           jQuery.validator.addMethod("phoneGuinee", function (phone_number, element) {
@@ -436,53 +436,53 @@ pagebreak: {mode: 'avoid-all', before:'#pageX'}
           // validate signup form on keyup and submit
           $("#rectifie").validate({
             rules: {
-             
-             
+
+
             },
             messages: {
-              
+
             },
             submitHandler: function(form){
-         
+
          $.ajax({
              url: form.action,
              type: form.method,
              data: $(form).serialize(),
              success: function(response) {
-             
-    
-                  if (response.codeerreurs) { 
-                    
-        $("#codeerreurs").css({ 
+
+
+                  if (response.codeerreurs) {
+
+        $("#codeerreurs").css({
                           display: 'block'
                         });
                         setTimeout(function () {
-        $("#codeerreurs").css({ 
+        $("#codeerreurs").css({
           display: 'none'
         });
         }, 3000)
-                        
+
                     }
-                      
-                    if (response.depotnoncompenser) { 
+
+                    if (response.depotnoncompenser) {
                      var table = response.depotnoncompenser;
                      var table1 = response.retraitnomcompenser;
                      var totaldepot = null;
                      var totalretrait = null;
                      var lescommissionretrait = null;
                      var lescommissiondepot = null;
-  
 
-                        var tableau = document.querySelector(".tablet");   
-                        var compasationform = document.querySelector("#compasationform")                 
+
+                        var tableau = document.querySelector(".tablet");
+                        var compasationform = document.querySelector("#compasationform")
                     for (var i = 0; i < table.length; i++) {
                         var element = table[i];
- 
-  
+
+
     var ligne = tableau.insertRow(-1);//on a ajouté une ligne
   var colonne0 = ligne.insertCell(0);//on ajoute la seconde cellule
   colonne0.innerHTML += i+1;
-  
+
  var dtr = element.Datetransaction
   var datenvoie =  moment(dtr).format('DD/MM/YYYY ');
   var colonne1 = ligne.insertCell(1);//on ajoute la seconde cellule
@@ -491,30 +491,30 @@ pagebreak: {mode: 'avoid-all', before:'#pageX'}
   var colonne2 = ligne.insertCell(2);
   colonne2.innerHTML += element.Nomexpediteur;
 
-  
+
   var colonne3 = ligne.insertCell(3);
   colonne3.innerHTML += element.Nomreceveur;
   var colonne4 = ligne.insertCell(4);
   totaldepot += element.Sommeenvoie;
   lescommissiondepot += element.commissiondepot;
   var Sommeenvoie = new Intl.NumberFormat('gn-GN').format(element.Sommeenvoie);
-  
+
   colonne4.innerHTML += Sommeenvoie;
 
   var commissiondepot = new Intl.NumberFormat('gn-GN').format(element.commissiondepot);
   var colonne5 = ligne.insertCell(5);
   colonne5.innerHTML += commissiondepot;
-     
- //Recuperer l id des 
- 
+
+ //Recuperer l id des
+
  var input = document.createElement('input')
   input.setAttribute("class", "form-control mt-1 mb-1  p-1");
   input.setAttribute("type", "hidden");
   input.setAttribute("name", "depotidss");
   input.setAttribute("value", element.idenvoie);
-  
-  compasationform.appendChild(input);  
-     
+
+  compasationform.appendChild(input);
+
                     }
   var ligne2 = tableau.insertRow(-1);//on a ajouté une ligne
   var colonne50 = ligne2.insertCell(0);//on ajoute la seconde cellule
@@ -524,12 +524,12 @@ pagebreak: {mode: 'avoid-all', before:'#pageX'}
 
   for (var i = 0; i < table1.length; i++) {
                         var element = table1[i];
- 
-  
+
+
     var ligne = tableau.insertRow(-1);//on a ajouté une ligne
   var colonne0 = ligne.insertCell(0);//on ajoute la seconde cellule
   colonne0.innerHTML += i+1;
-  
+
  var dtr = element.Datetransaction
   var datenvoie =  moment(dtr).format('DD/MM/YYYY ');
   var colonne1 = ligne.insertCell(1);//on ajoute la seconde cellule
@@ -538,13 +538,13 @@ pagebreak: {mode: 'avoid-all', before:'#pageX'}
   var colonne2 = ligne.insertCell(2);
   colonne2.innerHTML += element.Nomexpediteur;
 
-  
+
   var colonne3 = ligne.insertCell(3);
   colonne3.innerHTML += element.Nomreceveur;
   var colonne4 = ligne.insertCell(4);
   totalretrait  += element.montantlocale;
   var montantlocale = new Intl.NumberFormat('gn-GN').format(element.montantlocale);
- 
+
   colonne4.innerHTML += montantlocale;
   var commissionretrait = new Intl.NumberFormat('gn-GN').format(element.commissionretrait);
   lescommissionretrait +=  element.commissionretrait;
@@ -552,13 +552,13 @@ pagebreak: {mode: 'avoid-all', before:'#pageX'}
   var colonne5 = ligne.insertCell(5);
   colonne5.innerHTML += commissionretrait;
   //Recuperer l id de retrait d une tanssaction
-  
+
  var input = document.createElement('input')
   input.setAttribute("class", "form-control mt-1 mb-1  p-1");
   input.setAttribute("type", "hidden");
   input.setAttribute("name", "retraitidss");
   input.setAttribute("value", element.idretrait);
-  compasationform.appendChild(input);  
+  compasationform.appendChild(input);
    }
 
 //calculons le total des somme entre depot retrait et commission
@@ -569,107 +569,84 @@ var totalsm = new Intl.NumberFormat('gn-GN').format(letotal);
   total.innerHTML = totalsm;
   var totamontantdepot = document.getElementById("totamontantdepot");
   var lesdepotss = new Intl.NumberFormat('gn-GN').format(totaldepot);
-  
+
   totamontantdepot.innerHTML += lesdepotss ;
   var totalcomidepot = document.getElementById("totalcomidepot");
   var totcomidepot = new Intl.NumberFormat('gn-GN').format(lescommissiondepot);
-    
-  totalcomidepot.innerHTML +=  totcomidepot ;    
-  
+
+  totalcomidepot.innerHTML +=  totcomidepot ;
+
   var totalmontantretrait = document.getElementById('totalmontantretrait');
   var lesretraits = new Intl.NumberFormat('gn-GN').format(totalretrait);
-  
+
   totalmontantretrait.innerHTML += lesretraits;
 
   var totalcomretrait = document.getElementById('totalcomretrait');
   var totacomretrait = new Intl.NumberFormat('gn-GN').format(lescommissionretrait);
   totalcomretrait.innerHTML += totacomretrait;
-   
+
   var agencenom = document.getElementById('agencenom');
   var agence = response.agence;
   agencenom.innerHTML = agence.nomagence;
 
-  
+
   var solde = new Intl.NumberFormat('gn-GN').format(agence.solde);
- 
- var repportsoldedernier = response.repportsoldedernier;
- var  soldeancien = repportsoldedernier.repportsolde;
- if ( typeof repportsoldedernier =="undefined" || repportsoldedernier == null) {
- soldeancien = 0;
- }
- 
+
+ //var repportsoldedernier = response.repportsoldedernier;
+ var  soldeancien = response.derniersolde;
+
+
   var totalreport = document.getElementById('totalreport');
   var rp = new Intl.NumberFormat('gn-GN').format(soldeancien);
-  
+
   totalreport.innerHTML = rp;
   var montantcompense = soldeancien + (letotal)
- 
+
   var compensersom = document.getElementById('compensersom')
   var mc = new Intl.NumberFormat('gn-GN').format(montantcompense);
   compensersom.innerHTML = mc;
 
-  
+
  var input = document.createElement('input')
   input.setAttribute("class", "form-control mt-1 mb-1  p-1");
   input.setAttribute("type", "hidden");
   input.setAttribute("name", "soldeagence");
   input.setAttribute("value", agence.solde);
-  
-  compasationform.appendChild(input);  
-  
+
+  compasationform.appendChild(input);
+
   var input1 = document.createElement('input')
   input1.setAttribute("class", "form-control mt-1 mb-1  p-1");
   input1.setAttribute("type", "hidden");
   input1.setAttribute("name", "agenceid");
   input1.setAttribute("value", response.agenceid );
-  
-  compasationform.appendChild(input1); 
-                    
-// totalreport var lesdepot = new Intl.NumberFormat('gn-GN').format(totaldepot);
-                
-                                      
- /*
 
- var input = document.createElement('input')
-  input.setAttribute("class", "form-control mt-1 mb-1  p-1");
-  input.setAttribute("type", "hidden");
-  input.setAttribute("name", "soldeagence");
-  input.setAttribute("value", rp.solde);
-  
-  compasationform.appendChild(input);  
-  
-  var input1 = document.createElement('input')
-  input1.setAttribute("class", "form-control mt-1 mb-1  p-1");
-  input1.setAttribute("type", "hidden");
-  input1.setAttribute("name", "agenceid");
-  input1.setAttribute("value", response.agenceid );
-  
-  compasationform.appendChild(input1); 
+  compasationform.appendChild(input1);
 
- */
-           
-  
+  var input2 = document.createElement('input')
+  input2.setAttribute("class", "form-control mt-1 mb-1  p-1");
+  input2.setAttribute("type", "hidden");
+  input2.setAttribute("name", "avantderniersolde");
+  input2.setAttribute("value", response.derniersolde );
 
+  compasationform.appendChild(input2);
                   }
-    
-    
-                 
-                 
-                            }            
-               });       
+
+                            }
+               });
          }
-         
+
           });
-      
+
 
           $("#compasationform").validate({
         rules: {
         },
         messages: {
-          
+
         }
       });
-      
+
           //code to hide topic selection, disable for demo
           var newsletter = $("#newsletter");
           // newsletter topics are optional, hide at first
@@ -682,13 +659,13 @@ var totalsm = new Intl.NumberFormat('gn-GN').format(letotal);
             topicInputs.attr("disabled", !this.checked);
           });
         });
-        
-    
-    
-         
+
+
+
+
         </script>
-           
- 
+
+
 
   <script class="include" type="text/javascript" src="/assets/semantic/lib/jquery.dcjqaccordion.2.7.js"></script>
   <script src="/assets/semantic/lib/jquery.scrollTo.min.js"></script>
@@ -699,9 +676,9 @@ var totalsm = new Intl.NumberFormat('gn-GN').format(letotal);
   <script type="text/javascript" src="/assets/semantic/lib/gritter/js/jquery.gritter.js"></script>
   <script type="text/javascript" src="/assets/semantic/lib/gritter-conf.js"></script>
   <!--script for this page-->
-  
-  
-  
+
+
+
 </body>
 
 </html>

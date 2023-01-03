@@ -20,14 +20,14 @@
     <section id="main-content">
       <section class="wrapper">
         <div class="row mt">
-         
+
             <div class="col-lg-12">
               <h4><i class="fa fa-angle-right"></i>Impression d'une transaction </h4>
               <div class="form-panel">
                 <h1>buuuuuuuuuuu</h1>
               <!-- /form-panel -->
-             
-      
+
+
             </div>
             <!-- /col-lg-12 -->
           </div>
@@ -35,16 +35,16 @@
       </section>
     </section>
     <!--main content end-->
-    
+
   </section>
   <!-- js placed at the end of the document so the pages load faster -->
 
   <script src="/assets/semantic/lib/jquery-1.9.1.js"></script>
   <script src="/assets/semantic/lib/jquery.validate.js"></script>
   <script>
- 
 
-  
+
+
     $().ready(function() {
       // validate the comment form when it is submitted
       jQuery.validator.addMethod("phoneGuinee", function (phone_number, element) {
@@ -119,13 +119,13 @@
             required: "veuillez recharger la page"
           },
           numerocarte: {
-            required: "Veuillez fournir un numero de carte",  
+            required: "Veuillez fournir un numero de carte",
             minlength: "Votre un numero de carte  superieur a 2 caractere "
           }
         }
       });
-  
-  
+
+
       //code to hide topic selection, disable for demo
       var newsletter = $("#newsletter");
       // newsletter topics are optional, hide at first
@@ -145,15 +145,15 @@
     //scripte pour afficher ou non afficher info client
 
  $( ".target" ).change(function() {
- 
+
   if(this.value == "0"){
-    $("#carte").css({ 
+    $("#carte").css({
                       display: 'none'
                     });
 
   }
   if(this.value == "1"){
-    $("#carte").css({ 
+    $("#carte").css({
                       display: 'block'
                     });
   }
@@ -168,9 +168,9 @@
   <script type="text/javascript" src="/assets/semantic/lib/gritter/js/jquery.gritter.js"></script>
   <script type="text/javascript" src="/assets/semantic/lib/gritter-conf.js"></script>
   <!--script for this page-->
-  
-  
-  
+
+
+
 </body>
 
 </html>

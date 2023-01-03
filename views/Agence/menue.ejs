@@ -11,13 +11,13 @@
         </div>
         <!--logo start-->
         <a  class="logo text-decoration-none"><b>KOLIMA <span>Transfert</span></b></a>
-      
+
         <!--logo end-->
         <div class="nav notify-row" id="top_menu">
           <!--  notification start -->
           <ul class="nav justify-content-end">
             <li class="">
-           
+
               <a id="changelangue"  <% if(typeof langue !== 'undefined'){ %><% if( langue == 'Fr' ){ %> class="activer"    <% } }%>   href="/Agence/changelanguepage/Fr">
                 <svg xmlns="http://www.w3.org/2000/svg" height="30"  width="100" id="flag-icons-fr" viewBox="0 0 512 512">
                     <g fill-rule="evenodd" stroke-width="1pt">
@@ -37,9 +37,9 @@
                   <path fill="#C8102E" d="M0 208v96h512v-96H0zM208 0v512h96V0h-96z"/>
                 </svg>
               </a>
-            
+
             </li>
-          
+
             <li class="">
               <a id="changelangue" href="/Agence/changelanguepage/Es" <% if(typeof langue !== 'undefined'){ %><% if( langue == 'Es' ){ %> class="activer"    <% } }%> tabindex="-1" aria-disabled="true"> <svg xmlns="http://www.w3.org/2000/svg" height="30" width="100" id="flag-icons-es" viewBox="0 0 512 512">
                 <path fill="#AA151B" d="M0 0h512v512H0z"/>
@@ -591,11 +591,11 @@
            </a>
             </li>
           </ul>
-        
+
           <!--  notification end -->
         </div>
         <div class="top-menu">
-          
+
           <button data-bs-toggle="modal" data-bs-target="#deconnecter" class="btn btn-danger nav pull-right top-menu mt-2">Déconnection</button>
         </div>
       </header>
@@ -612,7 +612,7 @@
             <h5 class="centered">
               <% if(typeof nom !== "undefined"){ %>
                 <%= nom %>
-                
+
           <% } %>
               </h5>
             <li class="mt">
@@ -642,7 +642,7 @@
                   <li><a href="/Agence/RapportTransactionDeuxDate">Transaction de Depot entre Deux Dates</a></li>
                   <li><a href="/Agence/RapportTransactionRetraitJournalier">Transaction de Retrait Journalier</a></li>
                   <li><a href="/Agence/RapportTransactionRetraitDeuxDate">Transaction de Retrait entre Deux Date </a></li>
-               
+
                 </ul>
               </li>
               <li class="sub-menu">
@@ -654,7 +654,7 @@
                   <li><a href="/Agence/ToutTransactionvaliderJournalierement">Journalièrements</a></li>
                   <li><a href="/Agence/ToutTransactionvaliderDeuxDate">Entre Deux Dates </a></li>
                   <li><a href="/Agence/ToutTransactionvalider">Toute les Transactions  </a></li>
-                 
+
                 </ul>
               </li>
               <li class="mt-1">
@@ -675,10 +675,10 @@
                   <span>Les Taux d'échange </span>
                   </a>
               </li>
-           
+
             <li>
               <a href="/Agence/parametre">
-                
+
                 <i class="fa fa-cog"></i>
                 <span>Parametre</span>
                 </a>
@@ -687,7 +687,7 @@
           <!-- sidebar menu end-->
         </div>
       </aside>
-      
+
                                                                        <!--Boite  suppression-->
                                                                        <div class="modal fade" id="deconnecter" tabindex="-1" role="dialog" aria-labelledby="defaultModal" aria-hidden="true">
                                                                         <div class="modal-dialog" role="document">
@@ -697,7 +697,7 @@
                                                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                               </div>
                                                                                 <div class="modal-body text-dark">
-                                                                                    Voulez-vous vous déconnectez ? 
+                                                                                    Voulez-vous vous déconnectez ?
                                                                                 </div>
                                                                                 <div class="modal-footer">
                                                                                     <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">Non</button>
@@ -706,4 +706,4 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <!--Boite suppression fin--> 
+                                                                    <!--Boite suppression fin-->

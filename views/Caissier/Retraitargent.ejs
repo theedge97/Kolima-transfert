@@ -9,7 +9,7 @@
   }
 </style>
   <!-- fin de head-->
- 
+
 </head>
 <script src="/assets/semantic/lib/jquery.validate.js"></script>
 <script src="/assets/semantic/lib/moment.min.js"></script>
@@ -28,18 +28,18 @@
     <!-- debut du body-->
     <section id="main-content">
       <section class="wrapper">
-      
+
         <div class="row mt-5">
-         
+
             <div class="col-lg-12  ">
-             
+
               <div class="row account-contant">
-                            
+
                 <div class="col-12">
                     <div class="card card-statistics">
                         <div class="card-body p-0">
                             <div class="row no-gutters">
-                                
+
                                 <div class="col-xl-12 col-md-12 col-12">
                                     <div class="page-account-form">
                                         <div class="form-titel border-bottom p-3">
@@ -55,12 +55,12 @@
                                                   <div class="modal-body">
                                                     <p>Votre code ne correspond pas . Veuillez Bien verifier votre code .....!!  . </p>
                                                   </div>
-                                                 
+
                                                 </div>
                                               </div>
                                             </div>
                                             <!--Confirmation de Validation de Code -->
-                                            
+
                                             <div id="validertransaction" class="modal" tabindex="-1">
                                                 <div class="modal-dialog">
                                                   <div class="modal-content">
@@ -71,7 +71,7 @@
                                                     <div class="modal-body">
                                                       <p>La  transaction a été  Validé  . </p>
                                                     </div>
-                                                   
+
                                                   </div>
                                                 </div>
                                               </div>
@@ -88,13 +88,13 @@
                                                   <div class="modal-body">
                                                     <p>Votre est invalide ou Expirer. </p>
                                                   </div>
-                                                 
+
                                                 </div>
                                               </div>
                                             </div>
 
   <!-- mil -->
- 
+
   <!-- Modal -->
   <div class="modal  fade" id="facture" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable  modal-xl">
@@ -107,7 +107,7 @@
            <div>
             <div class="row">
               <div class="col-lg-6 col-sm-6">
-                <span id="envoiedate"></span> 
+                <span id="envoiedate"></span>
               </div>
             <div class="col-lg-6 col-sm-6 text-rigth">
               <span >Reçus de Reception </span>
@@ -125,7 +125,7 @@
                   <p><span>Type de pièce : <span id="envoietypepiece">Ci</span> </span> <span>Numéro de la pièce : <span id="envoienumpiece"></span></span></p>
                 </div>
              </div>
-  
+
              <div class="row border pb-2 pe-2 ps-2 m-1 rounded-2">
               <h4>Bénéficiaire</h4>
               <div class="col-lg-12">
@@ -133,7 +133,7 @@
                  <p>Nom et Prenom : <span id="envoienombenef"> </span></p>
                  </div>
             </div>
-            
+
             <div class="row border pb-2 pe-2 ps-2 m-1 rounded-2">
               <h4>Transaction </h4>
               <div class="col-lg-12">
@@ -153,18 +153,18 @@
               <div class="col-lg-6 col-sm-6 text-right">
                 Client
               </div>
-  
+
             </div>
-  
-                   
-  
+
+
+
              </div>
            </div>
 ------------------------------------------------------------------------------------------------------------------------------------------------------
            <div>
             <div class="row">
               <div class="col-lg-6 col-sm-6">
-                <span id="envoiedate1"></span> 
+                <span id="envoiedate1"></span>
               </div>
             <div class="col-lg-6 col-sm-6  text-rigth">
               <span>Reçus de Reception  </span>
@@ -182,7 +182,7 @@
                   <p><span>Type de pièce : <span id="envoietypepiece1">Ci</span> </span> <span>Numero de la pièce : <span id="envoienumpiece1"> </span></span></p>
                 </div>
              </div>
-  
+
              <div class="row border pb-2 pe-2 ps-2 m-1 rounded-2">
               <h4>Bénéficiaire</h4>
               <div class="col-lg-12">
@@ -190,7 +190,7 @@
                  <p>Nom et Prenom : <span id="envoienombenef1"> </span></p>
                  </div>
             </div>
-            
+
             <div class="row border pb-2 pe-2 ps-2 m-1 rounded-2">
               <h4>Transaction </h4>
               <div class="col-lg-12">
@@ -205,28 +205,28 @@
             <hr class="mt-1">
             <div class="row">
               <div class="col-lg-6 col-sm-6">
-                Caissier 
+                Caissier
               </div>
               <div class="col-lg-6 col-sm-6 text-right">
                 Client
               </div>
-  
+
             </div>
-  
-                   
-  
+
+
+
              </div>
            </div>
-                                         
 
-                                             
+
+
 
         </div>
-        
+
       <div class="modal-footer">
         <form method="post" id="valid" action="/Caissier/code">
         <button type="button" class="btn btn-default" data-dismiss="modal"><a  href="/Caissier/RetraitArgent">Fermer</a></button>
-        
+
           <input type="hidden" name="idtransaction" id="idtransaction"  />
           <button type="button submit" id="imprimert" class="btn btn-success">Validé </button>
         </form>
@@ -247,7 +247,7 @@
                                                   <div class="modal-body">
                                                     <p>Votre Transaction a été validé. </p>
                                                   </div>
-                                                 
+
                                                 </div>
                                               </div>
                                             </div>
@@ -256,54 +256,54 @@
                                         <div class="p-4">
                                             <form  id="signupForm" method="post" action="/Caissier/retrait">
                                                 <div class="row ">
-                                                    
+
                                                     <div class="form-group col-md-4 col-md-offset-2">
                                                       <label for="code" class="control-label ">Veuillez entrer le code que vous avez reçus  :</label>
                                                       <input type="text" class="form-control" name="code" id="code" placeholder="Entrez le code  ">
                                                     </div>
-                                               
-                                                  
-                                                  
-                                                 
-                                                    
+
+
+
+
+
                                                 </div>
                                                 <div class="form-group">
                                                   <div class="col-lg-offset-2 col-lg-9">
                                                     <button id="enregistrer" class="btn btn-primary" type="submit">Enregistrer</button>
                                                     <button id="can" class="btn btn-warning" type="button">Cancel</button>
-                                                  
+
                                                   </div>
                                                 </div>
                                             </form>
-                    
-                                     
+
+
                                         </div>
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
       <!--Fin de notification d'erreur-->
-     
+
             </div>
             <!-- /col-lg-12 -->
           </div>
-          
+
           <!-- Button trigger modal -->
 
         <!-- /row -->
       </section>
     </section>
     <!--main content end-->
-    
+
   </section>
   <!-- js placed at the end of the document so the pages load faster -->
-  
+
   <script>
-    
+
     $().ready(function() {
         // validate the comment form when it is submitted
         jQuery.validator.addMethod("phoneGuinee", function (phone_number, element) {
@@ -316,7 +316,7 @@
         $("#valid").validate({
 
 submitHandler: function(form){
-     $("#lespiner").css({ 
+     $("#lespiner").css({
                       display: 'block'
                     });
 $.ajax({
@@ -324,14 +324,14 @@ $.ajax({
     type: form.method,
     data: $(form).serialize(),
     success: function(response) {
-     
-         if (response.success) {   
-            $("#validertransaction").css({ 
+
+         if (response.success) {
+            $("#validertransaction").css({
                       display: 'block'
                     });
-                    
+
 setTimeout(function () {
-    $("#validertransaction").css({ 
+    $("#validertransaction").css({
                       display: 'none'
                     });
                   }, 3000);
@@ -346,27 +346,27 @@ jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' },
 pagebreak: {mode: 'avoid-all', before:'#pageX'}
 };
        html2pdf().from(invoice).set(opt).save();
-       
+
 setTimeout(function () {
  window.location.href = "/Caissier/Retraitargent";
                  }, 5000);
-     
 
 
 
 
-                 }  
-         
-         
-        
-                   }            
-      });       
+
+                 }
+
+
+
+                   }
+      });
 }
 });
 
 
-    
-        
+
+
         //code to hide topic selection, disable for demo
         var newsletter = $("#newsletter");
         // newsletter topics are optional, hide at first
@@ -380,8 +380,8 @@ setTimeout(function () {
         });
     });
 
-             
-   
+
+
 
 
 
@@ -393,16 +393,16 @@ setTimeout(function () {
     resultInput: '#montant',
   })
   //
-  
+
 </script>
 
   <script src="/assets/semantic/lib/bootstrap/js/bootstrap.min.js"></script>
- 
+
   <script>
- 
+
     var nomimprimer = "";
     var idtransaction = "";
-      
+
         $().ready(function() {
           // validate the comment form when it is submitted
           jQuery.validator.addMethod("phoneGuinee", function (phone_number, element) {
@@ -416,7 +416,7 @@ setTimeout(function () {
                 required: true,
                 minlength: 5
               } ,
-             
+
             },
             messages: {
               code: {
@@ -425,51 +425,51 @@ setTimeout(function () {
               }
             },
             submitHandler: function(form){
-         
+
          $.ajax({
              url: form.action,
              type: form.method,
              data: $(form).serialize(),
              success: function(response) {
-             
-    
-                  if (response.codeerreurs) { 
+
+
+                  if (response.codeerreurs) {
                     $('#codeerreurs').modal('show')
                         setTimeout(function () {
                             $('#codeerreurs').modal('hidden')
         }, 3000)
-                        
-                    }  
-                    if (response.invalidecode) { 
-                        
-                        
+
+                    }
+                    if (response.invalidecode) {
+
+
                         $('#invalidecode').modal('show')
                         setTimeout(function () {
                             $('#invalidecode').modal('hidden')
         }, 3000)
-                        
+
                     }
-                      
-                    if (response.transaction) { 
-                     
+
+                    if (response.transaction) {
+
                     var transaction = response.transaction;
 
 
 
 
-                          
+
                      $("#envoienomenvoyeur").html(transaction['Nomexpediteur']);
                      $("#envoienomenvoyeur1").html(transaction['Nomexpediteur']);
                      $("#envoietelephoneenvoyeur").html(transaction['Contactexpediteur']);
                      $("#envoietelephoneenvoyeur1").html(transaction['Contactexpediteur']);
                      $("#idtransaction").val(response.transaction['idtransac']);
-               
+
                      $("#envoiepaysenvoie").html(transaction['pays']);
-                     $("#envoiepaysenvoie1").html(transaction['pays']); 
+                     $("#envoiepaysenvoie1").html(transaction['pays']);
                      $("#envoiepaysbenef").html(response.paysagence);
-                     
+
                      $("#envoiepaysbenef1").html(response.paysagence);
-                      
+
             $('#totalmonaie').html(transaction['monaie']);
             $('#totalmonaie1').html(transaction['monaie']);
             $('#envoiecomissionmonaie').html(transaction['monaie']);
@@ -477,67 +477,67 @@ setTimeout(function () {
             //lamonaie1
             $('#lamonaie').html(transaction['monaie']);
             $('#lamonaie1').html(transaction['monaie']);
-                     
+
                      $("#envoiemonaiebenf").html(response.agencedevise);
                      $("#envoiemonaiebenf1").html(response.agencedevise);
-                   
+
                      $("#envoienombenef1").html(transaction['Nomreceveur']);
                      $("#envoienombenef").html(transaction['Nomreceveur']);
-                     $("#envoietelephonebenef").html(transaction['Contactreceveur']);  
-                     $("#envoietelephonebenef1").html(transaction['Contactreceveur']);   
+                     $("#envoietelephonebenef").html(transaction['Contactreceveur']);
+                     $("#envoietelephonebenef1").html(transaction['Contactreceveur']);
                      $("#envoiecode").html(transaction['Codetransfert']);
                      $("#envoiecode1").html(transaction['Codetransfert']);
-                     //Envoie argent 
+                     //Envoie argent
                      var sommeenvoie = new Intl.NumberFormat('gn-GN').format(transaction['Sommeenvoie'])
                     //asaa  Niisasa
                     var montantdevise = new Intl.NumberFormat('gn-GN').format(transaction['montantdevise'])
-                     
-                     $("#envoiemontanenvoyer").html(montantdevise);       
-                     $("#envoiemontanenvoyer1").html(montantdevise);  
-                     //Gabolo 
+
+                     $("#envoiemontanenvoyer").html(montantdevise);
+                     $("#envoiemontanenvoyer1").html(montantdevise);
+                     //Gabolo
                      var frai = new Intl.NumberFormat('gn-GN').format(transaction['Frais'])
                      $("#envoiecomission").html(frai);
                      $("#envoiecomission1").html(frai);
-                     //Frais 
-                     $("#envoiesommetotal").html(sommeenvoie); 
-                     $("#envoiesommetotal1").html(sommeenvoie);  
+                     //Frais
+                     $("#envoiesommetotal").html(sommeenvoie);
+                     $("#envoiesommetotal1").html(sommeenvoie);
 
-                   
+
                      //envoiemontantbenef1
                      var montantlocale = new Intl.NumberFormat('gn-GN').format(transaction['montantlocale'])
-                    
+
                      $("#envoiemontantbenef").html(montantlocale);
-                     $("#envoiemontantbenef1").html(montantlocale);  
-                     //Nom Agence 
-                     
-                     $("#nomagence").html(response.nomagence); 
-                     
-                     $("#nomagence1").html(response.nomagence); 
+                     $("#envoiemontantbenef1").html(montantlocale);
+                     //Nom Agence
+
+                     $("#nomagence").html(response.nomagence);
+
+                     $("#nomagence1").html(response.nomagence);
                      //envoiedate
-                     
+
                     var dateenvoie =  moment(transaction['Datetransaction']).format('DD / MM / YYYY ');
-                    
-                    $("#envoiedate").html(dateenvoie); 
-                    
-                    $("#envoiedate1").html(dateenvoie); 
-                    //Envoie de la monaie 
+
+                    $("#envoiedate").html(dateenvoie);
+
+                    $("#envoiedate1").html(dateenvoie);
+                    //Envoie de la monaie
                     //envoietelephonebenef1
-                    $("#envoiedate1").html(dateenvoie); 
+                    $("#envoiedate1").html(dateenvoie);
                     $('#facture').modal('show')
                     $('#validation').modal('show')
-                   
+
                   }
-    
-    
-                
-                 
-                            }            
-               });       
+
+
+
+
+                            }
+               });
          }
-         
+
           });
-      
-      
+
+
           //code to hide topic selection, disable for demo
           var newsletter = $("#newsletter");
           // newsletter topics are optional, hide at first
@@ -550,11 +550,11 @@ setTimeout(function () {
             topicInputs.attr("disabled", !this.checked);
           });
         });
-        
-    
-         
+
+
+
         </script>
-     
+
 
   <script class="include" type="text/javascript" src="/assets/semantic/lib/jquery.dcjqaccordion.2.7.js"></script>
   <script src="/assets/semantic/lib/jquery.scrollTo.min.js"></script>
@@ -565,9 +565,9 @@ setTimeout(function () {
   <script type="text/javascript" src="/assets/semantic/lib/gritter/js/jquery.gritter.js"></script>
   <script type="text/javascript" src="/assets/semantic/lib/gritter-conf.js"></script>
   <!--script for this page-->
-  
-  
-  
+
+
+
 </body>
 
 </html>

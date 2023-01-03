@@ -19,7 +19,7 @@
       color: rgb(219, 10, 10);
     }
   </style>
-  
+
   <script src="/assets/semantic/lib/jquery-1.9.1.js"></script>
   <script src="/assets/semantic/lib/jquery.validate.js"></script>
 </head>
@@ -31,11 +31,11 @@
         *********************************************************************************************************************************************************** -->
     <!-- debut du body-->
     <section id="main-content">
-      
+
         <section class="wrapper">
-      
+
             <div class="row mt-5">
-             
+
                     <div class="col-md-3 pb-xl-1 pb-5 border-right">
                         <div class="page-account-profil pt-5">
                             <div class="profile-img text-center rounded-circle">
@@ -48,9 +48,9 @@
                                     </div>
                                 </div>
                             </div>
-    
+
                             <div class="profile-btn text-center">
-                                                    
+
                                 <button data-bs-toggle="modal" data-bs-target="#photoprofile"  class="btn btn-danger">Changer le mot de passe  </button>
                                  <!--Changer la Photo de Profile -->
                                  <div class="modal fade" id="photoprofile" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -61,32 +61,32 @@
                                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                           <form method="post" action="/Superadmin/ModifierMotdepasseCompte"   id="majmotpasse"> 
-                                                                       
-                                        <div class="mb-3"> 
-                                        <input type="password" class="form-control p-3" id="motdepassemaj" name="motdepassemaj" required> 
-                                         
-                                      </div>   
+                                           <form method="post" action="/Superadmin/ModifierMotdepasseCompte"   id="majmotpasse">
+
+                                        <div class="mb-3">
+                                        <input type="password" class="form-control p-3" id="motdepassemaj" name="motdepassemaj" required>
+
+                                      </div>
                                                                                                                                             <div class="text-end">
-                                  
+
                                           <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">Fermer</button>
                                                                           <button type="submit" class="btn btn-danger pe-4 ps-4 rounded-pill">
                                                                               <span>Enregistrer</span>
                                                                           </button>
-                                                                      </div>                                     
+                                                                      </div>
                                                                   </form>
                                         </div>
                                       </div>
                                     </div>
                                   </div>
-                                  
+
     <!--Changer Photo de Profile fin-->
                                 </div>
-   
+
                             </div>
                         </div>
-                        
-                        
+
+
                         <div class="col-xl-9 col-md-9 col-12 border-t border-right">
                             <div class="page-account-form">
                                 <div class="form-titel border-bottom p-3">
@@ -107,34 +107,34 @@
                                                 <label class="textcoleur" for="telephone">Téléphone </label>
                                                 <input type="tel" class="form-control" id="telephone" name="telephone" value="<%=  compteadmininfo.telephone %>">
                                                 <input type="hidden" class="form-control" id="idcompte" name="idcompte" value="<%=  compteadmininfo.id %>">
-                                                
-                                            </div>  
+
+                                            </div>
                                         </div>
                                         <button type="submit" class="btn btn-success">Mèttre a Jour les Informations</button>
                                     </form>
                                 </div>
                             </div>
                         </div>
-                
+
           <!--Fin de notification d'erreur-->
-         
+
                 </div>
                 <!-- /col-lg-12 -->
-              
-              
+
+
               <!-- Button trigger modal -->
-    
+
             <!-- /row -->
           </section>
     <!--main content end-->
-    
+
   </section>
   <!-- js placed at the end of the document so the pages load faster -->
-  
+
   <script src="/assets/semantic/lib/datatables/jquery.dataTables.min.js"></script>
   <script src="/assets/semantic/lib/datatables/dataTables.bootstrap4.min.js"></script>
   <script src="/assets/semantic/lib/datatables/datatables-demo.js"></script>
- 
+
    <script src="/assets/semantic/lib/bootstrap/js/bootstrap.min.js"></script>
    <script class="include" type="text/javascript" src="/assets/semantic/lib/jquery.dcjqaccordion.2.7.js"></script>
    <script src="/assets/semantic/lib/jquery.scrollTo.min.js"></script>
@@ -146,8 +146,8 @@
    <script type="text/javascript" src="/assets/semantic/lib/gritter-conf.js"></script>
    <!--script for this page-->
    <script>
-  
-   
+
+
      $().ready(function() {
        // validate the comment form when it is submitted
        jQuery.validator.addMethod("phoneGuinee", function (phone_number, element) {
@@ -182,7 +182,7 @@
            },
            frais: {
             required: "Veuillez entrez le frais "
-          
+
            }
          }
        });

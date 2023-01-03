@@ -5,7 +5,7 @@ const sql = require("../db.js");
 
 
 // constructor de la table code activation
- 
+
 const Caissiers = function(caisse) {
   this.nomcaissier = caisse.nomcaissier;
   this.prenomcaissier = caisse.prenomcaissier;
@@ -26,7 +26,7 @@ const Caissiers = function(caisse) {
       });
   });
   };
-//Page 
+//Page
 Caissiers.lescaissierdunagence =  ( id) => {
   return new Promise((resolve, reject)=>{
     sql.query(`SELECT * FROM caissier WHERE agencelier  = ${id} `,  (error, employees)=>{
@@ -47,7 +47,7 @@ Caissiers.ajoutcaisse = (newFrais) => {
           return resolve(enregistre);
       });
   });
-  }; 
+  };
   //Selectionner les Inforamtions d un caissier
   Caissiers.selectlecaissier =  ( id) => {
     return new Promise((resolve, reject)=>{
@@ -59,7 +59,7 @@ Caissiers.ajoutcaisse = (newFrais) => {
       });
   });
   };
-  //Mettre a jour les informations du caissier 
+  //Mettre a jour les informations du caissier
   Caissiers.majinfocaissier =  (idcaisse, 	nomcaissier, prenomcaissier, telephonecaissier ,  genre ) =>{
     return new Promise((resolve, reject)=>{
       sql.query(`UPDATE  caissier SET  	nomcaissier = "${nomcaissier}" , prenomcaissier = "${prenomcaissier}", telephonecaissier = "${telephonecaissier}"  , genre = "${genre}"   WHERE idcaiss = ${idcaisse}  `,  (error, employees)=>{
@@ -81,7 +81,7 @@ Caissiers.ajoutcaisse = (newFrais) => {
       });
   });
   };
-  //Changement de Statue d un Compte de Caissiee 
+  //Changement de Statue d un Compte de Caissiee
   Caissiers.changestatue =  (idcaisse, 	idtype) =>{
     return new Promise((resolve, reject)=>{
       sql.query(`UPDATE  caissier SET  	statue = ${idtype}   WHERE idcaiss = ${idcaisse}  `,  (error, employees)=>{
@@ -95,5 +95,5 @@ Caissiers.ajoutcaisse = (newFrais) => {
 
 
 
-  
+
 module.exports = Caissiers;
