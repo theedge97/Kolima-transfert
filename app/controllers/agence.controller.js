@@ -146,7 +146,7 @@ async (req, res, next) => {
     var  letemps = moment.duration(currentTime).asSeconds()
 //convertir se temps en milliseconde
 
-if ( letemps >= 0 && letemps <= 79200) {
+if ( letemps >= 25200 && letemps <= 64800) {
   var connect = await Agence.Trouveragence(telephone);
   if (connect !== "" && !isEmpty(connect) ) {
 
