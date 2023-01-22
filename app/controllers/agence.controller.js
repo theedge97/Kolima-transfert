@@ -256,7 +256,7 @@ exports.Acceuil  =  [
           var agenceid = req.cookies.agenceid;
           //Selectionner le nombre de transaction journalier
           var transacjrnalierdepot = await Transaction.agencenbretransactionjourdepot(agenceid)
-
+console.log(transacjrnalierdepot)
          if (req.cookies.agencelangue == "En") {
 
           res.render('Agence/AcceuilEn', {nom: nom, telephone: telephone, email: email , langue : langue})
