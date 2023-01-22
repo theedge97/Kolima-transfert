@@ -1,13 +1,17 @@
 let express = require('express')
 let app = express()
 
-let bodyParser = require('body-parser') //permet de parser les donner envoyer par posts
-//let session = require("express-session") //permet d'appeler la session
+let bodyParser = require('body-parser')
+//permet de parser les donner envoyer par posts
+//let session = require("express-session")
+//permet d'appeler la session
 const validator = require('express-validator');
 const { body ,validationResult  } = require('express-validator');
-const bcrypt = require("bcryptjs")//permet de hacher le mot de passe
+const bcrypt = require("bcryptjs")
+//permet de hacher le mot de passe
 const saltRounds = 10;
 const codeargent = require("uuid");
+const moment = require('moment-timezone');
 
 const { toLower, isEmpty, upperCase, isArray, toInteger } = require('lodash');
 const path = require("path");
@@ -52,6 +56,9 @@ const Compensationns = require("../models/superadmin/historiquecompensation.mode
 const Tauxfraisenvoie = require("../models/superadmin/tauxfraisenvoie.models.js")
 const Solderecharche = require("../models/superadmin/solderecharche.models.js");
 const ListeTransfPays = require("../models/superadmin/listetransfertpays.models.js");
+const Reinitiallisationcode = require("../models/superadmin/reinitialisationcode.models.js");
+const Caissiercodereinitiallisation = require('../models/superadmin/caissiercodereinitiallisation.models.js');
+const  Suppresiontransac  = require('../models/superadmin/suppresiontransac.models.js');
 const e = require('express');
 //Inscription d'un administrateur
  exports.Inscription =  [
@@ -61,7 +68,6 @@ ce middelware permet de creer un compte adminiatrateur
 
  body('nom').isLength({ min: 3}).withMessage('Veuilez bien saisir un nom long').trim(),
  body('telephone').isNumeric().withMessage('Veuilez bien saisir un nombre').trim(),
- body('telephone').matches(/^6[1,2,5,6]{1}[0-9]{7}$/).withMessage('Veuilez bien saisir un numero valide').trim(),
  body('email').isEmail().withMessage('Veuilez bien saisir un email').normalizeEmail(),
  body('motdepasse', 'Veuillez saisir un mot de passe de plus de quatre caractere').isLength({ min: 4 }).trim(),
  body('motdepasse').custom((value, { req }) => {
@@ -135,63 +141,96 @@ async (req, res, next) => {
     var motdepasse = req.body.motdepasse
 
     try {
+    const timezone = moment.tz.guess();
+    const currentTime = moment().tz(timezone).format('HH:mm');
+    var  letemps = moment.duration(currentTime).asSeconds()
+//convertir se temps en milliseconde
 
+if ( letemps >= 0 && letemps <= 79200) {
+  var connect = await Agence.Trouveragence(telephone);
+  if (connect !== "" && !isEmpty(connect) ) {
 
-      var connect = await Agence.Trouveragence(telephone)
+  var vrai = await bcrypt.compareSync(req.body.motdepasse, connect[0]['motdepasse']);
 
+  if (vrai == true) {
+    console.log(connect)
+    if (connect[0]['statue'] == 1) {
+        res.cookie('agencenom', connect[0]['nomagence'], {maxAge: 900000});
+        res.cookie('agencenumero', connect[0]['numeroAgence'], {maxAge: 900000});
+        res.cookie('agencetelephone', connect[0]['telephoneagence'], {maxAge: 900000});
 
-      if (connect !== "" && !isEmpty(connect) ) {
+        res.cookie('agenceid', connect[0]['idagence'], {maxAge: 900000});
+        res.cookie('agenceville', connect[0]['ville'], {maxAge: 900000});
+        res.cookie('agencepays', connect[0]['pays'], {maxAge: 900000});
+        res.cookie('agenceidpays', connect[0]['idpays'], {maxAge: 900000});
+        res.cookie('agencedevise', connect[0]['monaie'], {maxAge: 900000});
 
-      var vrai = await bcrypt.compareSync(req.body.motdepasse, connect[0]['motdepasse']);
-      console.log(vrai)
+        res.cookie('agenceemail', connect[0]['emailagence'], {maxAge: 900000});
+              res.redirect("/Agence/Acceuil");
+    }else{
 
-      if (vrai == true) {
-        console.log(connect)
-        if (connect[0]['statue'] == 1) {
-            res.cookie('agencenom', connect[0]['nomagence'], {maxAge: 900000});
-            res.cookie('agencenumero', connect[0]['numeroAgence'], {maxAge: 900000});
-            res.cookie('agencetelephone', connect[0]['telephoneagence'], {maxAge: 900000});
-
-            res.cookie('agenceid', connect[0]['idagence'], {maxAge: 900000});
-            res.cookie('agenceville', connect[0]['ville'], {maxAge: 900000});
-            res.cookie('agencepays', connect[0]['pays'], {maxAge: 900000});
-            res.cookie('agenceidpays', connect[0]['idpays'], {maxAge: 900000});
-            res.cookie('agencedevise', connect[0]['monaie'], {maxAge: 900000});
-
-            res.cookie('agenceemail', connect[0]['emailagence'], {maxAge: 900000});
-                  res.redirect("/Agence/Acceuil");
-        }else{
-
-            if (req.cookies.agencelangue == "En") {
-
-              res.render('Agence/loginEn', {agencesuspense: "Votre agence est suspendue veuillez contacter l'administrateur"})
-              }else{
-
-              res.render('Agence/login', {agencesuspense: "Votre agence est suspendue veuillez contacter l'administrateur"})
-              }
-        }
-
-      }else{
         if (req.cookies.agencelangue == "En") {
-          var langue = req.cookies.agencelangue;
 
-          res.render('Agence/loginEn',  {erreurmotpasse: "Votre mot de passe ne correspond pas", langue: langue})
+          res.render('Agence/loginEn', {agencesuspense: "Votre agence est suspendue veuillez contacter l'administrateur"})
           }else{
 
-          res.render('Agence/login',   {erreurmotpasse: "Votre mot de passe ne correspond pas"})
+          res.render('Agence/login', {agencesuspense: "Votre agence est suspendue veuillez contacter l'administrateur"})
           }
+    }
 
-      }
-
+  }else{
+//Enregistron le nombre de tentative du mot de passe
+//On creer  un cookie qui va enregistrer le nombre de tentative du mot de passe
+//Si il tentate le code plus de trois fois on verrouille le compte et on emet un noti de contact de l administrateur
+//On tout dabor on recuperer le nombre de tentative precedant
+//En suite  on essaie de incrementer le nombre de une fois
+//verifion si le cookie de tentative existe deja
+    if (req.cookies.tentative == null ) {
+      //Si le cookie n existte pas on   creer
+      res.cookie('tentative', 1 );
     }else{
-      if (req.cookies.agencelangue == "En") {
-        var langue = req.cookies.agencelangue;
-        res.render('Agence/loginEn',  {erreurnumero: "Votre numero n'existe pas", langue : langue})
-        }else{
+    //au cas elle existe deja on essaie d incrementer le nombre d essaie
+    var ancientatentative = req.cookies.tentative;
+    ancientatentative = toInteger(ancientatentative)
+    ancientatentative = ancientatentative + 1;
 
-        res.render('Agence/login',  {erreurnumero: "Votre numero n'existe pas"})
-        }
+    res.cookie('tentative', ancientatentative);
+//si le nombre de tentative est superieur a 3  on block le compte
+if( ancientatentative > 3){
+//verrouiller le Compte
+await Agence.blockagecompte(telephone , 1);
+
+res.redirect("/Agence/Blockapage");
+}
+    }
+    if (req.cookies.agencelangue == "En") {
+      var langue = req.cookies.agencelangue;
+      res.render('Agence/loginEn',  {erreurmotpasse: "Votre mot de passe ne correspond pas", langue: langue})
+      }else{
+
+      res.render('Agence/login',   {erreurmotpasse: "Votre mot de passe ne correspond pas"})
       }
+
+  }
+
+}else{
+  if (req.cookies.agencelangue == "En") {
+    var langue = req.cookies.agencelangue;
+    res.render('Agence/loginEn',  {erreurnumero: "Votre numero n'existe pas", langue : langue})
+    }else{
+
+    res.render('Agence/login',  {erreurnumero: "Votre numero n'existe pas"})
+    }
+  }
+
+
+} else {
+  //On le renvoie a la page de Cadenas
+  res.redirect("/Agence/Cadenas");
+
+}
+
+
 
        } catch(e) {
            console.log(e);
@@ -213,15 +252,17 @@ exports.Acceuil  =  [
           var nom = req.cookies.agencenom;
           var telephone = req.cookies.agencetelephone
           var email = req.cookies.agenceemail
-         var langue = req.cookies.agencelangue;
-
+          var langue = req.cookies.agencelangue;
+          var agenceid = req.cookies.agenceid;
+          //Selectionner le nombre de transaction journalier
+          var transacjrnalierdepot = await Transaction.agencenbretransactionjourdepot(agenceid)
 
          if (req.cookies.agencelangue == "En") {
 
           res.render('Agence/AcceuilEn', {nom: nom, telephone: telephone, email: email , langue : langue})
         }else{
 
-          res.render('Agence/acceuil', {nom: nom, telephone: telephone, email: email, langue: langue})
+          res.render('Agence/Acceuil', {nom: nom, telephone: telephone, email: email, langue: langue})
         }
         } catch(e) {
               console.log(e);
@@ -234,7 +275,8 @@ exports.Acceuil  =  [
 
        }
    ]
-   //Page Envoie d'argent
+
+//Page Envoie d'argent
 exports.PageEnvoieargent  =  [
 
   async (req, res) => {
@@ -395,7 +437,8 @@ if (agencesolde >= montant) {
       Fraisretrait : fraisretrait,
       monaiepaysid : monaiepaysid,
       Fraisprincipale : fraisprincipale,
-      compensation : null
+      compensation : null,
+      Supprimer : 0
     })
     await Transaction.effectuer(transac)
     var soldediminuer = montant - fraisdepot;
@@ -1044,6 +1087,47 @@ async (req, res, next) => {
    }
  }
 ]
+//RapportToutTrDepot
+//Rapport de tout les Transactions de depot non validaer
+exports.RapportToutTransactionADepot  =  [
+
+  async (req, res) => {
+
+    if (req.cookies.agencenom != null ) {
+
+   try {
+
+    var nom = req.cookies.agencenom;
+    var telephone = req.cookies.agencetelephone
+    var email = req.cookies.agenceemail
+    var paysid = req.cookies.agenceidpays;
+    var agenceid =  req.cookies.agenceid;
+    var langue = req.cookies.agencelangue;
+
+    var lestransactions = await Transaction.transatoutdepotnonvalide(agenceid);
+  console.log(lestransactions)
+  if (req.cookies.agencelangue == "En") {
+
+    res.render('Agence/RapportToutTrDepot', {langue: langue, lestransactions : lestransactions ,paysid: paysid, nom: nom, telephone: telephone, email: email})
+
+  }else{
+
+    res.render('Agence/RapportToutTrDepot', {langue: langue, lestransactions : lestransactions ,paysid: paysid, nom: nom, telephone: telephone, email: email})
+
+  }
+   } catch(e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+
+
+     }else{
+
+      res.redirect("/Agence/connection")
+    }
+     }
+ ]
+
 //Transaction de Retrait  d une Agence Journalier
 exports.RapportTransactionDeRetraitAdate  =  [
 
@@ -1341,6 +1425,42 @@ exports.LesCaissiers  =  [
 
         }else{
           res.render('Agence/Lescaissier', {langue: langue, lescaissier : lescaissier, nom: nom, telephone: telephone, email: email})
+
+        }
+        } catch(e) {
+            console.log(e);
+            res.sendStatus(500);
+        }
+
+    }else{
+
+      res.redirect("/Agence/connection")
+    }
+     }
+ ]
+ //La Liste des Caissier Blocker
+ exports.LesCaissiersBlockers  =  [
+
+  async (req, res) => {
+
+    if (req.cookies.agencenom != null ) {
+
+      try {
+
+        var nom = req.cookies.agencenom;
+        var telephone = req.cookies.agencetelephone
+        var email = req.cookies.agenceemail
+        var paysid = req.cookies.agenceidpays;
+        var agenceid =  req.cookies.agenceid;
+        var langue = req.cookies.agencelangue;
+
+        var lescaissier = await Caissiers.lescaissierblocker(agenceid);
+
+        if (req.cookies.agencelangue == "En") {
+          res.render('Agence/Caissierblocker', {langue: langue, lescaissier : lescaissier, nom: nom, telephone: telephone, email: email})
+
+        }else{
+          res.render('Agence/Caissierblocker', {langue: langue, lescaissier : lescaissier, nom: nom, telephone: telephone, email: email})
 
         }
         } catch(e) {
@@ -1886,6 +2006,162 @@ exports.ChangeLanguage =  [
 
      res.cookie('agencelangue', lang);
 
+
+      res.redirect("/Agence/Acceuil")
+     } catch(e) {
+         console.log(e);
+         res.sendStatus(500);
+     }
+
+     }
+ ]
+ //Envoie du code de reinitialisation du mot de passe
+ exports.Reinitialisation =  [
+  /*
+ce middelware permet de creer un compte
+  */
+ // verifie si le matricule est un nombre.
+ body('codeactivation', 'Veuillez saisir un code de plus de 4 caractere ').isLength({ min: 5 }).trim(),
+async (req, res, next) => {
+
+   // Extract the validation errors from a request.
+   const errors = validator.validationResult(req);
+   //les erreurs
+   // Create a genre object with escaped and trimmed data
+   if (!errors.isEmpty()) {
+     // There are errors. Render the form again with sanitized values/error messages.
+     var erreur = errors.array();
+     console.log(erreur)
+     res.render('Agence/Blocakage', { erreur: erreur[0]});
+
+   }
+   else {
+
+    var codeactivation = req.body.codeactivation
+
+    try {
+
+await Reinitiallisationcode.supprimercode(codeactivation);
+console.log("Suppression")
+///Reinitialisationmodepasse
+
+res.redirect("/Agence/Reinitialisationmodepasse")
+
+       } catch(e) {
+           console.log(e);
+           res.sendStatus(500);
+       }
+    //verifier si le matricule existe dans la base de donner
+
+
+   }
+ }
+]
+//Reinitiallisation du mot de passe
+exports.ModifierMotdepasse =  [
+  /*
+ce middelware permet de creer un compte
+  */
+ // verifie si le matricule est un nombre.
+ body('telephone').isNumeric().withMessage('Veuilez bien saisir un nombre').trim(),
+ body('motdepasse', 'Veuillez saisir un mot de passe de plus de quatre caractere').isLength({ min: 4 }).trim(),
+ async (req, res, next) => {
+
+   // Extract the validation errors from a request.
+   const errors = validator.validationResult(req);
+   //les erreurs
+   // Create a genre object with escaped and trimmed data
+   if (!errors.isEmpty()) {
+     // There are errors. Render the form again with sanitized values/error messages.
+     var erreur = errors.array();
+     console.log(erreur)
+     res.render('Agence/Blocakage', { erreur: erreur[0]});
+
+   }
+   else {
+    var telephone = req.body.telephone;
+    var motdepasse = req.body.motdepasse;
+    console.log(telephone)
+    try {
+      var hasher =  await  bcrypt.hashSync(req.body.motdepasse, 10, (err, hash) => {
+        if (err) {
+          console.error(err)
+          return
+        }
+      })
+await Agence.modifiermotdepasseagence(telephone , hasher);
+
+res.clearCookie("tentative");
+
+res.redirect("/Agence/connection")
+
+       } catch(e) {
+           console.log(e);
+           res.sendStatus(500);
+       }
+    //verifier si le matricule existe dans la base de donner
+   }
+ }
+]
+//Generation du code de reinitiallisation du caissier
+exports.GenerationCode  =  [
+  async (req, res) => {
+
+    if(req.cookies.agencenom != null ){
+      try {
+        var nom = req.cookies.agencenom;
+        var telephone = req.cookies.agencetelephone
+        var email = req.cookies.agenceemail
+        var paysid = req.cookies.agenceidpays
+        var agenceid = req.cookies.agenceid;
+        var idcaisse = req.params.idcaisse;
+//idagence
+//Ajout  d un code a une Agence
+var nombrealeatoir = Math.random();
+
+const MY_NAMESPACE = '6ec0bd7f-11c0-43da-975e-2a8ad9ebae0b';
+var encodage =  nombrealeatoir + idcaisse + agenceid;
+var code = codeargent.v5(encodage, MY_NAMESPACE);
+var lecode =  code.slice(0, 5)
+const ajoutcode = new Caissiercodereinitiallisation({
+  codereinitialisation: lecode,
+  caisseid : idcaisse
+})
+
+await Caissiercodereinitiallisation.ajoutcode(ajoutcode)
+
+         res.redirect("/Agence/CaissierBlocker")
+        } catch(e) {
+            console.log(e);
+            res.sendStatus(500);
+        }
+     }else{
+      res.redirect("/")
+    }
+     }
+ ]
+ //Suppression des transaction non envoyer
+ exports.SuppressionTransaction =  [
+  async (req, res) => {
+
+   try {
+     var idtransac = req.params.idtransac
+     var agenceid = req.cookies.agenceid;
+console.log(idtransac)
+await Transaction.suppressiontransaction(idtransac);
+//Suppresiontransac
+const ajoutsuppression = new Suppresiontransac({
+  transactionids: idtransac,
+  datesuppression : new Date()
+})
+
+//Recuperer les information des transaction supprimer
+var sommeenvoie = await Transaction.unetransacinfos(idtransac);
+var sommeretourne = sommeenvoie[0].somme;
+
+
+await Suppresiontransac.AjoutSuppresion(ajoutsuppression)
+await Agence.reaugmentersolde(agenceid, sommeretourne);
 
       res.redirect("/Agence/Acceuil")
      } catch(e) {

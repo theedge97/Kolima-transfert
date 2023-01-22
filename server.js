@@ -1,5 +1,4 @@
 const { req, res } = require('express')
-
 let express = require('express')
 let app = express()
 let bodyParser = require('body-parser') //permet de parser les donner envoyer par posts
@@ -18,9 +17,10 @@ app.use(session({ // le middleware de session
     saveUninitialized: false,
     cookie: { secure: false}
 }))
-app.use(cookieParser());
 
-app.use(compression()); //Compress all routes
+app.use(cookieParser());
+app.use(compression());
+//Compress all routes
 app.disable('x-powered-by');
 
 var lien = require('./app/routes/Admin.routes.js');

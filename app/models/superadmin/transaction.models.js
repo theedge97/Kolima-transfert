@@ -20,6 +20,7 @@ const Transaction = function(leclient) {
     this.Fraisprincipale = leclient.Fraisprincipale;
     this.Clientid = leclient.Clientid;
     this.Caissierids = leclient.Caissierids;
+    this.Supprimer = leclient.Supprimer;
   };
 
 
@@ -51,7 +52,18 @@ const Transaction = function(leclient) {
   //Slectionner Les Transactions Effectuer par une Agence A Date les depots
   Transaction.transacadateagence = (  idAgenceenvoie) => {
     return new Promise((resolve, reject)=>{
-      sql.query(` SELECT * FROM transaction INNER JOIN client ON client.idclient = transaction.Clientid  INNER JOIN pays ON pays.idpays = transaction.Paysidenvoie INNER JOIN lesmonaie ON lesmonaie.idmonaie = pays.devise WHERE   transaction.Agenceenvoieid  = ${idAgenceenvoie} AND DATE(transaction.Datetransaction)= CURRENT_DATE   ORDER BY idtransac DESC `,  (error, employees)=>{
+      sql.query(` SELECT * FROM transaction INNER JOIN client ON client.idclient = transaction.Clientid  INNER JOIN pays ON pays.idpays = transaction.Paysidenvoie INNER JOIN lesmonaie ON lesmonaie.idmonaie = pays.devise WHERE   transaction.Agenceenvoieid  = ${idAgenceenvoie} AND DATE(transaction.Datetransaction)= CURRENT_DATE  AND transaction.Supprimer = 0  ORDER BY idtransac DESC `,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+  //Selectionner tout les Transactions de depot d une agence non valider
+  Transaction.transatoutdepotnonvalide = (  idAgenceenvoie) => {
+    return new Promise((resolve, reject)=>{
+      sql.query(` SELECT * FROM transaction INNER JOIN client ON client.idclient = transaction.Clientid  INNER JOIN pays ON pays.idpays = transaction.Paysidenvoie INNER JOIN lesmonaie ON lesmonaie.idmonaie = pays.devise WHERE   transaction.Agenceenvoieid  = ${idAgenceenvoie}  AND transaction.Supprimer = 0 AND transaction.Statue = 0  ORDER BY idtransac DESC `,  (error, employees)=>{
           if(error){
               return reject(error);
           }
@@ -62,7 +74,7 @@ const Transaction = function(leclient) {
   //Selectionner les Transactions effecruer par une Agence entre 2 Date les Depots
   Transaction.transacadeuxdateagence = (  idAgenceenvoie, debut, fin) => {
     return new Promise((resolve, reject)=>{
-      sql.query(` SELECT * FROM transaction INNER JOIN client ON client.idclient = transaction.Clientid  INNER JOIN pays ON pays.idpays = transaction.Paysidenvoie INNER JOIN lesmonaie ON lesmonaie.idmonaie = pays.devise WHERE   transaction.Agenceenvoieid  = ${idAgenceenvoie} AND   DATE(transaction.Datetransaction) BETWEEN '${debut}' AND '${fin}'  ORDER BY idtransac DESC `,  (error, employees)=>{
+      sql.query(` SELECT * FROM transaction INNER JOIN client ON client.idclient = transaction.Clientid  INNER JOIN pays ON pays.idpays = transaction.Paysidenvoie INNER JOIN lesmonaie ON lesmonaie.idmonaie = pays.devise WHERE   transaction.Agenceenvoieid  = ${idAgenceenvoie} AND   DATE(transaction.Datetransaction) BETWEEN '${debut}' AND '${fin}'  AND transaction.Supprimer = 0  ORDER BY idtransac DESC `,  (error, employees)=>{
           if(error){
               return reject(error);
           }
@@ -192,7 +204,6 @@ Transaction.toutcomissiondeuxdatesss = (   debut, fin) => {
       });
   });
   };
-
   //Validation du code de la transaction
   Transaction.validation = (idtransaction, datevalidation ) => {
     return new Promise((resolve, reject)=>{
@@ -294,6 +305,7 @@ Transaction.caissejournalierlessommesretraitagence = (idagence, idcaiss) => {
       });
   });
   };
+
   //Selectionner tout les sommes de retrait de tout les transaction entre deux date
   Transaction.deuxdateslessommesretraittoutagence = ( debut , fin) => {
     return new Promise((resolve, reject)=>{
@@ -305,6 +317,7 @@ Transaction.caissejournalierlessommesretraitagence = (idagence, idcaiss) => {
       });
   });
   };
+
 //Selectionner tout les Sommes de Depot d une Agence
 Transaction.toutlessommesdepotagence = (idagence) => {
   return new Promise((resolve, reject)=>{
@@ -327,7 +340,7 @@ Transaction.journalierlessommesdepotagence = (idagence) => {
       });
   });
   };
-  //Selectionner tout les Sommes de Depot de la caisse d  une Agence Journalierement
+//Selectionner tout les Sommes de Depot de la caisse d  une Agence Journalierement
 Transaction.caissierjournalierlessommesdepotagence = (idagence , idcaiss) => {
     return new Promise((resolve, reject)=>{
       sql.query(`SELECT SUM(transaction.Sommeenvoie) AS toutdepot FROM transaction INNER JOIN envoieargent ON envoieargent.transactionid = transaction.idtransac WHERE envoieargent.idagencenvoie    = ${idagence} AND envoieargent.caissierenvoieid    = ${idcaiss} AND DATE(transaction.Datevalidation)= CURRENT_DATE  `,  (error, employees)=>{
@@ -338,7 +351,7 @@ Transaction.caissierjournalierlessommesdepotagence = (idagence , idcaiss) => {
       });
   });
   };
-  //Selectionnner Tout les Sommes de Depots  d une Agence entre Deux Dates
+//Selectionnner Tout les Sommes de Depots  d une Agence entre Deux Dates
   Transaction.deuxdatelessommesdepotagences = (idagence, debut , fin) => {
     return new Promise((resolve, reject)=>{
       sql.query(`SELECT SUM(transaction.Sommeenvoie) AS toutdepot FROM transaction INNER JOIN envoieargent ON envoieargent.transactionid = transaction.idtransac WHERE envoieargent.idagencenvoie    = ${idagence} AND DATE(transaction.Datevalidation) BETWEEN '${debut}' AND '${fin}'  `,  (error, employees)=>{
@@ -349,7 +362,7 @@ Transaction.caissierjournalierlessommesdepotagence = (idagence , idcaiss) => {
       });
   });
   };
-  //Selection de tout les Sommes de Depot de tout les transaction entre deux
+//Selection de tout les Sommes de Depot de tout les transaction entre deux
   Transaction.deuxdatelessommesdepottoutagence = ( debut , fin) => {
     return new Promise((resolve, reject)=>{
       sql.query(`SELECT SUM(transaction.Sommeenvoie) AS toutdepot FROM transaction INNER JOIN envoieargent ON envoieargent.transactionid = transaction.idtransac WHERE  DATE(transaction.Datevalidation) BETWEEN '${debut}' AND '${fin}'  `,  (error, employees)=>{
@@ -360,4 +373,465 @@ Transaction.caissierjournalierlessommesdepotagence = (idagence , idcaiss) => {
       });
   });
   };
-  module.exports = Transaction;
+
+  //Suppression dune transaction
+  Transaction.suppressiontransaction = (idtransaction ) => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`UPDATE  transaction SET transaction.Supprimer = 1  WHERE transaction.idtransac = ${idtransaction} AND transaction.Statue = 0`,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+//Selectionner les informations de la transaction
+ Transaction.unetransacinfos = (idtransac) => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT Sommeenvoie AS somme FROM transaction  WHERE 	idtransac = ${idtransac}   `,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+//Statistique
+//Nombre de transaction realiser journalierement
+Transaction.nbretransactionjournalier = () => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT COUNT(idtransac) AS nbtransac FROM transaction WHERE DATE(transaction.Datetransaction)= CURRENT_DATE`,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+  //Nombre de transaction du jour precedent
+  Transaction.nbretransactionjourprecedent = () => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT COUNT(idtransac) AS nbtransac FROM transaction WHERE DATE(transaction.Datetransaction)= CURRENT_DATE - 1` ,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+  //Nombre de transaction valider journalierement
+  Transaction.nbrevalidertransactionjournalier = () => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT COUNT(idtransac) AS nbtransac FROM transaction WHERE DATE(transaction.Datetransaction)= CURRENT_DATE AND transaction.Statue = 1`,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+//Nombre de transaction non valider journalierement
+Transaction.nbrenonvalidertransactionjournalier = () => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT COUNT(idtransac) AS nbtransac FROM transaction WHERE DATE(transaction.Datetransaction)= CURRENT_DATE AND transaction.Statue = 0 AND transaction.Supprimer = 0`,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+  //Nombre de transaction  suspendus journalierement
+  Transaction.nbresuspendustransactionjournalier = () => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT COUNT(idtransac) AS nbtransac FROM transaction WHERE DATE(transaction.Datetransaction)= CURRENT_DATE AND transaction.Supprimer = 1`,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+  //Nombre de transaction realiser  hebdomadaires
+  Transaction.nbretransactionhebdo = () => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT COUNT(idtransac) AS nbtransac FROM transaction WHERE WEEK(transaction.Datetransaction)= WEEK(NOW())`,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+  //Nombre de transaction reealiser par une agence Journalierement
+  Transaction.agencenbretransactionjourdepot = (idagence) => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT COUNT(idtransac) AS nbtransac FROM transaction WHERE DATE(transaction.Datetransaction)= CURRENT_DATE AND  transaction.Agenceenvoieid =${idagence} `,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+//Selectioner le nombre de transaction en fonction des jours
+  //Nombre de transaction realiser  hebdomadaires
+  Transaction.nbretransactionenfctionjour = (id) => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT COUNT(idtransac) AS nbtransac FROM transaction WHERE WEEK(transaction.Datetransaction)= WEEK(NOW()) AND  DAYOFWEEK(transaction.Datetransaction) = ${id}`,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+  //mombre de transac en foction dea mois
+  Transaction.nbretransactionenfctionmois = (id) => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT COUNT(idtransac) AS nbtransac FROM transaction WHERE YEAR(transaction.Datetransaction) = YEAR(NOW()) AND MONTH(transaction.Datetransaction)=  ${id}`,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+  //Nombre de transaction valider hebdomandaire
+  Transaction.nbrevalidertransactionhebdo = () => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT COUNT(idtransac) AS nbtransac FROM transaction WHERE WEEK(transaction.Datetransaction)= WEEK(NOW()) AND transaction.Statue = 1`,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+  //Les Transactionds valider en fonction des jours
+Transaction.nbrevalidertransactionfonctionjour = (id) => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT COUNT(idtransac) AS nbtransac FROM transaction WHERE WEEK(transaction.Datetransaction)= WEEK(NOW()) AND  DAYOFWEEK(transaction.Datetransaction) = ${id} AND transaction.Statue = 1`,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+  //Les Transactionds valider en fonction des mois
+  Transaction.nbrevalidertransactionfonctionmois = (id) => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT COUNT(idtransac) AS nbtransac FROM transaction WHERE YEAR(transaction.Datetransaction) = YEAR(NOW()) AND MONTH(transaction.Datetransaction) = ${id} AND transaction.Statue = 1`,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+
+  //Nombre de transaction non valider Hebdomadaire
+  Transaction.nbrenonvalidertransactionhebdo = () => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT COUNT(idtransac) AS nbtransac FROM transaction WHERE WEEK(transaction.Datetransaction)= WEEK(NOW()) AND transaction.Statue = 0 AND transaction.Supprimer = 0`,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+  //Nombre de transaction non valider en fonction des jour
+  Transaction.nbrenonvalidertransacenfctiondesjour = (id) => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT COUNT(idtransac) AS nbtransac FROM transaction WHERE WEEK(transaction.Datetransaction)= WEEK(NOW()) AND  DAYOFWEEK(transaction.Datetransaction) = ${id} AND transaction.Statue = 0 AND transaction.Supprimer = 0`,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+  //Nombre   transaction non valider en fonction des mois
+  Transaction.nbrenonvalidertransacenfctiondesmois = (id) => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT COUNT(idtransac) AS nbtransac FROM transaction WHERE YEAR(transaction.Datetransaction) = YEAR(NOW()) AND MONTH(transaction.Datetransaction) = ${id} AND transaction.Statue = 0 AND transaction.Supprimer = 0`,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+  //Nombre de transaction suspendus hebdomaire
+  Transaction.nbresuspendustransactionhebdo = () => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT COUNT(idtransac) AS nbtransac FROM transaction WHERE YEAR(transaction.Datetransaction) = YEAR(NOW()) AND WEEK(transaction.Datetransaction)= WEEK(NOW()) AND transaction.Supprimer = 1`,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+//Nombre de transaction suspendus mensuellement
+Transaction.nbresuspendustransactionmois = () => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT COUNT(idtransac) AS nbtransac FROM transaction WHERE YEAR(transaction.Datetransaction) = YEAR(NOW()) AND MONTH(transaction.Datetransaction)= MONTH(NOW()) AND transaction.Supprimer = 1`,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+  //Nombre de transaction supprimer en fction jour
+  Transaction.nbresuspendustransacenfctindesjour = (id) => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT COUNT(idtransac) AS nbtransac FROM transaction WHERE YEAR(transaction.Datetransaction) = YEAR(NOW()) AND WEEK(transaction.Datetransaction)= WEEK(NOW()) AND  DAYOFWEEK(transaction.Datetransaction) = ${id} AND transaction.Supprimer = 1`,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+//Nombre de transaction supprimer en fction des mois
+Transaction.nbresuspendustransacenfctindesmois = (id) => {
+        return new Promise((resolve, reject)=>{
+          sql.query(`SELECT COUNT(idtransac) AS nbtransac FROM transaction WHERE YEAR(transaction.Datetransaction) = YEAR(NOW()) AND MONTH(transaction.Datetransaction) = ${id} AND transaction.Supprimer = 1`,  (error, employees)=>{
+              if(error){
+                  return reject(error);
+              }
+              return resolve(employees);
+          });
+      });
+      };
+//nombre de transac  en fonctions mois
+
+//Nombre de transaction realiser mensuellement
+Transaction.nbretransactionmois = () => {
+        return new Promise((resolve, reject)=>{
+          sql.query(`SELECT COUNT(idtransac) AS nbtransac FROM transaction WHERE YEAR(transaction.Datetransaction) = YEAR(NOW()) AND MONTH(transaction.Datetransaction)=  MONTH(NOW())`,  (error, employees)=>{
+              if(error){
+                  return reject(error);
+              }
+              return resolve(employees);
+          });
+      });
+      };
+//Nombre de transaction valider Mensuellement
+  Transaction.nbrevalidertransactionmois = () => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT COUNT(idtransac) AS nbtransac FROM transaction WHERE YEAR(transaction.Datetransaction) = YEAR(NOW()) AND MONTH(transaction.Datetransaction)= MONTH(NOW()) AND transaction.Statue = 1`,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+  //Nombre de Transaction non valider Mensuellement
+  Transaction.nbrenonvalidertransactionmois = () => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT COUNT(idtransac) AS nbtransac FROM transaction WHERE YEAR(transaction.Datetransaction) = YEAR(NOW()) AND MONTH(transaction.Datetransaction)= MONTH(NOW()) AND transaction.Statue = 0 AND transaction.Supprimer = 0`,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+  //Nombre de Transaction  suspendus par mois
+  Transaction.nbresuspendustransactionmois = () => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT COUNT(idtransac) AS nbtransac FROM transaction WHERE YEAR(transaction.Datetransaction) = YEAR(NOW()) AND MONTH(transaction.Datetransaction)= MONTH(NOW()) AND transaction.Supprimer = 1`,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+  //Nombre de transaction de Depot par Pays
+  Transaction.depotnbretransacpays = () => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT pays.pays as nompays, COUNT(transaction.idtransac) as nbre FROM pays INNER JOIN transaction ON transaction.Paysidenvoie = pays.idpays WHERE transaction.Statue = 1 GROUP BY pays.idpays`,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+//Nombre de depot par pays en fonction du jour
+//DATE(transaction.Datetransaction)= CURRENT_DATE
+Transaction.depotnbretransacpaysjour = () => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT pays.pays as nompays, COUNT(transaction.idtransac) as nbre FROM pays INNER JOIN transaction ON transaction.Paysidenvoie = pays.idpays WHERE transaction.Statue = 1 AND YEAR(transaction.Datetransaction) = YEAR(NOW()) AND DATE(transaction.Datetransaction)= CURRENT_DATE GROUP BY pays.idpays`,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+//Nombre de depot par pays en fonction de la semaine
+Transaction.depotnbretransacpayshebdo = () => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT pays.pays as nompays, COUNT(transaction.idtransac) as nbre FROM pays INNER JOIN transaction ON transaction.Paysidenvoie = pays.idpays WHERE transaction.Statue = 1 AND YEAR(transaction.Datetransaction) = YEAR(NOW()) AND WEEK(transaction.Datetransaction) = WEEK(NOW())  GROUP BY pays.idpays`,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+//Nombre de depot par pays en fonction du mois
+Transaction.depotnbretransacpaysmois = () => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT pays.pays as nompays, COUNT(transaction.idtransac) as nbre FROM pays INNER JOIN transaction ON transaction.Paysidenvoie = pays.idpays WHERE transaction.Statue = 1 AND YEAR(transaction.Datetransaction) = YEAR(NOW()) AND MONTH(transaction.Datetransaction) = MONTH(NOW())  GROUP BY pays.idpays`,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+
+//Nombre de transaction retrait par pays
+//SELECT pays.pays as nomapays, COUNT(transaction.idtransac) as nbre FROM `transaction` INNER JOIN client ON client.idclient = transaction.Clientid INNER JOIN pays ON pays.idpays = client.paysdestionation WHERE transaction.Statue = 1 GROUP BY pays.idpays
+Transaction.retraitnbretransparpays = () => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT pays.pays as nompays, COUNT(transaction.idtransac) as nbre FROM transaction INNER JOIN client ON client.idclient = transaction.Clientid INNER JOIN pays ON pays.idpays = client.paysdestionation WHERE transaction.Statue = 1 AND YEAR(transaction.Datetransaction) = YEAR(NOW()) GROUP BY pays.idpays`,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+//Nombre de tramsactiom journalierrement    retrait en fonction du pays
+Transaction.retraitnbretransparpaysjour = () => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT pays.pays as nompays, COUNT(transaction.idtransac) as nbre FROM transaction INNER JOIN client ON client.idclient = transaction.Clientid INNER JOIN pays ON pays.idpays = client.paysdestionation WHERE transaction.Statue = 1 AND YEAR(transaction.Datetransaction) = YEAR(NOW())  AND DATE(transaction.Datetransaction)= CURRENT_DATE  GROUP BY pays.idpays`,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+  //Nombre de retrait par pays  Hebdomandaire
+  Transaction.retraitnbretransparpayshebdo = () => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT pays.pays as nompays, COUNT(transaction.idtransac) as nbre FROM transaction INNER JOIN client ON client.idclient = transaction.Clientid INNER JOIN pays ON pays.idpays = client.paysdestionation WHERE transaction.Statue = 1 AND YEAR(transaction.Datetransaction) = YEAR(NOW()) AND WEEK(transaction.Datetransaction) = WEEK(NOW()) GROUP BY pays.idpays`,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+  //Nombre de retrait  par pays  Mois
+  Transaction.retraitnbretransparpaysmois = () => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT pays.pays as nompays, COUNT(transaction.idtransac) as nbre FROM transaction INNER JOIN client ON client.idclient = transaction.Clientid INNER JOIN pays ON pays.idpays = client.paysdestionation WHERE transaction.Statue = 1 AND YEAR(transaction.Datetransaction) = YEAR(NOW()) AND MONTH(transaction.Datetransaction) = MONTH(NOW()) GROUP BY pays.idpays`,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+  //Selectionner les  somme de tout les de retrait par pays
+  Transaction.retraitsommetransparpays = () => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT pays.pays as nompays, SUM(transaction.montantlocale) as sommeretrait FROM transaction INNER JOIN client ON client.idclient = transaction.Clientid INNER JOIN pays ON pays.idpays = client.paysdestionation WHERE transaction.Statue = 1 GROUP BY pays.idpays`,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+//Selectionner les Sommmes de retraits par jour et par pays
+Transaction.retraitsommetransparpaysjour = () => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT pays.pays as nompays, SUM(transaction.montantlocale) as sommeretrait FROM transaction INNER JOIN client ON client.idclient = transaction.Clientid INNER JOIN pays ON pays.idpays = client.paysdestionation WHERE transaction.Statue = 1 AND DATE(transaction.Datetransaction)= CURRENT_DATE AND YEAR(transaction.Datetransaction) = YEAR(NOW()) GROUP BY pays.idpays`,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+//Selectionner la somme de retrait par semaine et par pays
+Transaction.retraitsommetransparpayshebdo = () => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT pays.pays as nompays, SUM(transaction.montantlocale) as sommeretrait FROM transaction INNER JOIN client ON client.idclient = transaction.Clientid INNER JOIN pays ON pays.idpays = client.paysdestionation WHERE transaction.Statue = 1 AND YEAR(transaction.Datetransaction) = YEAR(NOW()) AND WEEK(transaction.Datetransaction) = WEEK(NOW()) GROUP BY pays.idpays`,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+  //Selectionner la somme de retrait par mois et par pays
+Transaction.retraitsommetransparpaysmois = () => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT pays.pays as nompays, SUM(transaction.montantlocale) as sommeretrait FROM transaction INNER JOIN client ON client.idclient = transaction.Clientid INNER JOIN pays ON pays.idpays = client.paysdestionation WHERE transaction.Statue = 1 AND YEAR(transaction.Datetransaction) = YEAR(NOW()) AND MONTH(transaction.Datetransaction) = MONTH(NOW()) GROUP BY pays.idpays`,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+//Selctionner les Sommes de Depot en Fonction des Pays
+//SELECT pays.pays as nompays, SUM(transaction.Sommeenvoie) as sommeenvoyer FROM pays INNER JOIN transaction ON transaction.Paysidenvoie = pays.idpays WHERE transaction.Statue = 1 GROUP BY pays.idpays
+Transaction.depotsommetransparpays = () => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT pays.pays as nompays, SUM(transaction.Sommeenvoie) as sommeenvoyer FROM pays INNER JOIN transaction ON transaction.Paysidenvoie = pays.idpays WHERE transaction.Statue = 1 GROUP BY pays.idpays`,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+//Selectionner les sommes de depot
+Transaction.depotsommetransparpaysjour = () => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT pays.pays as nompays, SUM(transaction.Sommeenvoie) as sommeenvoyer FROM pays INNER JOIN transaction ON transaction.Paysidenvoie = pays.idpays WHERE transaction.Statue = 1  AND DATE(transaction.Datetransaction)= CURRENT_DATE GROUP BY pays.idpays`,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+  //Selectionner les sommes de depot par semmaine
+  Transaction.depotsommetransparpayshebdo = () => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT pays.pays as nompays, SUM(transaction.Sommeenvoie) as sommeenvoyer FROM pays INNER JOIN transaction ON transaction.Paysidenvoie = pays.idpays WHERE transaction.Statue = 1  AND YEAR(transaction.Datetransaction) = YEAR(NOW()) AND WEEK(transaction.Datetransaction) = WEEK(NOW()) GROUP BY pays.idpays`,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+  //Selectionner les sommes de depot par mois
+  Transaction.depotsommetransparpaysmois = () => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`SELECT pays.pays as nompays, SUM(transaction.Sommeenvoie) as sommeenvoyer FROM pays INNER JOIN transaction ON transaction.Paysidenvoie = pays.idpays WHERE transaction.Statue = 1  AND YEAR(transaction.Datetransaction) = YEAR(NOW()) AND MONTH(transaction.Datetransaction) = MONTH(NOW()) GROUP BY pays.idpays`,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+module.exports = Transaction;

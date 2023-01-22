@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="Ammar">
+  <meta name="keyword" content="">
+
+
+  <!-- Favicons -->
+  <link href="/assets/semantic/img/favicon.png" rel="icon">
+  <link href="/assets/semantic/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Bootstrap core CSS -->
+ <!--external css-->
+  <link href="/assets/semantic/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
+  <!-- Custom styles for this template -->
+  <link href="/assets/semantic/css/style-responsive.css" rel="stylesheet">
+  <link href="/assets/semantic/css/bootstrap.css" rel="stylesheet">
+  <link href="/assets/semantic/css/bootstrap-grid.min.css" rel="stylesheet">
+
+
+  <script src="/assets/semantic/lib/jquery-1.9.1.js"></script>
+
+<script src="/assets/semantic/js/bootstrap.min.js"></script>
+<script src="/assets/semantic/js/bootstrap.bundle.min"></script>
+  <link href="/assets/semantic/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
+  <!-- Custom styles for this template -->
+  <link href="/assets/semantic/css/style.css" rel="stylesheet">
+  <link href="/assets/semantic/css/style-responsive.css" rel="stylesheet">
+
+  <style>
+    #notifi{
+text-align: left;
+font-size: 17px;
+margin-top: 5px;
+z-index: 100;
+padding: 5px;
+border-radius: 5px;
+color: #ffffff;
+background-color: #ffca18;
+border-color: #ffca18;
+position: absolute;
+top: 10%;
+display: none;
+    }
+    #agencesuspense{
+
+text-align: left;
+font-size: 17px;
+margin-top: 5px;
+z-index: 100;
+padding: 5px;
+border-radius: 5px;
+color: #ffffff;
+background-color: #f30808;
+border-color:  #f30808;
+    }
+#erreur
+{
+text-align: left;
+font-size: 17px;
+margin-top: 5px;
+z-index: 100;
+padding: 5px;
+border-radius: 5px;
+color: #ffffff;
+background-color: #f30808;
+border-color:  #f30808;
+position: absolute;
+top: 10%;
+display: block;
+    }
+    .error
+        {
+            color: red;
+        }
+</style>
+</head>
+
+<body>
+  <!-- **********************************************************************************************************************************************************
+      MAIN CONTENT
+      *********************************************************************************************************************************************************** -->
+  <div id="login-page">
+    <div class="container">
+
+      <div class="row">
+
+        <% if(typeof agencesuspense !== "undefined"){ %>
+          <div id="agencesuspense" class="col-lg-offset-3   col-md-offset-4 col-sm-11 col-xs-12 col-md-6 col-lg-5 ">
+            <h2><%= agencesuspense %></h2>
+          </div>
+
+          <% } %>
+          <% if(typeof erreurmotpasse !== "undefined"){ %>
+            <div id="notifi" class="col-lg-offset-3   col-md-offset-4 col-sm-11 col-xs-12 col-md-6 col-lg-4 ">
+              <h2><%= erreurmotpasse %></h2>
+            </div>
+
+            <% } %>
+          <% if(typeof erreurnumero !== "undefined"){ %>
+            <div id="erreur" class="col-lg-offset-3   col-md-offset-4 col-sm-11 col-xs-12 col-md-6 col-lg-4 ">
+              <h2><%= erreurnumero %></h2>
+            </div>
+            <% } %>
+
+                                            <!--Modification de Solde -->
+                                            <div id="modiflangue" class="modal" tabindex="-1">
+                                              <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                  <div class="modal-header bg-success">
+                                                    <h5 class="modal-title">Effectuer  ...!!</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                  </div>
+                                                  <div class="modal-body">
+                                                    <h3>Langue Modifier avec sucees....! </h3>
+                                                  </div>
+
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <!--Fin Boite MOdale-->
+
+          </div>
+      <form class="form-login" method="post" id="signupForm" action="/Caissier/Modifiermotdepassecaissier">
+        <h2 class="form-login-heading">Modification du Mot de Passe </h2>
+        <div class="login-wrap">
+            <input type="tel" name="telephone" id="telephone" class="form-control" placeholder="Entrez votre numero de téléphone " autofocus>
+          <br>
+          <input type="password" name="motdepasse" id="motdepasse" class="form-control" placeholder="Entrez le nouveau mot de passe " autofocus>
+          <br>
+          <input type="password" name="motdepasse1" id="motdepasse1" class="form-control mt-2" placeholder="Confirmer le mot de passe "><br>
+
+          <button class="btn btn-theme btn-block"  type="submit"><i class="fa fa-lock"></i> Créer</button>
+          <hr>
+
+
+        </div>
+
+      </form>
+    </div>
+  </div>
+  <!-- js placed at the end of the document so the pages load faster -->
+  <script src="/assets/semantic/lib/jquery/jquery.min.js"></script>
+  <script src="/assets/semantic/lib/bootstrap/js/bootstrap.min.js"></script>
+  <!--BACKSTRETCH-->
+  <!-- You can use an image of whatever size. This script will stretch to fit in any screen size.-->
+  <script type="text/javascript" src="/assets/semantic/lib/jquery.backstretch.min.js"></script>
+  <script src="/assets/semantic/lib/jquery.validate.js"></script>
+  <script>
+
+
+    $().ready(function() {
+      // validate the comment form when it is submitted
+      jQuery.validator.addMethod("phoneGuinee", function (phone_number, element) {
+        phone_number = phone_number.replace(/\s+/g, "");
+        return this.optional(element) || phone_number.length >= 9 && phone_number.match(/^6[1,2,5,6]{1}[0-9]{7}$/);
+    }, "Veuillez Entrez le bon format de Numero");
+      // validate signup form on keyup and submit
+      $("#signupForm").validate({
+        rules: {
+            telephone: {
+            required: true
+          },
+            motdepasse: {
+            required: true,
+            minlength: 5
+          },
+          motdepasse1: {
+            required: true,
+            minlength: 5,
+            equalTo: "#motdepasse"
+          }
+        },
+        messages: {
+            telephone: {
+            required: "Veuillez Entrez votre numero de telephone",
+          },
+            motdepasse: {
+            required: "Veuillez fournir un mot de passe",
+            minlength: "Votre mot de passe doit comporter au moins 5 caractères"
+          },
+          motdepasse1: {
+            required: "Veuillez fournir un mot de passe",
+            minlength: "Votre mot de passe doit comporter au moins 5 caractères",
+            equalTo: "Entrez le même mot de passe qui est  ci-dessus"
+          }
+        }
+      });
+
+
+      //code to hide topic selection, disable for demo
+      var newsletter = $("#newsletter");
+      // newsletter topics are optional, hide at first
+      var inital = newsletter.is(":checked");
+      var topics = $("#newsletter_topics")[inital ? "removeClass" : "addClass"]("gray");
+      var topicInputs = topics.find("input").attr("disabled", !inital);
+      // show when newsletter is checked
+      newsletter.click(function() {
+        topics[this.checked ? "removeClass" : "addClass"]("gray");
+        topicInputs.attr("disabled", !this.checked);
+      });
+    });
+    </script>
+  <script>
+    $.backstretch("/assets/semantic/img/login-bg.jpg", {
+      speed: 500
+    });
+  </script>
+   <script>
+    //Changement de La langue de L utilisateur
+$( "#changelangue" ).change(function() {
+  var url = "/Agence/changelangue/" + this.value;
+
+$.ajax({
+     type: "GET",
+     url: url,
+     dataType: "json",
+      success: function (response){
+        if (response.success) {
+
+$('#modiflangue').modal('show')
+               setTimeout(function () {
+
+                window.location.href = "/Agence/connection"
+
+                  }, 2000);
+
+                 }
+
+      }
+});
+
+});
+
+
+    '<% if(typeof erreurmotpasse !== "undefined"){ %>'
+    $("#notifi").css({
+      display: 'block'
+    });
+    setTimeout(function () {
+    $("#notifi").css({
+      display: 'none'
+    });
+    }, 5000)
+    '<% } %> '
+    '<% if(typeof erreurnumero!== "undefined"){ %>'
+    $("#erreur").css({
+      display: 'block'
+    });
+    setTimeout(function () {
+    $("#erreur").css({
+      display: 'none'
+    });
+    }, 5000)
+    '<% } %> '
+    </script>
+</body>
+
+</html>

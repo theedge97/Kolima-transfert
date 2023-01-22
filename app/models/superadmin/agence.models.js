@@ -15,6 +15,7 @@ const Agence = function(agence) {
     this.villeid = agence.villeid;
     this.zone = agence.zone;
     this.statue = agence.statue;
+    this.blockage = agence.blockage;
     this.motdepasse = agence.motdepasse;
   };
 
@@ -66,6 +67,28 @@ Agence.lesagences = result => {
       });
   });
   };
+  //Blocker le Compte de l utilisateur
+  Agence.blockagecompte = (	telephoneagence, valeur) => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`UPDATE  agence SET blockage = ${valeur}  WHERE agence.telephoneagence = ${telephoneagence} `,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
+//Recuperer la Liste des Agences Blocker
+  Agence.agenceblocker = result => {
+    return new Promise((resolve, reject)=>{
+      sql.query("SELECT * FROM `agence` LEFT JOIN codereinitialisation ON codereinitialisation.agencelier = agence.idagence  WHERE agence.blockage = 1",  (error, agences)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(agences);
+      });
+  });
+  };
   //rechargement de l'Agence
   Agence.rechargement = (agenceid, somme) => {
     return new Promise((resolve, reject)=>{
@@ -113,6 +136,17 @@ Agence.diminutionsolde = (agenceid, somme) => {
     });
 });
 };
+//Reaugmenter le solde lorsque la transaction est suppeimer
+Agence.reaugmentersolde = (agenceid, somme) => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`UPDATE  agence SET  solde = solde +  ${somme}  WHERE agence.idagence = ${agenceid} `,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
 //Augmentation du Solde lorsque il ya un Retrait
 Agence.augmentationsolde = (agenceid, somme) => {
   return new Promise((resolve, reject)=>{
@@ -124,5 +158,16 @@ Agence.augmentationsolde = (agenceid, somme) => {
     });
 });
 };
+//Modification du mot de passe de passe
+Agence.modifiermotdepasseagence = ( telephone , motdepasse) => {
+    return new Promise((resolve, reject)=>{
+      sql.query(`UPDATE  agence SET motdepasse = "${motdepasse}" , blockage = 0   WHERE telephoneagence = ${telephone} `,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
 
   module.exports = Agence;

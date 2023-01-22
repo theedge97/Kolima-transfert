@@ -10,10 +10,10 @@ const app = express()
 app.use(cookieParser());
 
 app.use(bodyParser.json());
-//Les routes cote super admin 
+//Les routes cote super admin
 module.exports = app => {
     const superadmin = require("../controllers/superadmin.controller.js");
-  // Create a new Customer 
+  // Create a new Customer
   app.get("/Superadmin/connection", (req, res) => {
     res.render('Super admin/connection')
   });
@@ -31,7 +31,7 @@ module.exports = app => {
   app.get("/Superadmin/lesclientsentreprise/:identreprise", superadmin.ClientEntreprise)
   //Compte de L'entreprise
   app.get("/Superadmin/entreprisecompte/:identreprise", superadmin.CompteEntreprise)
-  
+
 //page de connection /Superadmin/entreprisecompte/ ///Superadmin/entreprisedetails/:identreprise /Superadmin/lesclientsentreprise/ /Superadmin/lesdistributeurentreprise/:identreprise
   app.post("/Superadmin/connection", superadmin.Connection);
 };

@@ -47,7 +47,7 @@ const Comissionprincipale = require("../models/superadmin/commissionprincipale.m
 const Envoieargenttrans = require("../models/superadmin/envoieargent.models.js");
 
 const Caissier = require("../models/superadmin/caissier.models.js");
-
+const Caissiercodereinitiallisation = require("../models/superadmin/caissiercodereinitiallisation.models.js");
 
 //Connection de la Caisse
 exports.Connection =  [
@@ -108,7 +108,30 @@ res.cookie("caissierdevise",  connect[0]['monaie'])
         }
 
       }else{
-        res.render('Caissier/login', {erreurmotpasse: "Votre mot de passe ne correspond pas"})
+//Mot de passe  n existe pas
+if (req.cookies.tentativecaissier == null ) {
+  //Si le cookie n existte pas on   creer
+  res.cookie('tentativecaissier', 1 );
+  res.render('Caissier/login', {erreurmotpasse: "Votre mot de passe ne correspond pas"})
+
+}else{
+//au cas elle existe deja on essaie d incrementer le nombre d essaie
+var ancientatentative = req.cookies.tentativecaissier;
+ancientatentative = toInteger(ancientatentative)
+ancientatentative = ancientatentative + 1;
+
+res.cookie('tentativecaissier', ancientatentative);
+//si le nombre de tentative est superieur a 3  on block le compte
+if( ancientatentative > 3){
+//verrouiller le Compte
+await Caissier.blockcompte(telephone)
+
+res.redirect("/Caissier/Blockpage");
+}else{
+  res.render('Caissier/login', {erreurmotpasse: "Votre mot de passe ne correspond pas"})
+
+}
+}
 
       }
 
@@ -653,3 +676,80 @@ exports.Deconnecter =  [
 
        }
    ]
+//Envoie du code de reinitialisation du mot de passe
+ exports.Reinitialisation =  [
+ // verifie si le matricule est un nombre.
+ body('codeactivation', 'Veuillez saisir un code de plus de 4 caractere ').isLength({ min: 5 }).trim(),
+async (req, res, next) => {
+
+   // Extract the validation errors from a request.
+   const errors = validator.validationResult(req);
+   //les erreurs
+   // Create a genre object with escaped and trimmed data
+   if (!errors.isEmpty()) {
+     // There are errors. Render the form again with sanitized values/error messages.
+     var erreur = errors.array();
+     console.log(erreur)
+     res.render('Caissier/blockpage', { erreur: erreur[0]});
+   }
+   else {
+    var codeactivation = req.body.codeactivation
+    try {
+await Caissiercodereinitiallisation.supprimercode(codeactivation);
+res.redirect("/Caissier/Reinitialisationmodepasse")
+
+       } catch(e) {
+           console.log(e);
+           res.sendStatus(500);
+       }
+    //verifier si le matricule existe dans la base de donner
+
+
+   }
+ }
+]
+//Reinitiallisation du mot de passe
+exports.ModifierMotdepasse =  [
+  /*
+ce middelware permet de creer un compte
+  */
+ // verifie si le matricule est un nombre.
+ body('telephone').isNumeric().withMessage('Veuilez bien saisir un nombre').trim(),
+ body('motdepasse', 'Veuillez saisir un mot de passe de plus de quatre caractere').isLength({ min: 4 }).trim(),
+ async (req, res, next) => {
+
+   // Extract the validation errors from a request.
+   const errors = validator.validationResult(req);
+   //les erreurs
+   // Create a genre object with escaped and trimmed data
+   if (!errors.isEmpty()) {
+     // There are errors. Render the form again with sanitized values/error messages.
+     var erreur = errors.array();
+     console.log(erreur)
+     res.render('Agence/reinitiallisation', { erreur: erreur[0]});
+
+   }
+   else {
+    var telephone = req.body.telephone;
+    var motdepasse = req.body.motdepasse;
+    console.log(telephone)
+    try {
+      var hasher =  await  bcrypt.hashSync(motdepasse, 10, (err, hash) => {
+        if (err) {
+          console.error(err)
+          return
+        }
+      })
+console.log(hasher)
+await Caissier.blockermodepassemaj(telephone, hasher)
+res.clearCookie("tentativecaissier");
+res.redirect("/Caissier/connection")
+
+       } catch(e) {
+           console.log(e);
+           res.sendStatus(500);
+       }
+    //verifier si le matricule existe dans la base de donner
+   }
+ }
+]

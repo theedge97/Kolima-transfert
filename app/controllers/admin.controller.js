@@ -6,6 +6,8 @@ let bodyParser = require('body-parser') //permet de parser les donner envoyer pa
 const validator = require('express-validator');
 const { body ,validationResult  } = require('express-validator');
 const bcrypt = require("bcryptjs")//permet de hacher le mot de passe
+
+const codecrypte = require("uuid");
 const saltRounds = 10;
 //const cookieParser = require('cookie-parser')
 
@@ -37,6 +39,8 @@ const  Ecriture = require('../models/superadmin/ecriture.models.js');
 const  Mvt = require('../models/superadmin/mouvement.models.js');
 const Tauxfraisenvoie = require('../models/superadmin/tauxfraisenvoie.models.js');
 const ListeTransfPays = require('../models/superadmin/listetransfertpays.models.js');
+const Reinitiallisationcode  = require("../models/superadmin/reinitialisationcode.models.js");
+const { nbretransactionhebdo } = require('../models/superadmin/transaction.models.js');
 //Inscription d'un administrateur
  exports.Inscription =  [
   /*
@@ -140,7 +144,6 @@ res.cookie('adminemail', connect[0]['email'], {maxAge: 86400000});
       res.render('Super_admin/login', {erreurnumero: "Votre numero ne correspond pas"})
 
       }
-
        } catch(e) {
            console.log(e);
            res.sendStatus(500);
@@ -402,7 +405,56 @@ if(req.cookies.admintelephone != null){
     var nom = req.cookies.adminnom;
     var telephone = req.cookies.admintelephone
     var email = req.cookies.adminemail
-   res.render('Super_admin/acceuil', {nom: nom, telephone: telephone})
+   //Recuperons le nbre de transaction journalier
+  var nbretransacjour = await Transaction.nbretransactionjournalier();
+  nbretransacjour  =nbretransacjour[0].nbtransac
+//Nbre de transaction du jour precedent
+  var nbretransacprecedjour = await Transaction.nbretransactionjourprecedent();
+  nbretransacprecedjour = nbretransacprecedjour[0].nbtransac;
+  //Nbre de transaction valider journalier
+  var nbrevalidertransajour = await Transaction.nbrevalidertransactionjournalier();
+  nbrevalidertransajour = nbrevalidertransajour[0].nbtransac
+  //Nombre de transaction non valider journalierement
+  var nbrenonvalidertransajour =await Transaction.nbrenonvalidertransactionjournalier();
+  nbrenonvalidertransajour = nbrenonvalidertransajour[0].nbtransac
+   //Nombre de transaction supprimer journalierement
+   var nbresuspendutransajour = await Transaction.nbresuspendustransactionjournalier()
+   nbresuspendutransajour = nbresuspendutransajour[0].nbtransac
+//nombre de transaction de  depotpar pays
+  var depotnbretransacpays = await  Transaction.depotnbretransacpaysjour();
+//Recuperons un tableau
+var labeldepots = Array();
+var lesnbredepots = Array();
+depotnbretransacpays.forEach(element => {
+lesnbredepots.push(element['nbre'])
+labeldepots.push(element['nompays'])
+});
+//nombre de retrait par pays
+var retraitnbreparpays =  await Transaction.retraitnbretransparpaysjour();
+var labelsretrait = Array();
+var lesnbreretrait =  Array();
+retraitnbreparpays.forEach(element => {
+  lesnbreretrait.push(element['nbre'])
+  labelsretrait.push(element['nompays'])
+  });
+//Recuperons la somme total  de retrait par pay
+var retraitsommeparpays = await Transaction.retraitsommetransparpaysjour();
+var labelsretraitsommme= Array();
+var  lessommeretrait = Array();
+retraitsommeparpays.forEach(element => {
+  lessommeretrait.push(element['sommeretrait'])
+  labelsretraitsommme.push(element['nompays'])
+  });
+//Recuperons la somme total dedepot par pays
+var depotsommeparpays = await Transaction.depotsommetransparpaysjour();
+var labelsdepotsomme = Array();
+var lessommesdepots = Array();
+depotsommeparpays.forEach(element => {
+  lessommesdepots.push(element['sommeenvoyer'])
+  labelsdepotsomme.push(element['nompays'])
+  });
+
+res.render('Super_admin/acceuil', { nbretransacprecedjour : nbretransacprecedjour , labelsdepotsomme : labelsdepotsomme, lessommesdepots: lessommesdepots, labelsretraitsommme : labelsretraitsommme, lessommeretrait : lessommeretrait , retraitsommeparpays : retraitsommeparpays, labelsretrait : labelsretrait,  lesnbreretrait : lesnbreretrait, lesnbredepots  : lesnbredepots, labeldepots: labeldepots,  nbresuspendutransajour  : nbresuspendutransajour , nbrenonvalidertransajour: nbrenonvalidertransajour,  nbrevalidertransajour: nbrevalidertransajour   ,nbretransacjour: nbretransacjour, nom: nom, telephone: telephone})
     } catch(e) {
         console.log(e);
         res.sendStatus(500);
@@ -412,6 +464,189 @@ if(req.cookies.admintelephone != null){
 }
      }
  ]
+
+//Page d accueil hebdommandaire
+
+exports.Acceuilhebdo  =  [
+  async (req, res) => {
+if(req.cookies.admintelephone != null){
+  try {
+    var nom = req.cookies.adminnom;
+    var telephone = req.cookies.admintelephone
+    var email = req.cookies.adminemail
+  //nombre de transaction hebdomandaire
+  var nbretransahebdo =  await Transaction.nbretransactionhebdo();
+  nbretransahebdo = nbretransahebdo[0].nbtransac;
+  //Nombre de transaction Valider Hebdomandaire
+  var  nbrevalidertransahebdo = await Transaction.nbrevalidertransactionhebdo();
+  nbrevalidertransahebdo = nbrevalidertransahebdo[0].nbtransac;
+  //Nombre de transaction non valider Hebdomandaire
+  var nbrenonvalidertransahebdo = await Transaction.nbrenonvalidertransactionhebdo();
+  nbrenonvalidertransahebdo = nbrenonvalidertransahebdo[0].nbtransac;
+  //Nombre de transaction supprimer hebdomandaire
+var nbresuspendutransahebdo = await Transaction.nbresuspendustransactionhebdo();
+nbresuspendutransahebdo = nbresuspendutransahebdo[0].nbtransac;
+
+var depotnbretransacpays = await  Transaction.depotnbretransacpayshebdo();
+//Recuperons un tableau
+var labeldepots = Array();
+var lesnbredepots = Array();
+depotnbretransacpays.forEach(element => {
+lesnbredepots.push(element['nbre'])
+labeldepots.push(element['nompays'])
+});
+//nombre de retrait par pays
+var retraitnbreparpays =  await Transaction.retraitnbretransparpayshebdo();
+var labelsretrait = Array();
+var lesnbreretrait =  Array();
+retraitnbreparpays.forEach(element => {
+  lesnbreretrait.push(element['nbre'])
+  labelsretrait.push(element['nompays'])
+  });
+//Recuperons la somme total  de retrait par pay
+var retraitsommeparpays = await Transaction.retraitsommetransparpayshebdo();
+var labelsretraitsommme= Array();
+var  lessommeretrait = Array();
+retraitsommeparpays.forEach(element => {
+  lessommeretrait.push(element['sommeretrait'])
+  labelsretraitsommme.push(element['nompays'])
+  });
+//Recuperons la somme total dedepot par pays
+var depotsommeparpays = await Transaction.depotsommetransparpayshebdo();
+var labelsdepotsomme = Array();
+var lessommesdepots = Array();
+depotsommeparpays.forEach(element => {
+  lessommesdepots.push(element['sommeenvoyer'])
+  labelsdepotsomme.push(element['nompays'])
+  });
+var tramsnbrenfctjour = Array();
+for (var i = 1; i <= 7; i++) {
+var tt = await Transaction.nbretransactionenfctionjour(i)
+tramsnbrenfctjour.push(tt[0].nbtransac)
+}
+var transvaliderenfctjour = Array();
+for (var i = 1; i <= 7; i++) {
+var v = await  Transaction.nbrevalidertransactionfonctionjour(i);
+transvaliderenfctjour.push(v[0].nbtransac)
+}
+var transnonvaliderenfctjour = Array();
+for (var i = 1; i <= 7; i++) {
+  var vn = await  Transaction.nbrenonvalidertransacenfctiondesjour(i);
+  transnonvaliderenfctjour.push(vn[0].nbtransac)
+  }
+//nbresuspendustransacenfctindesjour
+
+var transsuspenfctjour = Array();
+for (var i = 1; i <= 7; i++) {
+  var vs = await  Transaction.nbresuspendustransacenfctindesjour(i);
+  transsuspenfctjour.push(vs[0].nbtransac)
+  }
+
+res.render('Super_admin/acceuilhebdo', { transsuspenfctjour : transsuspenfctjour, transnonvaliderenfctjour : transnonvaliderenfctjour, transvaliderenfctjour : transvaliderenfctjour,  tramsnbrenfctjour : tramsnbrenfctjour, labelsdepotsomme : labelsdepotsomme, lessommesdepots: lessommesdepots, labelsretraitsommme : labelsretraitsommme, lessommeretrait : lessommeretrait , retraitsommeparpays : retraitsommeparpays, labelsretrait : labelsretrait,  lesnbreretrait : lesnbreretrait, lesnbredepots  : lesnbredepots, labeldepots: labeldepots,  nbresuspendutransahebdo  : nbresuspendutransahebdo , nbrenonvalidertransahebdo: nbrenonvalidertransahebdo, nbrevalidertransahebdo: nbrevalidertransahebdo   ,   nom: nom, telephone: telephone ,nbretransahebdo :nbretransahebdo})
+    } catch(e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+}else{
+  res.redirect("/Superadmin/Login")
+}
+     }
+ ]
+ //Page d acceuil mois
+
+ exports.Acceuilmois  =  [
+  async (req, res) => {
+if(req.cookies.admintelephone != null){
+  try {
+    var nom = req.cookies.adminnom;
+    var telephone = req.cookies.admintelephone
+    var email = req.cookies.adminemail
+  //Nombre de transaction du mois
+  var nbretransacmois = await Transaction.nbretransactionmois();
+  nbretransacmois = nbretransacmois[0].nbtransac;
+  //Nombre de transaction valider Mensuellement
+  var nbrevalidertransmois = await Transaction.nbrevalidertransactionmois();
+  nbrevalidertransmois = nbrevalidertransmois[0].nbtransac;
+
+  //Nombre de transaction non valider mensuellement
+   var nbrenonvalidertranmois =  await Transaction.nbrenonvalidertransactionmois();
+   nbrenonvalidertranmois =  nbrenonvalidertranmois[0].nbtransac;
+   console.log(nbrenonvalidertranmois)
+   //Nombre de transaction suspendus Mensuellement nbresuspendustransactionmois
+  var nbresuspendutransmois = await Transaction.nbresuspendustransactionmois();
+  nbresuspendutransmois =  nbresuspendutransmois[0].nbtransac;
+//nj
+//depotnbretransacpaysmois
+var depotnbretransacpays = await  Transaction.depotnbretransacpaysmois();
+//Recuperons un tableau
+var labeldepots = Array();
+var lesnbredepots = Array();
+depotnbretransacpays.forEach(element => {
+
+lesnbredepots.push(element['nbre'])
+labeldepots.push(element['nompays'])
+});
+//nombre de retrait par pays
+var retraitnbreparpays =  await Transaction.retraitnbretransparpaysmois();
+var labelsretrait = Array();
+var lesnbreretrait =  Array();
+retraitnbreparpays.forEach(element => {
+  lesnbreretrait.push(element['nbre'])
+  labelsretrait.push(element['nompays'])
+  });
+//Recuperons la somme total  de retrait par pay
+var retraitsommeparpays = await Transaction.retraitsommetransparpaysmois();
+var labelsretraitsommme= Array();
+var  lessommeretrait = Array();
+retraitsommeparpays.forEach(element => {
+  lessommeretrait.push(element['sommeretrait'])
+  labelsretraitsommme.push(element['nompays'])
+  });
+//Recuperons la somme total dedepot par pays
+var depotsommeparpays = await Transaction.depotsommetransparpaysmois();
+var labelsdepotsomme = Array();
+var lessommesdepots = Array();
+depotsommeparpays.forEach(element => {
+  lessommesdepots.push(element['sommeenvoyer']);
+  labelsdepotsomme.push(element['nompays']);
+  });
+//Nombre de transaction
+var tramsnbrenfctmois = Array();
+for (var i = 1; i <= 12; i++) {
+var tt = await Transaction.nbretransactionenfctionmois(i)
+tramsnbrenfctmois.push(tt[0].nbtransac)
+}
+//transaction valider en fonction des mois
+var transvaliderenfctmois = Array();
+for (var i = 1; i <= 12; i++) {
+var v = await  Transaction.nbrevalidertransactionfonctionmois(i);
+transvaliderenfctmois.push(v[0].nbtransac)
+}
+//Nombre de transaction non valider en fonction des mois
+
+var transnonvaliderenfctmois = Array();
+for (var i = 1; i <= 12; i++) {
+  var vn = await  Transaction.nbrenonvalidertransacenfctiondesmois(i);
+  transnonvaliderenfctmois.push(vn[0].nbtransac)
+  }
+  //Nombre de transaction suspendus en fonction  des mois
+var transsuspenfctmois = Array();
+for (var i = 1; i <= 12; i++) {
+  var vs = await  Transaction.nbresuspendustransacenfctindesmois(i);
+  transsuspenfctmois.push(vs[0].nbtransac)
+  }
+
+  res.render('Super_admin/acceuilmois', { transsuspenfctmois : transsuspenfctmois, transnonvaliderenfctmois : transnonvaliderenfctmois, transvaliderenfctmois  : transvaliderenfctmois , tramsnbrenfctmois : tramsnbrenfctmois, labelsdepotsomme : labelsdepotsomme, lessommesdepots: lessommesdepots, labelsretraitsommme : labelsretraitsommme, lessommeretrait : lessommeretrait , retraitsommeparpays : retraitsommeparpays, labelsretrait : labelsretrait,  lesnbreretrait : lesnbreretrait, lesnbredepots  : lesnbredepots, labeldepots: labeldepots, nbresuspendutransmois :nbresuspendutransmois , nbresuspendutransmois : nbresuspendutransmois, nbrenonvalidertranmois : nbrenonvalidertranmois, nbrevalidertransmois: nbrevalidertransmois, nbretransacmois : nbretransacmois, nom: nom, telephone: telephone })
+    } catch(e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+}else{
+  res.redirect("/Superadmin/Login")
+}
+     }
+ ]
+
 
 
  //Lien pour afficher le formulaire d'ajout d'agence
@@ -495,6 +730,7 @@ async (req, res, next) => {
         villeid : villeagence,
         zone : zoneagence,
         statue : 0,
+        blockage :0,
         motdepasse : hasher
       });
     await Agence.inscription(newagence);
@@ -2400,7 +2636,72 @@ exports.BalancePeriodique =  [
       res.redirect("/")
     }
 
+     }
+ ]
+
+ //Page pour afficher la liste des Agences Blocker
+ exports.AgenceBlocker =  [
+  async (req, res) => {
+
+    if(req.cookies.admintelephone != null){
+      try {
+        var nom = req.cookies.adminnom;
+         var telephone = req.cookies.admintelephone;
+         var email = req.cookies.adminemail;
+
+         var lesagenceblocker = await Agence.agenceblocker();
+         res.render('Super_admin/agenceblocker', {nom: nom, telephone: telephone, lesagenceblocker : lesagenceblocker   })
+
+        } catch(e) {
+            console.log(e);
+            res.sendStatus(500);
+        }
+
+     }else{
+      res.redirect("/")
+    }
+
 
 
      }
  ]
+//Generation du code de reinitiallisation
+exports.GenerationCode  =  [
+  async (req, res) => {
+
+    if(req.cookies.admintelephone != null){
+      try {
+         var nom = req.cookies.adminnom;
+         var telephone = req.cookies.admintelephone;
+         var email = req.cookies.adminemail;
+         var idagence = req.params.idagence;
+//idagence
+//Ajout  d un code a une Agence
+
+var nombrealeatoir = Math.random();
+
+const MY_NAMESPACE = '6ec0bd7f-11c0-43da-975e-2a8ad9ebae0b';
+var encodage =  nombrealeatoir + idagence;
+var code = codecrypte.v5(encodage, MY_NAMESPACE);
+var lecode =  code.slice(0, 5)
+const ajoutcode = new Reinitiallisationcode({
+  codereinitialisation: lecode,
+  agencelier : idagence
+})
+await Reinitiallisationcode.ajoutcode(ajoutcode);
+         res.redirect("/Superadmin/LesagenceBlocker")
+
+        } catch(e) {
+            console.log(e);
+            res.sendStatus(500);
+        }
+
+     }else{
+      res.redirect("/")
+    }
+
+
+
+     }
+ ]
+

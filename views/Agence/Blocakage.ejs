@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Dashboard">
+    <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+    <title>Kolima Transfert || Agence  </title>
+
+    <!-- Favicons -->
+    <link href="/assets/semantic/img/favicon.png" rel="icon">
+    <link href="/assets/semantic/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Bootstrap core CSS -->
+    <link href="/assets/semantic/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!--external css-->
+    <link href="/assets/semantic/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    <link href="/assets/semantic/css/style.css" rel="stylesheet">
+    <link href="/assets/semantic/css/style-responsive.css" rel="stylesheet">
+<style>
+  #erreur
+{
+text-align: left;
+font-size: 17px;
+margin-top: 5px;
+z-index: 100;
+padding: 5px;
+border-radius: 5px;
+color: #ffffff;
+background-color: #f30808;
+border-color:  #f30808;
+position: absolute;
+top: 10%;
+display: block;
+    }
+</style>
+</head>
+
+<body onload="getTime()">
+  <!-- **********************************************************************************************************************************************************
+      MAIN CONTENT
+      *********************************************************************************************************************************************************** -->
+  <div class="container">
+    <div id="showtime"></div>
+<div class="row">
+  <% if(typeof erreur !== "undefined"){ %>
+    <div id="erreur" class="col-lg-offset-3   col-md-offset-4 col-sm-11 col-xs-12 col-md-6 col-lg-4 ">
+      <h2 class="text-white"><%= erreur.msg %></h2>
+    </div>
+    <% } %>
+</div>
+    <div class="col-lg-4 col-lg-offset-4">
+      <div class="lock-screen">
+        <h2><a data-toggle="modal" href="#myModal"><i class="fa fa-lock"></i></a></h2>
+        <p>Débloquer</p>
+
+        <!-- Modal -->
+        <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
+          <div class="modal-dialog">
+             <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class="modal-title">Veuillez Entrer le Code de Réinitialisation du mot de passe </h4>
+                </div>
+                <form method="post" id="signupForm" action="/Agence/deblockage">
+
+                <div class="modal-body">
+                  <p class="centered"><img class="img-circle" width="80" src="/assets/semantic/img/ui-sam.jpg"></p>
+                  <input type="text" name="codeactivation" placeholder="Entrez le code D'activation" autocomplete="off" class="form-control placeholder-no-fix">
+                </div>
+                <div class="modal-footer centered">
+                  <button data-dismiss="modal" class="btn btn-theme04" type="button">Fermer </button>
+                  <button class="btn btn-theme03" type="submit">Envoyer </button>
+                </div>
+
+            </form>
+              </div>
+          </div>
+        </div>
+        <!-- modal -->
+      </div>
+      <!-- /lock-screen -->
+    </div>
+    <!-- /col-lg-4 -->
+  </div>
+  <!-- /container -->
+ <!-- js placed at the end of the document so the pages load faster -->
+ <script src="/assets/semantic/lib/jquery/jquery.min.js"></script>
+ <script src="/assets/semantic/lib/bootstrap/js/bootstrap.min.js"></script>
+ <!--BACKSTRETCH-->
+ <!-- You can use an image of whatever size. This script will stretch to fit in any screen size.-->
+ <script src="/assets/semantic/lib/jquery.validate.js"></script>
+ <script>
+
+
+   $().ready(function() {
+     // validate the comment form when it is submitted
+     jQuery.validator.addMethod("phoneGuinee", function (phone_number, element) {
+       phone_number = phone_number.replace(/\s+/g, "");
+       return this.optional(element) || phone_number.length >= 9 && phone_number.match(/^6[1,2,5,6]{1}[0-9]{7}$/);
+   }, "Veuillez Entrez le bon format de Numero");
+     // validate signup form on keyup and submit
+     $("#signupForm").validate({
+       rules: {
+
+         codeactivation: {
+                   required: true,
+               }
+       },
+       messages: {
+        codeactivation: {
+           required: "Veuillez fournir un Code d'Activation"
+         }
+       }
+     });
+
+
+     //code to hide topic selection, disable for demo
+     var newsletter = $("#newsletter");
+     // newsletter topics are optional, hide at first
+     var inital = newsletter.is(":checked");
+     var topics = $("#newsletter_topics")[inital ? "removeClass" : "addClass"]("gray");
+     var topicInputs = topics.find("input").attr("disabled", !inital);
+     // show when newsletter is checked
+     newsletter.click(function() {
+       topics[this.checked ? "removeClass" : "addClass"]("gray");
+       topicInputs.attr("disabled", !this.checked);
+     });
+   });
+   </script>
+ <script type="text/javascript" src="/assets/semantic/lib/jquery.backstretch.min.js"></script>
+ <script>
+   $.backstretch("/assets/semantic/img/login-bg.jpg", {
+     speed: 500
+   });
+ </script>
+ <script>
+   function getTime() {
+     var today = new Date();
+     var h = today.getHours();
+     var m = today.getMinutes();
+     var s = today.getSeconds();
+     // add a zero in front of numbers<10
+     m = checkTime(m);
+     s = checkTime(s);
+     document.getElementById('showtime').innerHTML = h + ":" + m + ":" + s;
+     t = setTimeout(function() {
+       getTime()
+     }, 500);
+   }
+
+   function checkTime(i) {
+     if (i < 10) {
+       i = "0" + i;
+     }
+     return i;
+   }
+ </script>
+
+</body>
+
+</html>

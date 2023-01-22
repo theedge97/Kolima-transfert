@@ -14,6 +14,7 @@ const Caissiers = function(caisse) {
   this.motdepasse = caisse.motdepasse;
   this.agencelier = caisse.agencelier;
   this.statue = caisse.statue;
+  this.blockage = caisse.blockage;
 };
 //selectionner Un Comptes Caissier
   Caissiers.Trouvercomptecaisse = (telephone ) => {
@@ -30,6 +31,17 @@ const Caissiers = function(caisse) {
 Caissiers.lescaissierdunagence =  ( id) => {
   return new Promise((resolve, reject)=>{
     sql.query(`SELECT * FROM caissier WHERE agencelier  = ${id} `,  (error, employees)=>{
+        if(error){
+            return reject(error);
+        }
+        return resolve(employees);
+    });
+});
+};
+//Selectionner la liste des Caissier Blockers
+Caissiers.lescaissierblocker =  (id) => {
+  return new Promise((resolve, reject)=>{
+    sql.query(`SELECT * FROM caissier LEFT JOIN caissiercodereinitiallisation ON caissiercodereinitiallisation.caisseid = caissier.idcaiss  WHERE agencelier  = ${id} AND caissier.blockage = 1 `,  (error, employees)=>{
         if(error){
             return reject(error);
         }
@@ -70,6 +82,17 @@ Caissiers.ajoutcaisse = (newFrais) => {
       });
   });
   };
+  //Blocker la page d un Caissier
+  Caissiers.blockcompte =  (telephonecaissier) =>{
+    return new Promise((resolve, reject)=>{
+      sql.query(`UPDATE  caissier SET  	blockage = 1      WHERE telephonecaissier = "${telephonecaissier}"  `,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
   //Mettre a jour le Mot de passe du Caissier
   Caissiers.majmotpasse =  (idcaisse, 	motdepasse) =>{
     return new Promise((resolve, reject)=>{
@@ -92,7 +115,17 @@ Caissiers.ajoutcaisse = (newFrais) => {
       });
   });
   };
-
+  //Modifier le mot de passe du caissier
+  Caissiers.blockermodepassemaj =  (telephone, 	motdepasse) =>{
+    return new Promise((resolve, reject)=>{
+      sql.query(`UPDATE  caissier SET  	motdepasse = "${motdepasse} ", blockage = 0   WHERE telephonecaissier = "${telephone}"  `,  (error, employees)=>{
+          if(error){
+              return reject(error);
+          }
+          return resolve(employees);
+      });
+  });
+  };
 
 
 

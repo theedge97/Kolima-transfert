@@ -1,0 +1,344 @@
+<!-- debut de head-->
+<%- include('head'); -%>
+
+
+<title>Kolima Admin Transfert</title>
+  <!-- fin de head-->
+</head>
+<!-- debut  de menue-->
+<%- include('menue'); -%>
+    <!--fin de menue end-->
+    <!-- **********************************************************************************************************************************************************
+        MAIN CONTENT
+        *********************************************************************************************************************************************************** -->
+    <!-- debut du body-->
+    <section id="main-content">
+      <section class="wrapper">
+        <div class="row">
+         <div class="col-lg-12 main-chart">
+
+
+            <div class="row mt">
+                <!-- SERVER STATUS PANELS -->
+
+                  <!-- /grey-panel -->
+
+                 <!-- /col-md-4 -->
+                   <div class="col-md-4 col-sm-4 mb">
+                  <div class="green-panel pn">
+                    <div class="green-header">
+                      <h5>Nombre des transactions Hebdomandaires effectuer</h5>
+                    </div>
+                    <h1 class="mt">
+
+              <svg fill="#ffffff" xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 512 512"><title>Transaction</title><path d="M218.31,340.69A16,16,0,0,0,191,352v32H171a28,28,0,0,1-28-28V152a64,64,0,1,0-64-1.16V356a92.1,92.1,0,0,0,92,92h20v32a16,16,0,0,0,27.31,11.31l64-64a16,16,0,0,0,0-22.62ZM112,64A32,32,0,1,1,80,96,32,32,0,0,1,112,64Z"/><path d="M432,360.61V156a92.1,92.1,0,0,0-92-92H320V32a16,16,0,0,0-27.31-11.31l-64,64a16,16,0,0,0,0,22.62l64,64A16,16,0,0,0,320,160V128h20a28,28,0,0,1,28,28V360.61a64,64,0,1,0,64,0ZM400,448a32,32,0,1,1,32-32A32,32,0,0,1,400,448Z"/></svg>
+
+            </h1>
+
+                    <h3><%= nbretransahebdo  %></h3>
+                  </div>
+                </div>
+
+
+                 <div class="col-md-4 col-sm-4 mb">
+                  <div style=" color: #fff;   text-align: center;
+      background: #198754 ;" class=" pn">
+                    <div style="    background: #198754;
+      padding: 3px; text-align: center;     font-size: 23px;
+      margin-bottom: 15px;" class="primary-header green-header">
+                      <h5>Nombre de transaction validée Hebdomandaires</h5>
+                    </div>
+                    <h1 class="mt">
+                    <i   class="fa fa-refresh fa-3x"></i></h1>
+                    <h3><%= nbrevalidertransahebdo  %></h3>
+                  </div>
+                </div>
+                <!-- /col-md-4-->
+
+                <!-- /col-md-4 -->
+                 <div class="col-md-4 col-sm-4 mb">
+                  <div  style=" color: #fff;   text-align: center;
+                  background: #dc3545;" class="white-panel	 pn">
+                    <div   style=" color: #fff;   text-align: center;
+                    background: #dc3545;" class="white-header">
+                      <h5>Nombre de Transaction non validée Hebdomandaires</h5>
+                    </div>
+                    <h1 class="mt">
+
+              <i   class="fa fa-refresh fa-3x"></i></h1>
+
+                    <h3><%=  nbrenonvalidertransahebdo %></h3>
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-4 mb">
+                  <div  style=" color: #fff;   text-align: center;
+                  background: #dc3545;" class="white-panel	 pn">
+                    <div   style=" color: #fff;   text-align: center;
+                    background: #dc3545;" class="white-header">
+                      <h5>Nombre de Transaction Supprimer Hebdomandaires</h5>
+                    </div>
+                    <h1 class="mt">
+
+              <svg width="100px"  height="100px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><circle fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="48" cx="256" cy="256" r="200"/><line stroke="#fff" stroke-miterlimit="10" stroke-width="48" x1="114.58" y1="114.58" x2="397.42" y2="397.42"/></svg></h1>
+
+                    <h3><%= nbresuspendutransahebdo %></h3>
+                  </div>
+                </div>
+
+              </div>
+
+            <!-- /row -->
+            <hr>
+<div class="row">
+<h1>Statistique</h1>
+
+  <div class="col-lg-4">
+    <div class="card-body">
+      <div class="chart-bar"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+           <canvas id="nbredepotmois" width="294" height="160" style="display: block; width: 294px; height: 160px;" class="chartjs-render-monitor"></canvas>
+
+      </div>
+      <hr>
+Nombre de Transaction de depot en fonction des pays  Hebdomandairement
+  </div>
+  </div>
+<div class="col-lg-4">
+  <div class="card-body">
+    <div class="chart-bar"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+         <canvas id="nbreretraitmois" width="294" height="160" style="display: block; width: 294px; height: 160px;" class="chartjs-render-monitor"></canvas>
+
+    </div>
+    <hr>
+Nombre de Transaction de retrait en fonction des pays  Hebdomandairement
+</div>
+</div>
+
+<div class="col-lg-4">
+  <div class="card-body">
+    <div class="chart-bar"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+         <canvas id="sommeretraitmois" width="294" height="160" style="display: block; width: 294px; height: 160px;" class="chartjs-render-monitor"></canvas>
+
+    </div>
+    <hr>
+Les somme retirer  en fonction des pays  Hebdomandairement
+</div>
+</div>
+
+<div class="col-lg-4">
+  <div class="card-body">
+    <div class="chart-bar"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+         <canvas id="sommedepotmois" width="294" height="160" style="display: block; width: 294px; height: 160px;" class="chartjs-render-monitor"></canvas>
+
+    </div>
+    <hr>
+Les somme depots en fonction des pays Hebdomandairement
+</div>
+</div>
+
+            </div>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card-body">
+      <div class="chart-bar"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+          <canvas id="revenuesmois" width="294" height="160" style="display: block; width: 294px; height: 160px;" class="chartjs-render-monitor"></canvas>
+      </div>
+      <hr>
+     Statistique des transaction Hebdomandaires en fonction des jours
+  </div>
+  </div>
+</div>
+
+          </div>
+        </div>
+        <!-- /row -->
+      </section>
+    </section>
+    <!--main content end-->
+
+  </section>
+  <!-- js placed at the end of the document so the pages load faster -->
+  <script src="/assets/semantic/lib/jquery/jquery.min.js"></script>
+
+  <script src="/assets/semantic/lib/bootstrap/js/bootstrap.min.js"></script>
+  <script class="include" type="text/javascript" src="/assets/semantic/lib/jquery.dcjqaccordion.2.7.js"></script>
+  <script src="/assets/semantic/lib/jquery.scrollTo.min.js"></script>
+  <script src="/assets/semantic/lib/jquery.nicescroll.js" type="text/javascript"></script>
+  <script src="/assets/semantic/lib/jquery.sparkline.js"></script>
+  <!--common script for all pages-->
+  <script src="/assets/semantic/lib/common-scripts.js"></script>
+  <script type="text/javascript" src="/assets/semantic/lib/gritter/js/jquery.gritter.js"></script>
+  <script type="text/javascript" src="/assets/semantic/lib/gritter-conf.js"></script>
+  <!--script for this page-->
+
+  <script src="/assets/semantic/js/Chart.min.js"></script>
+  <!-- Page level custom scripts -->
+  <script src="/assets/semantic/js/chart-area-demo.js"></script>
+  <script src="/assets/semantic/js/chart-pie-demo.js"></script>
+
+<script>
+  //Nombre de transaction du jour precdent
+  var jrpreced =0;
+  var jrn = 0;
+  var ev= null;
+  if (jrn == null || jrpreced == null) {
+  ev = 0;
+  }else{
+ ev =  ((jrn - jrpreced) / jrpreced)* 100 ;
+  }
+$("#tauxevolution").html(ev + '%')
+  //Nombre de depot en fonction du mois
+  var nbredepotmois = document.getElementById("nbredepotmois");
+var la ="<%= labeldepots %>";
+var nb ="<%= lesnbredepots %>";
+var label = la.split(',');
+var lesnbredepots = nb.split(',');
+var myBarChart = new Chart(nbredepotmois, {
+  type: 'doughnut',
+  data: {
+     labels: label,
+  datasets: [{
+    label: 'My First Dataset',
+    data: lesnbredepots,
+    backgroundColor:[ '#BE63C2','#2bc23a','#f7b520','#45b5f2','#e9124c', '#c2324c', '#29c2ba','#BC98E9', '#ce5037','#85af24', '#e50221','#8E54E9','#2bcbba','#f7b731','#45aaf2','#e3324c', '#f3324c', '#2b52ba','#8C94E9', '#fb5037','#85abf2', '#d7b221'],
+    hoverOffset: 4
+  }],
+  }
+});
+//Nombre de retrait  par pays
+var nbreretraitmois = document.getElementById("nbreretraitmois");
+var lr ="<%= labelsretrait %>";
+var nbrt ="<%=  lesnbreretrait %>";
+var label = lr.split(',');
+var lesnbreretrait = nbrt.split(',');
+var myBarChart = new Chart(nbreretraitmois, {
+  type: 'doughnut',
+  data: {
+     labels: label,
+  datasets: [{
+    label: 'My First Dataset',
+    data: lesnbreretrait,
+    backgroundColor:[ '#e9124c', '#c2324c', '#29c2ba','#BC98E9','#BE63C2','#2bc23a','#f7b520','#45b5f2', '#ce5037','#85af24', '#e50221','#8E54E9','#2bcbba','#f7b731','#45aaf2','#e3324c', '#f3324c', '#2b52ba','#8C94E9', '#fb5037','#85abf2', '#d7b221'],
+    hoverOffset: 4
+  }],
+  }
+});
+//Les Somme retirer par pays
+
+var sommeretraitmois = document.getElementById("sommeretraitmois");
+var lrs ="<%= labelsretraitsommme %>";
+var smr ="<%=  lessommeretrait %>";
+var label = lrs.split(',');
+var lessommeretrait = smr.split(',');
+var myBarChart = new Chart(sommeretraitmois, {
+  type: 'doughnut',
+  data: {
+     labels: label,
+  datasets: [{
+    label: 'My First Dataset',
+    data: lessommeretrait,
+    backgroundColor:[ '#BC98E9','#BE63C2','#2bc23a','#f7b520','#45b5f2', '#ce5037','#e9124c', '#c2324c', '#29c2ba','#85af24', '#e50221','#8E54E9','#2bcbba','#f7b731','#45aaf2','#e3324c', '#f3324c', '#2b52ba','#8C94E9', '#fb5037','#85abf2', '#d7b221'],
+    hoverOffset: 4
+  }],
+  }
+});
+//Les Somme depots par pays
+//labelsdepotsomme
+var sommedepotmois = document.getElementById("sommedepotmois");
+var lds ="<%= labelsdepotsomme %>";
+var smd ="<%=  lessommesdepots %>";
+var label = lds.split(',');
+var lessommedepot = smd.split(',');
+var myBarChart = new Chart(sommedepotmois, {
+  type: 'doughnut',
+  data: {
+     labels: label,
+  datasets: [{
+    label: 'My First Dataset',
+    data: lessommedepot,
+    backgroundColor:['#f0e409', '#c2324c', '#29c2ba', '#BC98E9','#BE63C2','#2bc23a','#f7b520','#45b5f2', '#ce5037','#85af24', '#e50221','#8E54E9','#2bcbba','#f7b731','#45aaf2','#e3324c', '#f3324c', '#2b52ba','#8C94E9', '#fb5037','#85abf2', '#d7b221'],
+    hoverOffset: 4
+  }],
+  }
+});
+//le nombre des transaction en fonction desjours
+
+var ctx = document.getElementById("revenuesmois");
+var barColors = [
+      '#ffc107',
+      ];
+var barColors2 = [
+      '#198754',
+];
+var barColors3 = [
+      '#dd6317',
+];
+var barColors4 = [
+      '#cc3f3f',
+]
+var tramsnbrenfctjour = "<%=  tramsnbrenfctjour %>";
+tramsnbrenfctjour = tramsnbrenfctjour.split(',');
+var transvaliderenfctjour  = "<%=  transvaliderenfctjour %>";
+transvaliderenfctjour  =transvaliderenfctjour.split(',');
+var transnonvaliderenfctjour  = "<%=  transnonvaliderenfctjour %>";
+transnonvaliderenfctjour  = transnonvaliderenfctjour.split(',');
+var transsuspenfctjour  ="<%=  transsuspenfctjour %>";
+transsuspenfctjour  = transsuspenfctjour.split(',');
+var myBarChart = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: [ "Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
+    datasets: [{
+      data: tramsnbrenfctjour,
+      borderColor: "rgba(255, 99, 132, 0.2)",
+      hoverBackgroundColor: "#6c757d",
+      fill: false,
+      backgroundColor: barColors,
+      label: "Transaction effectuer ",
+    },{
+       data: transvaliderenfctjour,
+      borderColor: "blue",
+      fill: false,
+       label: "Transaction validé",
+      hoverBackgroundColor: "#6c757d",
+      backgroundColor: barColors2,
+      borderColor: [
+      'rgb(255, 99, 132)',
+    ],
+    },
+    {
+       data: transnonvaliderenfctjour,
+      borderColor: "blue",
+      fill: false,
+       label: "Transaction non validé",
+      hoverBackgroundColor: "#6c757d",
+      backgroundColor: barColors3,
+      borderColor: [
+      'rgb(255, 99, 132)',
+    ],
+    },
+    {
+       data: transsuspenfctjour,
+      borderColor: "blue",
+      fill: false,
+       label: "Transaction suspendus",
+      hoverBackgroundColor: "#6c757d",
+      backgroundColor: barColors4,
+      borderColor: [
+      'rgb(255, 99, 132)',
+    ],
+    }
+  ],
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+});
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,461 @@
+<!-- debut de head-->
+<%- include('head'); -%>
+
+
+<title>Agence || Kolima  Transfert</title>
+<link href="/assets/semantic/lib/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+
+  <!-- fin de head-->
+  <style>
+    #blockmodifier
+    {
+      display: none;
+    }
+  </style>
+
+</head>
+<script src="/assets/semantic/lib/jquery.validate.js"></script>
+<script src="/assets/semantic/lib/moment.min.js"></script>
+
+<script src="/assets/semantic/lib/html2pdf.bundle.min.js"></script>
+<script src="/assets/semantic/js/jquery.formatCurrency.js" ></script>
+<script src="/assets/semantic/js/easy-number-separator.js"></script>
+
+
+<!-- debut  de menue-->
+<%- include('menue'); -%>
+    <!--fin de menue end-->
+    <!-- **********************************************************************************************************************************************************
+        MAIN CONTENT
+        *********************************************************************************************************************************************************** -->
+    <!-- debut du body-->
+    <section id="main-content">
+      <section class="wrapper">
+
+        <div class="row mt-5">
+
+            <div class="col-lg-12  ">
+
+              <div class="row account-contant">
+
+                <div class="col-12">
+                    <div class="card card-statistics">
+                        <div class="card-body p-0">
+                            <div class="row no-gutters">
+
+                                <div class="col-xl-12 col-md-12 col-12">
+                                    <div class="page-account-form">
+                                        <div class="form-titel border-bottom p-3">
+                                            <h5 class="mb-0  textcoleur py-2">Rapport des Transaction de Depot Journalières . </h5>
+                                            <!--Boite Modale d erreur Taux -->
+                                            <div id="valide" class="modal" tabindex="-1">
+                                              <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                  <div class="modal-header bg-success">
+                                                    <h5 class="modal-title">Success...!!</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                  </div>
+                                                  <div class="modal-body">
+                                                    <p>Bravo les Informations ont été modifier avec Success.....!!  . </p>
+                                                  </div>
+
+                                                </div>
+                                              </div>
+                                            </div>
+
+
+                                            <!--Fin Boite Modale -->
+                                            <!--Boite modale invalide Code -->
+                                            <div id="codeerreurs" class="modal" tabindex="-1">
+                                              <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                  <div class="modal-header bg-warning">
+                                                    <h5 class="modal-title">Code Erreurs ...!!</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                  </div>
+                                                  <div class="modal-body">
+                                                    <p>Code Invalide . </p>
+                                                  </div>
+
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <!--Fin Boite Modale-->
+                                             <!--BOite modale Imprimer Facture du Client -->
+
+  <!-- Modal -->
+        <!--Fin -->
+                                             <!--Boite modale innexistance de Frais envoie erreurfrais -->
+                                             <div id="validation" class="modal" tabindex="-1">
+                                              <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                  <div class="modal-header bg-success">
+                                                    <h5 class="modal-title">Tansaction Validé ...!!</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                  </div>
+                                                  <div class="modal-body">
+                                                    <p>Votre Transaction a été validé. </p>
+                                                  </div>
+
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <!--Fin Boite Modale-->
+                                          </div>
+
+                                        <div class="p-4" >
+
+
+        <div class="row mt">
+            <div class="col-md-12">
+                <div class="">
+                  <h4><i class="fa fa-angle-right"></i><font _mstmutation="1">Liste des Rapports des Transactions de Dépot  Journalières. </font> </h4>
+                  <hr>
+
+                  <div id="deuxdaterapport"  class="table-responsive">
+                  <table  id="dataTable"  class="table table-striped table-advance table-hover">
+
+
+                    <thead>
+                      <tr>
+                        <th> N °</th>
+                        <th> Nom De l'Expediteur  </th>
+                        <th>Contact de l' Expediteur  </th>
+                        <th> Pays de Reception  </th>
+                        <th> Nom de Receveur   </th>
+                        <th> Contact du Receveur</th>
+                        <th> Numéro  de la carte</th>
+                        <th> Montant </th>
+                        <th>Frais </th>
+                        <th>Commission Agence </th>
+                        <th>Date  D'Envoie </th>
+                        <th>Statue</th>
+                        <th>Supprimer</th>
+
+
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                        <% if(typeof lestransactions !== "undefined"){ %>
+
+                            <% for(var i= 0 ; i < lestransactions.length; i++)  { %>
+
+                           <tr>
+                             <td><%= i+1 %></td>
+                             <td><%= lestransactions[i].Nomexpediteur %> </td>
+                             <td><%= lestransactions[i].Contactexpediteur %> </td>
+                             <td><%= lestransactions[i].Contactexpediteur %> </td>
+                             <td><%= lestransactions[i].Nomreceveur %> </td>
+                             <td><%= lestransactions[i].Contactreceveur %></td>
+                             <td> <%= lestransactions[i].Numerocarte %>    </td>
+                             <td><span id="somme<%= i+1 %>"></span> </td>
+                             <td><span id="frais<%= i+1 %>"></span></td>
+                             <td> <span id="fraisdepot<%= i+1 %>"></span></td>
+                             <td> <span id="datere<%= i+1 %>"></span></td>
+                             <td><% if( lestransactions[i].Statue == 1) {  %><span class="text-success">Traité </span>
+                                <% }  if( lestransactions[i].Statue == 0) { %> <span class="text-danger">Non Traité</span>   <% } %></td>
+
+                                <td>   <button data-bs-toggle="modal" data-bs-target="#suppression<%= i+1 %>" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+                                </td>
+
+             <!--Boite suppression-->
+            <div class="modal fade" id="suppression<%= i+1 %>" tabindex="-1" role="dialog" aria-labelledby="defaultModal" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header bg-danger">
+                      <h5 class="modal-title " id="exampleModalLabel">Suppression d'une Transaction </h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                      <div class="modal-body">
+                          Voulez-vous supprimer la Transaction de  <%= lestransactions[i].Nomexpediteur %>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Non</button>
+                          <a href="/Agence/TransactionSupprimer/<%= lestransactions[i].idtransac %>"><button type="button" class="btn btn-danger">Oui</button></a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <!--Boite suppression fin-->
+                              </tr>
+
+                            <script>
+                                var ss = "<%= lestransactions[i].Datetransaction %>";
+                                 var datere =  moment(ss).format('DD / MM / YYYY ');
+
+                                                  $("#datere<%= i+1 %>").html(datere);
+                                                  var somme = "<%= lestransactions[i].Sommeenvoie %>";
+                                                  var montantlocale = new Intl.NumberFormat('gn-GN').format(somme);
+                                                  var fr = "<%= lestransactions[i].Frais %>";
+                                                  var frais = new Intl.NumberFormat('gn-GN').format(fr);
+                                                  var dp = "<%= lestransactions[i].Fraisdepot %>";
+                                                  var fraisdp = new Intl.NumberFormat('gn-GN').format(dp);
+
+                                                  $("#fraisdepot<%= i+1 %>").html(fraisdp);
+                                                  $("#frais<%= i+1 %>").html(frais);
+                                                  $("#somme<%= i+1 %>").html(montantlocale);
+                              </script>
+                            <% } %>
+                            <% } %>
+
+
+
+                    </tbody>
+                  </table>
+                  </div>
+                </div>
+                <!-- /content-panel -->
+              </div>
+              <div class="col-lg-12">
+                <button id="rapportimprimert" class="btn btn-primary">Imprimer </button>
+
+              </div>
+            <!-- /col-lg-12 -->
+          </div>
+        <!-- /row -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      <!--Fin de notification d'erreur-->
+
+            </div>
+            <!-- /col-lg-12 -->
+          </div>
+
+          <!-- Button trigger modal -->
+
+        <!-- /row -->
+      </section>
+    </section>
+    <!--main content end-->
+
+  </section>
+  <!-- js placed at the end of the document so the pages load faster -->
+
+  <script>
+
+
+
+
+    document.querySelector("#rapportimprimert").addEventListener("click", ()=>{
+       var td = document.getElementsByTagName('td');
+       var th = document.getElementsByTagName('th');
+       $("td").css({
+
+        padding: 0
+                        });
+                        $("th").css({
+
+                          padding: 0
+                                          });
+
+
+        const invoice = this.document.getElementById("deuxdaterapport");
+        var opt = {
+margin:       0.1,
+filename:     'rapportdeuxdate.pdf',
+image:        { type: 'jpeg', quality: 1 },
+html2canvas:  { scale: 1.5 },
+jsPDF:        { unit: 'in', format: 'a4', orientation: 'landscape' },
+
+pagebreak: {mode: 'avoid-all', before:'#pageX'}
+};
+        html2pdf().from(invoice).set(opt).save();
+
+
+        setTimeout(function () {
+            $("td").css({
+
+                padding: '15px'
+                                         });
+                                         $("th").css({
+
+
+                padding: '15px'
+                                                           });
+
+                           }, 3000);
+
+    })
+
+
+
+
+
+
+</script>
+<script>
+  easyNumberSeparator({
+    selector: '.number-separator',
+    separator: ' ',
+    resultInput: '#montant',
+  })
+  //
+
+</script>
+<script src="/assets/semantic/lib/datatables/jquery.dataTables.min.js"></script>
+<script src="/assets/semantic/lib/datatables/dataTables.bootstrap4.min.js"></script>
+<script src="/assets/semantic/lib/datatables/datatables-demo.js"></script>
+
+
+  <script src="/assets/semantic/lib/bootstrap/js/bootstrap.min.js"></script>
+
+
+  <script>
+
+    var nomimprimer = "";
+    var idtransaction = "";
+
+        $().ready(function() {
+          // validate the comment form when it is submitted
+          jQuery.validator.addMethod("phoneGuinee", function (phone_number, element) {
+            phone_number = phone_number.replace(/\s+/g, "");
+            return this.optional(element) || phone_number.length >= 9 && phone_number.match(/^6[1,2,5,6]{1}[0-9]{7}$/);
+        }, "Veuillez Entrez le bon format de Numero");
+          // validate signup form on keyup and submit
+          $("#rectifie").validate({
+            rules: {
+              code: {
+                required: true,
+                minlength: 5
+              } ,
+
+            },
+            messages: {
+              code: {
+                required: "Veuillez entrez le code .",
+                minlength: "Votre code doit  être égale à 5 caractères "
+              }
+            },
+            submitHandler: function(form){
+
+         $.ajax({
+             url: form.action,
+             type: form.method,
+             data: $(form).serialize(),
+             success: function(response) {
+
+
+                  if (response.codeerreurs) {
+
+        $("#codeerreurs").css({
+                          display: 'block'
+                        });
+                        setTimeout(function () {
+        $("#codeerreurs").css({
+          display: 'none'
+        });
+        }, 3000)
+
+                    }
+
+                    if (response.transaction) {
+
+                      $("#blockmodifier").css({
+          display: 'block'
+        });
+                    //
+                    $("#idtransaction").val(response.transaction['idtransac']);
+
+                    $("#expediteurnom").val(response.transaction['Nomexpediteur']);
+                    $("#expediteurcontact").val(response.transaction['Contactexpediteur']);
+                    $("#receveurnom").val(response.transaction['Nomreceveur']);
+
+                    $("#idclient").val(response.transaction['idclient']);
+
+
+                    $("#numerocarte").val(response.transaction['Numerocarte']);
+                    $("#receveurcontact").val(response.transaction['Contactreceveur']);
+                    var mt = new Intl.NumberFormat('gn-GN').format(response.transaction['Sommeenvoie'])
+                    var fr = new Intl.NumberFormat('gn-GN').format(response.transaction['Frais']);
+                    var  md = new Intl.NumberFormat('gn-GN').format(response.transaction['montantdevise']);
+                    var  ml = new Intl.NumberFormat('gn-GN').format(response.transaction['montantlocale']);
+
+                    $("#montantaenvoyer").val(mt);
+                    //frais
+                    $("#hfrais").val(fr);
+                    $("#hlasomme").val(md);
+                    $("#hlasomme").val(md);
+                    $("#hmonaierecevoir").val(ml);
+                    $("#codet").val(response.transaction['Codetransfert']);
+                    //montantenvoie
+                    $("#paysdestination").val(response.transaction['pays']);
+                    var frais = new Intl.NumberFormat('gn-GN').format(response.frais)
+
+
+
+
+
+
+
+
+                  }
+
+
+
+
+                            }
+               });
+         }
+
+          });
+
+
+          //code to hide topic selection, disable for demo
+          var newsletter = $("#newsletter");
+          // newsletter topics are optional, hide at first
+          var inital = newsletter.is(":checked");
+          var topics = $("#newsletter_topics")[inital ? "removeClass" : "addClass"]("gray");
+          var topicInputs = topics.find("input").attr("disabled", !inital);
+          // show when newsletter is checked
+          newsletter.click(function() {
+            topics[this.checked ? "removeClass" : "addClass"]("gray");
+            topicInputs.attr("disabled", !this.checked);
+          });
+        });
+
+     document.querySelector("#imprimer").addEventListener("click", ()=>{
+                const invoice = this.document.getElementById("lenvoie");
+
+                     //si le compte n'est pas engistrer
+
+
+                var opt = {
+      margin:       0.5,
+      filename:     nomimprimer,
+      image:        { type: 'jpeg', quality: 0.98 },
+      html2canvas:  { scale: 2 },
+      jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+    };
+    html2pdf().from(invoice).set(opt).save();
+
+            })
+
+
+
+        </script>
+
+
+  <script class="include" type="text/javascript" src="/assets/semantic/lib/jquery.dcjqaccordion.2.7.js"></script>
+  <script src="/assets/semantic/lib/jquery.scrollTo.min.js"></script>
+  <script src="/assets/semantic/lib/jquery.nicescroll.js" type="text/javascript"></script>
+  <script src="/assets/semantic/lib/jquery.sparkline.js"></script>
+  <!--common script for all pages-->
+  <script src="/assets/semantic/lib/common-scripts.js"></script>
+  <script type="text/javascript" src="/assets/semantic/lib/gritter/js/jquery.gritter.js"></script>
+  <script type="text/javascript" src="/assets/semantic/lib/gritter-conf.js"></script>
+  <!--script for this page-->
+
+
+
+</body>
+
+</html>

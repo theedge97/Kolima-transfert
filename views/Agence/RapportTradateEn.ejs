@@ -131,6 +131,7 @@
                         <th>Agency fee </th>
                         <th>Sending Date  </th>
                         <th>Statue</th>
+                        <th>Delete</th>
 
 
                       </tr>
@@ -155,7 +156,9 @@
                              <td> <span id="datere<%= i+1 %>"></span></td>
                              <td><% if( lestransactions[i].Statue == 1) {  %><span class="text-success">Treat </span>
                                 <% }  if( lestransactions[i].Statue == 0) { %> <span class="text-danger">Untreated</span>   <% } %></td>
-                            </tr>
+                             <td>   <button data-toggle="modal" data-target="#suppression<%= i+1 %>" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+                             </td>
+                              </tr>
 
                             <script>
                                 var ss = "<%= lestransactions[i].Datetransaction %>";
